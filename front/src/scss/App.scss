@@ -1,0 +1,49 @@
+html * {
+    font-family: SF Pro Rounded !important;
+     font-style: normal !important;
+     font-size: 17px !important;
+     line-height: 20px !important;
+ }
+
+ input[type="text"] {
+    background-color: transparent;
+    border: 0px;
+    outline: none;
+
+    font-family: SF Pro Rounded;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 20px;
+
+    color: #000000;
+}
+
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+}
+
+.app {
+    width: 414px;
+    height: 880px;
+
+    background: #FFFFFF;
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    &__tapbar-reserve {
+        bottom: 0;
+
+        position: absolute;
+    }
+    &__tapbar {
+        bottom: 0;
+
+        position: absolute;
+    }
+}

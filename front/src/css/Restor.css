@@ -1,0 +1,99 @@
+.restor {
+  width: 363px;
+  height: 132px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  background: #F2F2F2;
+  border-radius: 12px;
+}
+.restor__img-column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
+  margin-top: 6px;
+  margin-left: 12px;
+  margin-bottom: 12px;
+  margin-right: 6px;
+  overflow: hidden;
+}
+.restor__img-column img {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.restor__info-column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+  -webkit-box-flex: 6;
+      -ms-flex: 6;
+          flex: 6;
+  margin-top: 12px;
+  margin-right: 12px;
+  margin-left: 6px;
+  margin-bottom: 12px;
+}
+.restor__title {
+  font-family: SF Pro Rounded;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 101.34%;
+  color: #000000;
+  opacity: 0.9;
+}
+.restor__rating {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: baseline;
+      -ms-flex-pack: baseline;
+          justify-content: baseline;
+}
+.restor__rating img {
+  margin-right: 10px;
+}
+.restor__metro {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: baseline;
+      -ms-flex-pack: baseline;
+          justify-content: baseline;
+}
+.restor__metro img {
+  margin-right: 10px;
+}
