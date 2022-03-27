@@ -119,6 +119,80 @@
 
     background: #F2F2F2;
     border-radius: 12px;
+
+    &__img-column {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        flex: 9;
+
+        object-fit: contain;
+        max-width: 100%;
+        max-height: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+    &__info-column {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        flex: 11;
+
+        margin-left: 5px;
+    }
+    &__title {
+        height: 15px;
+        width: 90%;
+
+        font-family: 'SF Pro Rounded';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 14px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        margin: 3px;
+
+        color: #000000;
+
+        opacity: 0.9;
+    }
+    &__desc {
+        display: flex;
+        height: 30px;
+        width: 90%;
+
+        font-family: 'SF Pro Rounded';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 12px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        color: #9F9F9F;
+
+        opacity: 0.9;
+
+        margin: 3px;
+    }
+    &__price {
+        font-family: 'SF Pro Rounded';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 14px;
+
+        margin: 3px;
+
+
+        color: #000000;
+
+        opacity: 0.9;
+    }
 }
 
 .restor-navbar{
