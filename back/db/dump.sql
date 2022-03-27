@@ -4,6 +4,8 @@ create table if not exists users
 (
     id     serial primary key,
     email  citext unique,
+    password varchar(64) not null,
+    full_name varchar(128) not null,
     number varchar(16) not null
 );
 
