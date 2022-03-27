@@ -1,18 +1,3 @@
-body{
-    width: 414px;
-    height: 896px;
-
-    margin: 0;
-
-    background: #FFFFFF;
-    border-radius: 20px;
-}
-
-html {
-    overflow: scroll;
-    overflow-x: hidden;
-}
-
 ::-webkit-scrollbar {
     width: 0;
     background: transparent;
