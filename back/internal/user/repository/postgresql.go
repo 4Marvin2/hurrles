@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"context"
 	"fmt"
 	"hurrles/config"
 	"hurrles/internal/user/models"
@@ -10,9 +11,9 @@ import (
 )
 
 type IUserRepository interface {
-	GetUserById(uid uint64) (models.User, error)
-	GetUserByEmail(email string) (models.User, error)
-	CreateUser(models.User) (models.User, error)
+	GetUserById(context.Context, uint64) (models.User, error)
+	GetUserByEmail(context.Context, string) (models.User, error)
+	CreateUser(context.Context, models.User) (models.User, error)
 }
 
 type userRepository struct {
@@ -45,7 +46,7 @@ func NewPostgresUserRepository(config config.PostgresConfig) (IUserRepository, e
 	return &userRepository{pool}, nil
 }
 
-func (ur *userRepository) GetUserById(uid uint64) (models.User, error) {
+func (ur *userRepository) GetUserById(ctx context.Context, uid uint64) (models.User, error) {
 	var user models.User
 	err := ur.Conn.QueryRow(
 		"SELECT id, email, password, full_name, number FROM users WHERE id = $1;",
@@ -63,7 +64,7 @@ func (ur *userRepository) GetUserById(uid uint64) (models.User, error) {
 	return user, nil
 }
 
-func (ur *userRepository) GetUserByEmail(email string) (models.User, error) {
+func (ur *userRepository) GetUserByEmail(ctx context.Context, email string) (models.User, error) {
 	var user models.User
 	err := ur.Conn.QueryRow(
 		"SELECT id, email, password, full_name, number FROM users WHERE email = $1;",
@@ -81,7 +82,7 @@ func (ur *userRepository) GetUserByEmail(email string) (models.User, error) {
 	return user, nil
 }
 
-func (ur *userRepository) CreateUser(user models.User) (models.User, error) {
+func (ur *userRepository) CreateUser(ctx context.Context, user models.User) (models.User, error) {
 	var createdUser models.User
 	err := ur.Conn.QueryRow(
 		`INSERT INTO users (email, password, full_name, number)

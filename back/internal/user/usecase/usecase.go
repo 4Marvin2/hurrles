@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"context"
 	"fmt"
 	"hurrles/internal/pkg/hasher"
 	"hurrles/internal/user/models"
@@ -12,9 +13,9 @@ import (
 )
 
 type IUserUsecase interface {
-	GetUserById(uid uint64) (models.User, error)
-	LoginUser(models.UserCredentials) (models.User, int, error)
-	SignupUser(models.User) (models.User, int, error)
+	GetUserById(context.Context, uint64) (models.User, int, error)
+	LoginUser(context.Context, models.UserCredentials) (models.User, int, error)
+	SignupUser(context.Context, models.User) (models.User, int, error)
 }
 
 type userUsecase struct {
@@ -29,8 +30,8 @@ func NewUserUsecase(ur repository.IUserRepository, timeout time.Duration) IUserU
 	}
 }
 
-func (uu *userUsecase) LoginUser(credentials models.UserCredentials) (models.User, int, error) {
-	user, err := uu.UserPostgresRepository.GetUserByEmail(credentials.Email)
+func (uu *userUsecase) LoginUser(ctx context.Context, credentials models.UserCredentials) (models.User, int, error) {
+	user, err := uu.UserPostgresRepository.GetUserByEmail(ctx, credentials.Email)
 	if err == pgx.ErrNoRows {
 		return models.User{}, http.StatusNotFound, fmt.Errorf("user with email %s not found", credentials.Email)
 	} else if err != nil {
@@ -49,15 +50,15 @@ func (uu *userUsecase) LoginUser(credentials models.UserCredentials) (models.Use
 	return user, http.StatusOK, nil
 }
 
-func (uu *userUsecase) SignupUser(user models.User) (models.User, int, error) {
-	user, err := uu.UserPostgresRepository.GetUserByEmail(user.Email)
+func (uu *userUsecase) SignupUser(ctx context.Context, user models.User) (models.User, int, error) {
+	user, err := uu.UserPostgresRepository.GetUserByEmail(ctx, user.Email)
 	if err == nil {
 		return models.User{}, http.StatusConflict, err
 	} else if err != nil && err != pgx.ErrNoRows {
 		return models.User{}, http.StatusInternalServerError, err
 	}
 
-	createdUser, err := uu.UserPostgresRepository.CreateUser(user)
+	createdUser, err := uu.UserPostgresRepository.CreateUser(ctx, user)
 	if err != nil {
 		return models.User{}, http.StatusInternalServerError, err
 	}
@@ -65,10 +66,13 @@ func (uu *userUsecase) SignupUser(user models.User) (models.User, int, error) {
 	return createdUser, http.StatusOK, nil
 }
 
-func (uu *userUsecase) GetUserById(uid uint64) (models.User, error) {
-	user, err := uu.UserPostgresRepository.GetUserById(uid)
-	if err != nil {
-		return models.User{}, err
+func (uu *userUsecase) GetUserById(ctx context.Context, uid uint64) (models.User, int, error) {
+	user, err := uu.UserPostgresRepository.GetUserById(ctx, uid)
+	if err == pgx.ErrNoRows {
+		return models.User{}, http.StatusNotFound, fmt.Errorf("user with id %d not found", uid)
+	} else if err != nil {
+		return models.User{}, http.StatusInternalServerError, err
 	}
-	return user, nil
+
+	return user, http.StatusOK, nil
 }

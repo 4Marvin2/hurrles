@@ -1,0 +1,22 @@
+{
+  "server": {
+    "host": "127.0.0.1",
+    "httpPort": ":8000",
+    "certFile": "api.ijia.me.crt",
+    "keyFile": "api.ijia.me.key"
+  },
+  "tarantool": {
+    "host": "tarantool",
+    "port": ":3301",
+    "user": "admin",
+    "pass": "password",
+    "name": "hurrles"
+  },
+  "postgres": {
+    "host": "postgres",
+    "port": "5432",
+    "user": "admin",
+    "pass": "password",
+    "name": "hurrles"
+  }
+}

@@ -8,7 +8,7 @@ type UserCredentials struct {
 
 //easyjson:json
 type User struct {
-	Id       int64  `json:"id,omitempty"`
+	Id       uint64 `json:"id,omitempty"`
 	Email    string `json:"email,omitempty"`
 	Password string `json:"password,omitempty"`
 	FullName string `json:"fullName,omitempty"`

@@ -6,6 +6,8 @@ box.cfg {
     log_level = 5,
 }
 
+local log = require('log')
+
 function init()
     s = box.schema.space.create('user', {if_not_exists=true})
     s:format({
@@ -14,23 +16,23 @@ function init()
     })
     s:create_index('primary', { type = 'HASH', parts = {'cookie'}, if_not_exists = true })
 
-    box.log.info('create space sessions')
+    log.info('create space sessions')
 end
 
 function new_session(cookie, user_id)
-    box.log.info('receive data for user %s', user_id)
+    log.info('receive data for user %s', user_id)
     box.space.sessions:insert{cookie, user_id}
-    box.log.info('insert cookie %s for %s user success', cookie, user_id)
+    log.info('insert cookie %s for %s user success', cookie, user_id)
 end
 
 function check_session(cookie)
     local session = box.space.sessions:select{cookie}
-    box.log.info('found session for user %s', session.user_id)
+    log.info('found session for user %s', session.user_id)
     return session
 end
 
 function delete_session(cookie)
     local  droped_session = box.space.sessions:delete{cookie}
-    box.log.info('delete session %s', deleted_session)
+    log.info('delete session %s', deleted_session)
     return droped_session
 end

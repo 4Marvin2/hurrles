@@ -10,9 +10,9 @@ import (
 )
 
 type ISessionUsecase interface {
-	AddSession(ctx context.Context, session models.Session) error
-	DeleteSession(ctx context.Context) error
-	GetSessionByCookie(sessionCookie string) (session models.Session, err error)
+	AddSession(context.Context, models.Session) error
+	DeleteSession(context.Context) error
+	GetSessionByCookie(context.Context, string) (models.Session, error)
 }
 
 type sessionUsecase struct {
@@ -28,7 +28,7 @@ func NewSessionUsecase(sess repository.ISessionRepository, timeout time.Duration
 }
 
 func (s *sessionUsecase) AddSession(ctx context.Context, session models.Session) error {
-	err := s.Session.NewSessionCookie(session.Cookie, session.UserID)
+	err := s.Session.NewSessionCookie(ctx, session.Cookie, session.UserID)
 	if err != nil {
 		return err
 	}
@@ -44,15 +44,15 @@ func (s *sessionUsecase) DeleteSession(ctx context.Context) error {
 	if !ok {
 		return errors.New("convert to model session error")
 	}
-	err := s.Session.DeleteSessionCookie(currentSession.Cookie)
+	err := s.Session.DeleteSessionCookie(ctx, currentSession.Cookie)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (s *sessionUsecase) GetSessionByCookie(sessionCookie string) (session models.Session, err error) {
-	findSession, err := s.Session.GetSessionByCookie(sessionCookie)
+func (s *sessionUsecase) GetSessionByCookie(ctx context.Context, sessionCookie string) (session models.Session, err error) {
+	findSession, err := s.Session.GetSessionByCookie(ctx, sessionCookie)
 	if err != nil {
 		return models.Session{}, err
 	}

@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"errors"
+	"context"
 	"fmt"
 	"hurrles/config"
 	"hurrles/internal/user/models"
@@ -10,12 +10,12 @@ import (
 	"github.com/tarantool/go-tarantool"
 )
 
-const success = "Connection success (drip_tarantool) on: "
+const success = "Connection success on: "
 
 type ISessionRepository interface {
-	GetSessionByCookie(sessionCookie string) (models.Session, error)
-	NewSessionCookie(sessionCookie string, userId uint64) error
-	DeleteSessionCookie(sessionCookie string) error
+	GetSessionByCookie(context.Context, string) (models.Session, error)
+	NewSessionCookie(context.Context, string, uint64) error
+	DeleteSessionCookie(context.Context, string) error
 }
 
 type sessionRepository struct {
@@ -47,14 +47,14 @@ func NewTarantoolConnection(tntConfig config.TarantoolConfig) (ISessionRepositor
 	return &seesManager, nil
 }
 
-func (conn *sessionRepository) GetSessionByCookie(sessionCookie string) (session models.Session, err error) {
+func (conn *sessionRepository) GetSessionByCookie(ctx context.Context, sessionCookie string) (session models.Session, err error) {
 	resp, err := conn.TarantoolConn.Call("check_session", []interface{}{sessionCookie})
 	if err != nil {
 		return models.Session{}, err
 	}
 
 	if len(resp.Data) == 0 {
-		return models.Session{}, errors.New("not exixsts this cookie")
+		return models.Session{}, fmt.Errorf("not exixsts cookie")
 	}
 
 	data := resp.Data[0]
@@ -83,26 +83,26 @@ func (conn *sessionRepository) GetSessionByCookie(sessionCookie string) (session
 	return models.Session{Cookie: cookie, UserID: userId}, nil
 }
 
-func (conn *sessionRepository) NewSessionCookie(sessionCookie string, id uint64) error {
+func (conn *sessionRepository) NewSessionCookie(ctx context.Context, sessionCookie string, id uint64) error {
 	resp, err := conn.TarantoolConn.Call("new_session", []interface{}{sessionCookie, id})
 	if err != nil {
 		return err
 	}
 
 	if len(resp.Data) == 0 {
-		return errors.New("this cookie already exists")
+		return fmt.Errorf("this cookie already exists")
 	}
 	return nil
 }
 
-func (conn *sessionRepository) DeleteSessionCookie(sessionCookie string) error {
+func (conn *sessionRepository) DeleteSessionCookie(ctx context.Context, sessionCookie string) error {
 	resp, err := conn.TarantoolConn.Call("delete_session", []interface{}{sessionCookie})
 	if err != nil {
 		return err
 	}
 
 	if len(resp.Data) == 0 {
-		return errors.New("this cookie is not exists")
+		return fmt.Errorf("this cookie is not exists")
 	}
 
 	return nil

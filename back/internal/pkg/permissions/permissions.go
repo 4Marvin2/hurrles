@@ -11,6 +11,7 @@ import (
 	"time"
 
 	uuid "github.com/nu7hatch/gouuid"
+	log "github.com/sirupsen/logrus"
 )
 
 type Permission struct {
@@ -23,11 +24,13 @@ func (perm *Permission) CheckAuth(next http.HandlerFunc) http.HandlerFunc {
 		var userSession models.Session
 		session, err := r.Cookie("sessionId")
 		if err != nil {
+			log.Errorf("Permissions.CheckAuth: no cookie: %w", err)
 			ioutils.SendError(w, http.StatusForbidden, "")
 			return
 		} else {
-			userSession, err = perm.SessionUseCase.GetSessionByCookie(session.Value)
+			userSession, err = perm.SessionUseCase.GetSessionByCookie(r.Context(), session.Value)
 			if err != nil {
+				log.Errorf("Permissions.CheckAuth: failed GetSessionByCookie with error: %w", err)
 				ioutils.SendError(w, http.StatusForbidden, "")
 				return
 			}
@@ -41,18 +44,21 @@ func (perm *Permission) GetCurrentUser(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctxSession := r.Context().Value(config.ContextUserID)
 		if ctxSession == nil {
+			log.Errorf("Permissions.GetCurrentUser: empty session in ctx")
 			ioutils.SendError(w, http.StatusForbidden, "")
 			return
 		}
 		currentSession, ok := ctxSession.(models.Session)
 		if !ok {
+			log.Errorf("Permissions.GetCurrentUser: failed cast ctxSession to Session")
 			ioutils.SendError(w, http.StatusForbidden, "")
 			return
 		}
 
-		currentUser, err := perm.UserUseCase.GetUserById(currentSession.UserID)
-		if err != nil {
-			ioutils.SendError(w, http.StatusNotFound, "")
+		currentUser, status, err := perm.UserUseCase.GetUserById(r.Context(), currentSession.UserID)
+		if err != nil || status != http.StatusOK {
+			log.Errorf("Permissions.GetCurrentUser: failed GetUserById with [error: %w] [status: %d]", err, status)
+			ioutils.SendError(w, status, "")
 			return
 		}
 

@@ -7,6 +7,14 @@ import (
 	"github.com/spf13/viper"
 )
 
+type ServerConfig struct {
+	Host     string
+	HttpPort string
+	GrpcUrl  string
+	CertFile string
+	KeyFile  string
+}
+
 type TarantoolConfig struct {
 	User     string
 	Password string
@@ -34,6 +42,7 @@ type contextUserID string
 type contextUser string
 
 var (
+	Server        ServerConfig
 	Tarantool     TarantoolConfig
 	Postgres      PostgresConfig
 	Timeouts      TimeoutsConfig
@@ -48,12 +57,19 @@ func SetConfig() {
 		log.Fatal(err)
 	}
 
+	Server = ServerConfig{
+		HttpPort: viper.GetString(`server.httpPort`),
+		Host:     viper.GetString(`server.host`),
+		CertFile: viper.GetString(`server.certFile`),
+		KeyFile:  viper.GetString(`server.keyFile`),
+	}
+
 	Tarantool = TarantoolConfig{
-		Port:     viper.GetString(`session.port`),
-		Host:     viper.GetString(`session.host`),
-		User:     viper.GetString(`session.user`),
-		Password: viper.GetString(`session.pass`),
-		DBName:   viper.GetString(`session.name`),
+		Port:     viper.GetString(`tarantool.port`),
+		Host:     viper.GetString(`tarantool.host`),
+		User:     viper.GetString(`tarantool.user`),
+		Password: viper.GetString(`tarantool.pass`),
+		DBName:   viper.GetString(`tarantool.name`),
 	}
 
 	Postgres = PostgresConfig{

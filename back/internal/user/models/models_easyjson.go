@@ -116,7 +116,7 @@ func easyjsonD2b7633eDecodeHurrlesInternalUserModels1(in *jlexer.Lexer, out *Use
 		}
 		switch key {
 		case "id":
-			out.Id = int64(in.Int64())
+			out.Id = uint64(in.Uint64())
 		case "email":
 			out.Email = string(in.String())
 		case "password":
@@ -143,7 +143,7 @@ func easyjsonD2b7633eEncodeHurrlesInternalUserModels1(out *jwriter.Writer, in Us
 		const prefix string = ",\"id\":"
 		first = false
 		out.RawString(prefix[1:])
-		out.Int64(int64(in.Id))
+		out.Uint64(uint64(in.Id))
 	}
 	if in.Email != "" {
 		const prefix string = ",\"email\":"
