@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"hurrles/config"
-	"hurrles/internal/user/models"
+	"hurrles/internal/models"
 	"log"
 
 	"github.com/jackc/pgx"
@@ -87,6 +87,10 @@ func (ur *userRepository) CreateUser(ctx context.Context, user models.User) (mod
 	err := ur.Conn.QueryRow(
 		`INSERT INTO users (email, password, full_name, number)
 		VALUES ($1, $2, $3, $4) RETURNING email, password, full_name, number;`,
+		user.Email,
+		user.Password,
+		user.FullName,
+		user.Number,
 	).Scan(
 		&createdUser.Email,
 		&createdUser.Password,

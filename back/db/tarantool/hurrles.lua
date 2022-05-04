@@ -9,10 +9,10 @@ box.cfg {
 local log = require('log')
 
 function init()
-    s = box.schema.space.create('user', {if_not_exists=true})
+    s = box.schema.space.create('sessions', {if_not_exists=true})
     s:format({
-        { name = 'user_id',  type = 'unsigned' },
         { name = 'cookie',   type = 'string' },
+        { name = 'user_id',  type = 'unsigned' },
     })
     s:create_index('primary', { type = 'HASH', parts = {'cookie'}, if_not_exists = true })
 
@@ -21,8 +21,9 @@ end
 
 function new_session(cookie, user_id)
     log.info('receive data for user %s', user_id)
-    box.space.sessions:insert{cookie, user_id}
+    local session = box.space.sessions:insert{cookie, user_id}
     log.info('insert cookie %s for %s user success', cookie, user_id)
+    return session
 end
 
 function check_session(cookie)

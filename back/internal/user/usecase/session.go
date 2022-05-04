@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"hurrles/config"
-	"hurrles/internal/user/models"
+	"hurrles/internal/models"
 	"hurrles/internal/user/repository"
 	"time"
 )

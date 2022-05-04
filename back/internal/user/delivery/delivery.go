@@ -3,16 +3,16 @@ package delivery
 import (
 	"crypto/md5"
 	"fmt"
+	"hurrles/internal/models"
 	"hurrles/internal/pkg/hasher"
 	"hurrles/internal/pkg/ioutils"
-	p "hurrles/internal/pkg/permissions"
-	"hurrles/internal/user/models"
-	"hurrles/internal/user/usecase"
 	"net/http"
 	"time"
 
-	"github.com/gorilla/mux"
+	p "hurrles/internal/pkg/permissions"
+	"hurrles/internal/user/usecase"
 
+	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -106,7 +106,7 @@ func (uh *UserHandler) UserSignupPost(w http.ResponseWriter, r *http.Request) {
 
 	sess := models.Session{
 		Cookie: cookie.Value,
-		UserID: user.Id,
+		UserID: createdUser.Id,
 	}
 
 	err = uh.SessionUseCase.AddSession(r.Context(), sess)

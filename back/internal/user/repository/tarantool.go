@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"hurrles/config"
-	"hurrles/internal/user/models"
+	"hurrles/internal/models"
 	"log"
 
 	"github.com/tarantool/go-tarantool"

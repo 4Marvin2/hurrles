@@ -3,8 +3,8 @@ package usecase
 import (
 	"context"
 	"fmt"
+	"hurrles/internal/models"
 	"hurrles/internal/pkg/hasher"
-	"hurrles/internal/user/models"
 	"hurrles/internal/user/repository"
 	"net/http"
 	"time"
@@ -51,12 +51,18 @@ func (uu *userUsecase) LoginUser(ctx context.Context, credentials models.UserCre
 }
 
 func (uu *userUsecase) SignupUser(ctx context.Context, user models.User) (models.User, int, error) {
-	user, err := uu.UserPostgresRepository.GetUserByEmail(ctx, user.Email)
+	_, err := uu.UserPostgresRepository.GetUserByEmail(ctx, user.Email)
 	if err == nil {
 		return models.User{}, http.StatusConflict, err
 	} else if err != nil && err != pgx.ErrNoRows {
 		return models.User{}, http.StatusInternalServerError, err
 	}
+
+	hashedPswd, err := hasher.HashAndSalt(user.Password)
+	if err != nil {
+		return models.User{}, http.StatusInternalServerError, err
+	}
+	user.Password = hashedPswd
 
 	createdUser, err := uu.UserPostgresRepository.CreateUser(ctx, user)
 	if err != nil {

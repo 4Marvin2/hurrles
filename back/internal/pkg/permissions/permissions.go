@@ -3,8 +3,8 @@ package permissions
 import (
 	"context"
 	"hurrles/config"
+	"hurrles/internal/models"
 	"hurrles/internal/pkg/ioutils"
-	"hurrles/internal/user/models"
 	"hurrles/internal/user/usecase"
 
 	"net/http"

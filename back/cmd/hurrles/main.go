@@ -2,9 +2,15 @@ package main
 
 import (
 	"hurrles/config"
-	"hurrles/internal/user/delivery"
-	"hurrles/internal/user/repository"
-	"hurrles/internal/user/usecase"
+	admin_delivery "hurrles/internal/admin/delivery"
+	admin_repository "hurrles/internal/admin/repository"
+	admin_usecase "hurrles/internal/admin/usecase"
+	restaurant_delivery "hurrles/internal/restaurant/delivery"
+	restaurant_repository "hurrles/internal/restaurant/repository"
+	restaurant_usecase "hurrles/internal/restaurant/usecase"
+	user_delivery "hurrles/internal/user/delivery"
+	user_repository "hurrles/internal/user/repository"
+	user_usecase "hurrles/internal/user/usecase"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -20,21 +26,33 @@ func main() {
 	timeoutContext := config.Timeouts.ContextTimeout
 
 	// repository
-	sessionRepo, err := repository.NewTarantoolConnection(config.Tarantool)
+	sessionRepo, err := user_repository.NewTarantoolConnection(config.Tarantool)
 	if err != nil {
 		log.Fatal(err)
 	}
-	userRepo, err := repository.NewPostgresUserRepository(config.Postgres)
+	userRepo, err := user_repository.NewPostgresUserRepository(config.Postgres)
+	if err != nil {
+		log.Fatal(err)
+	}
+	adminRepo, err := admin_repository.NewPostgresAdminRepository(config.Postgres)
+	if err != nil {
+		log.Fatal(err)
+	}
+	restaurantRepo, err := restaurant_repository.NewPostgresRestaurantRepository(config.Postgres)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// usecase
-	sessionUseCase := usecase.NewSessionUsecase(sessionRepo, timeoutContext)
-	userUseCase := usecase.NewUserUsecase(userRepo, timeoutContext)
+	sessionUseCase := user_usecase.NewSessionUsecase(sessionRepo, timeoutContext)
+	userUseCase := user_usecase.NewUserUsecase(userRepo, timeoutContext)
+	adminUseCase := admin_usecase.NewAdminUsecase(adminRepo, timeoutContext)
+	restaurantUseCase := restaurant_usecase.NewRestaurantUsecase(restaurantRepo, timeoutContext)
 
 	// delivery
-	delivery.SetUserRouting(router, userUseCase, sessionUseCase)
+	user_delivery.SetUserRouting(router, userUseCase, sessionUseCase)
+	admin_delivery.SetAdminRouting(router, adminUseCase, userUseCase, sessionUseCase)
+	restaurant_delivery.SetRestaurantRouting(router, restaurantUseCase, userUseCase, sessionUseCase)
 
 	srv := &http.Server{
 		Handler:      router,
