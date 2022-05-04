@@ -42,9 +42,13 @@ type Dish struct {
 }
 
 //easyjson:json
+type OrderList []Order
+
+//easyjson:json
 type Order struct {
 	Id          uint64    `json:"id,omitempty"`
 	UserId      uint64    `json:"userId,omitempty"`
+	PlaceId     uint64    `json:"placeId,omitempty"`
 	StartTime   time.Time `json:"startTime,omitempty"`
 	EndTime     time.Time `json:"endTime,omitempty"`
 	Cost        int32     `json:"cost,omitempty"`

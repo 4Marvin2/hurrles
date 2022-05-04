@@ -5,12 +5,18 @@ import (
 	admin_delivery "hurrles/internal/admin/delivery"
 	admin_repository "hurrles/internal/admin/repository"
 	admin_usecase "hurrles/internal/admin/usecase"
+
 	restaurant_delivery "hurrles/internal/restaurant/delivery"
 	restaurant_repository "hurrles/internal/restaurant/repository"
 	restaurant_usecase "hurrles/internal/restaurant/usecase"
+
 	user_delivery "hurrles/internal/user/delivery"
 	user_repository "hurrles/internal/user/repository"
 	user_usecase "hurrles/internal/user/usecase"
+
+	order_delivery "hurrles/internal/order/delivery"
+	order_repository "hurrles/internal/order/repository"
+	order_usecase "hurrles/internal/order/usecase"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -42,17 +48,23 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	orderRepo, err := order_repository.NewPostgresOrderRepository(config.Postgres)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// usecase
 	sessionUseCase := user_usecase.NewSessionUsecase(sessionRepo, timeoutContext)
 	userUseCase := user_usecase.NewUserUsecase(userRepo, timeoutContext)
 	adminUseCase := admin_usecase.NewAdminUsecase(adminRepo, timeoutContext)
 	restaurantUseCase := restaurant_usecase.NewRestaurantUsecase(restaurantRepo, timeoutContext)
+	orderUseCase := order_usecase.NewOrderUsecase(orderRepo, timeoutContext)
 
 	// delivery
 	user_delivery.SetUserRouting(router, userUseCase, sessionUseCase)
 	admin_delivery.SetAdminRouting(router, adminUseCase, userUseCase, sessionUseCase)
 	restaurant_delivery.SetRestaurantRouting(router, restaurantUseCase, userUseCase, sessionUseCase)
+	order_delivery.SetOrderRouting(router, orderUseCase, userUseCase, sessionUseCase)
 
 	srv := &http.Server{
 		Handler:      router,
