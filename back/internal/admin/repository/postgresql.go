@@ -113,12 +113,13 @@ func (ar *adminRepository) GetRestaurantByTitleAndAddress(ctx context.Context, t
 func (ar *adminRepository) CreateRestaurant(ctx context.Context, restaurant models.Restaurant) (models.Restaurant, error) {
 	var createdRestaurant models.Restaurant
 	err := ar.Conn.QueryRow(
-		`INSERT INTO restaurants (title, description, address, number, open_time, close_time, kitchen, img)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-		RETURNING id, title, description, address, number, open_time, close_time, kitchen, img;`,
+		`INSERT INTO restaurants (title, description, address, metro, number, open_time, close_time, kitchen, img)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+		RETURNING id, title, description, address, metro, number, open_time, close_time, kitchen, img;`,
 		restaurant.Title,
 		restaurant.Description,
 		restaurant.Address,
+		restaurant.Metro,
 		restaurant.Number,
 		restaurant.OpenTime,
 		restaurant.CloseTime,
@@ -129,6 +130,7 @@ func (ar *adminRepository) CreateRestaurant(ctx context.Context, restaurant mode
 		&createdRestaurant.Title,
 		&createdRestaurant.Description,
 		&createdRestaurant.Address,
+		&createdRestaurant.Metro,
 		&createdRestaurant.Number,
 		&createdRestaurant.OpenTime,
 		&createdRestaurant.CloseTime,
@@ -146,13 +148,14 @@ func (ar *adminRepository) UpdateRestaurant(ctx context.Context, restaurant mode
 	var updatedRestaurant models.Restaurant
 	err := ar.Conn.QueryRow(
 		`UPDATE restaurants
-		SET (title, description, address, number, open_time, close_time, kitchen, img) = ($2, $3, $4, $5, $6, $7, $8, $9)
+		SET (title, description, address, metro, number, open_time, close_time, kitchen, img) = ($2, $3, $4, $5, $6, $7, $8, $9, $10)
 		WHERE id = $1
-		RETURNING id, title, description, address, number, open_time, close_time, kitchen, img;`,
+		RETURNING id, title, description, address, metro, number, open_time, close_time, kitchen, img;`,
 		restaurant.Id,
 		restaurant.Title,
 		restaurant.Description,
 		restaurant.Address,
+		restaurant.Metro,
 		restaurant.Number,
 		restaurant.OpenTime,
 		restaurant.CloseTime,
@@ -163,6 +166,7 @@ func (ar *adminRepository) UpdateRestaurant(ctx context.Context, restaurant mode
 		&updatedRestaurant.Title,
 		&updatedRestaurant.Description,
 		&updatedRestaurant.Address,
+		&updatedRestaurant.Metro,
 		&updatedRestaurant.Number,
 		&updatedRestaurant.OpenTime,
 		&updatedRestaurant.CloseTime,

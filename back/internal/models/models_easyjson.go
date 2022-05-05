@@ -125,6 +125,8 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels1(in *jlexer.Lexer, out *User) {
 			out.FullName = string(in.String())
 		case "number":
 			out.Number = string(in.String())
+		case "isAdmin":
+			out.IsAdmin = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -184,6 +186,16 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels1(out *jwriter.Writer, in User) 
 			out.RawString(prefix)
 		}
 		out.String(string(in.Number))
+	}
+	if in.IsAdmin {
+		const prefix string = ",\"isAdmin\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.IsAdmin))
 	}
 	out.RawByte('}')
 }
@@ -377,6 +389,8 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels4(in *jlexer.Lexer, out *Restaur
 			out.Description = string(in.String())
 		case "address":
 			out.Address = string(in.String())
+		case "metro":
+			out.Metro = string(in.String())
 		case "number":
 			out.Number = string(in.String())
 		case "openTime":
@@ -440,6 +454,16 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels4(out *jwriter.Writer, in Restau
 			out.RawString(prefix)
 		}
 		out.String(string(in.Address))
+	}
+	if in.Metro != "" {
+		const prefix string = ",\"metro\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.Metro))
 	}
 	if in.Number != "" {
 		const prefix string = ",\"number\":"
@@ -1033,6 +1057,16 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels10(in *jlexer.Lexer, out *Order)
 			out.UserId = uint64(in.Uint64())
 		case "placeId":
 			out.PlaceId = uint64(in.Uint64())
+		case "restaurantTitle":
+			out.RestaurantTitle = string(in.String())
+		case "restaurantAddress":
+			out.RestaurantAddress = string(in.String())
+		case "restaurantMetro":
+			out.RestaurantMetro = string(in.String())
+		case "placeNumber":
+			out.PlaceNumber = int32(in.Int32())
+		case "placeCapacity":
+			out.PlaceCapacity = int32(in.Int32())
 		case "startTime":
 			if data := in.Raw(); in.Ok() {
 				in.AddError((out.StartTime).UnmarshalJSON(data))
@@ -1086,6 +1120,56 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels10(out *jwriter.Writer, in Order
 			out.RawString(prefix)
 		}
 		out.Uint64(uint64(in.PlaceId))
+	}
+	if in.RestaurantTitle != "" {
+		const prefix string = ",\"restaurantTitle\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.RestaurantTitle))
+	}
+	if in.RestaurantAddress != "" {
+		const prefix string = ",\"restaurantAddress\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.RestaurantAddress))
+	}
+	if in.RestaurantMetro != "" {
+		const prefix string = ",\"restaurantMetro\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.RestaurantMetro))
+	}
+	if in.PlaceNumber != 0 {
+		const prefix string = ",\"placeNumber\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Int32(int32(in.PlaceNumber))
+	}
+	if in.PlaceCapacity != 0 {
+		const prefix string = ",\"placeCapacity\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Int32(int32(in.PlaceCapacity))
 	}
 	if true {
 		const prefix string = ",\"startTime\":"

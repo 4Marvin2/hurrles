@@ -3,6 +3,7 @@ package delivery
 import (
 	"hurrles/internal/admin/usecase"
 	"hurrles/internal/models"
+	"hurrles/internal/pkg/admin"
 	"hurrles/internal/pkg/ioutils"
 	p "hurrles/internal/pkg/permissions"
 	userUsecase "hurrles/internal/user/usecase"
@@ -27,14 +28,14 @@ func SetAdminRouting(router *mux.Router, as usecase.IAdminUsecase, us userUsecas
 		SessionUseCase: ss,
 	}
 
-	router.HandleFunc("/api/v1/admin/restaurant", p.CheckCSRF((perm.CheckAuth(adminHandler.RestaurantCreatePost)))).Methods("POST", "OPTIONS")
-	router.HandleFunc("/api/v1/admin/restaurant/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(adminHandler.RestaurantUpdatePut))).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/api/v1/admin/restaurant", p.CheckCSRF((perm.CheckAuth(perm.GetCurrentUser(admin.CheckAdmin(adminHandler.RestaurantCreatePost)))))).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/v1/admin/restaurant/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(admin.CheckAdmin(adminHandler.RestaurantUpdatePut))))).Methods("PUT", "OPTIONS")
 
-	router.HandleFunc("/api/v1/admin/dish", p.CheckCSRF((perm.CheckAuth(adminHandler.DishCreatePost)))).Methods("POST", "OPTIONS")
-	router.HandleFunc("/api/v1/admin/dish/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(adminHandler.DishUpdatePut))).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/api/v1/admin/dish", p.CheckCSRF((perm.CheckAuth(perm.GetCurrentUser(admin.CheckAdmin(adminHandler.DishCreatePost)))))).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/v1/admin/dish/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(admin.CheckAdmin(adminHandler.DishUpdatePut))))).Methods("PUT", "OPTIONS")
 
-	router.HandleFunc("/api/v1/admin/place", p.CheckCSRF((perm.CheckAuth(adminHandler.PlaceCreatePost)))).Methods("POST", "OPTIONS")
-	router.HandleFunc("/api/v1/admin/place/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(adminHandler.PlaceUpdatePut))).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/api/v1/admin/place", p.CheckCSRF((perm.CheckAuth(perm.GetCurrentUser(admin.CheckAdmin(adminHandler.PlaceCreatePost)))))).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/v1/admin/place/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(admin.CheckAdmin(adminHandler.PlaceUpdatePut))))).Methods("PUT", "OPTIONS")
 }
 
 //

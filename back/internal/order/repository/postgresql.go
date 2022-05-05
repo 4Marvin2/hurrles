@@ -75,8 +75,22 @@ func (or *orderRepository) CreateOrder(ctx context.Context, order models.Order) 
 
 func (or *orderRepository) GetOrders(ctx context.Context, uid uint64) (models.OrderList, error) {
 	rows, err := or.Conn.Query(
-		`SELECT id, user_id, place_id, start_time, end_time, cost, created_time
-		FROM orders
+		`SELECT 
+			o.id,
+			o.user_id,
+			o.place_id,
+			o.start_time,
+			o.end_time,
+			o.cost,
+			o.created_time,
+			r.title,
+			r.address,
+			r.metro,
+			p.number,
+			p.capacity
+		FROM orders AS o
+		JOIN places AS p ON (p.id = o.place_id)
+		JOIN restaurants AS r ON (r.id = p.restaurant_id)
 		WHERE user_id = $1 AND end_time >= now();`,
 		uid,
 	)
@@ -96,6 +110,11 @@ func (or *orderRepository) GetOrders(ctx context.Context, uid uint64) (models.Or
 			&curOrder.EndTime,
 			&curOrder.Cost,
 			&curOrder.CreatedTime,
+			&curOrder.RestaurantTitle,
+			&curOrder.RestaurantAddress,
+			&curOrder.RestaurantMetro,
+			&curOrder.PlaceNumber,
+			&curOrder.PlaceCapacity,
 		)
 		if err != nil {
 			return models.OrderList{}, err
@@ -105,7 +124,6 @@ func (or *orderRepository) GetOrders(ctx context.Context, uid uint64) (models.Or
 	if err := rows.Err(); err != nil {
 		return models.OrderList{}, err
 	}
-	fmt.Println(orders)
 	return orders, nil
 }
 

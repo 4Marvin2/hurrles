@@ -7,15 +7,16 @@ create table if not exists users
     password    varchar(64) not null,
     full_name   varchar(128) not null,
     number      varchar(16) not null,
-    admin       boolean
+    is_admin    boolean default false
 );
 
 create table if not exists restaurants
 (
     id          serial primary key,
     title       varchar(255) not null,
-    description varchar(255) not null,
+    description varchar(1000) not null,
     address     varchar(255) not null,
+    metro       varchar(50) not null,
     number      varchar(16)  not null,
     open_time   timestamptz  not null,
     close_time  timestamptz  not null,

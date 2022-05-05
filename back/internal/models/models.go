@@ -21,6 +21,7 @@ type User struct {
 	Password string `json:"password,omitempty"`
 	FullName string `json:"fullName,omitempty"`
 	Number   string `json:"number,omitempty"`
+	IsAdmin  bool   `json:"isAdmin,omitempty"`
 }
 
 //easyjson:json
@@ -46,13 +47,18 @@ type OrderList []Order
 
 //easyjson:json
 type Order struct {
-	Id          uint64    `json:"id,omitempty"`
-	UserId      uint64    `json:"userId,omitempty"`
-	PlaceId     uint64    `json:"placeId,omitempty"`
-	StartTime   time.Time `json:"startTime,omitempty"`
-	EndTime     time.Time `json:"endTime,omitempty"`
-	Cost        int32     `json:"cost,omitempty"`
-	CreatedTime time.Time `json:"createdTime,omitempty"`
+	Id                uint64    `json:"id,omitempty"`
+	UserId            uint64    `json:"userId,omitempty"`
+	PlaceId           uint64    `json:"placeId,omitempty"`
+	RestaurantTitle   string    `json:"restaurantTitle,omitempty"`
+	RestaurantAddress string    `json:"restaurantAddress,omitempty"`
+	RestaurantMetro   string    `json:"restaurantMetro,omitempty"`
+	PlaceNumber       int32     `json:"placeNumber,omitempty"`
+	PlaceCapacity     int32     `json:"placeCapacity,omitempty"`
+	StartTime         time.Time `json:"startTime,omitempty"`
+	EndTime           time.Time `json:"endTime,omitempty"`
+	Cost              int32     `json:"cost,omitempty"`
+	CreatedTime       time.Time `json:"createdTime,omitempty"`
 }
 
 //easyjson:json
@@ -95,6 +101,7 @@ type Restaurant struct {
 	Title       string    `json:"title,omitempty"`
 	Description string    `json:"description,omitempty"`
 	Address     string    `json:"address,omitempty"`
+	Metro       string    `json:"metro,omitempty"`
 	Number      string    `json:"number,omitempty"`
 	OpenTime    time.Time `json:"openTime,omitempty"`
 	CloseTime   time.Time `json:"closeTime,omitempty"`

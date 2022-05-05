@@ -49,7 +49,7 @@ func NewPostgresRestaurantRepository(config config.PostgresConfig) (IRestaurantR
 
 func (rr *restaurantRepository) GetRestaurants(ctx context.Context) (models.RestaurantList, error) {
 	rows, err := rr.Conn.Query(
-		"SELECT id, title, description, address, number, open_time, close_time, kitchen, img FROM restaurants;",
+		"SELECT id, title, description, address, metro, number, open_time, close_time, kitchen, img FROM restaurants;",
 	)
 	if err != nil {
 		return models.RestaurantList{}, err
@@ -64,6 +64,7 @@ func (rr *restaurantRepository) GetRestaurants(ctx context.Context) (models.Rest
 			&curRestaurant.Title,
 			&curRestaurant.Description,
 			&curRestaurant.Address,
+			&curRestaurant.Metro,
 			&curRestaurant.Number,
 			&curRestaurant.OpenTime,
 			&curRestaurant.CloseTime,
