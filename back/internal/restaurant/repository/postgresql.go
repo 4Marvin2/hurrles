@@ -15,6 +15,9 @@ type IRestaurantRepository interface {
 	GetRestaurantPlacesByFloor(context.Context, models.PlaceParameters) (models.PlaceList, error)
 	GetRestaurantBookedPlaces(context.Context, models.PlaceParameters) (models.PlaceList, error)
 	GetRestaurantMenuById(context.Context, uint64) (models.DishList, error)
+	CreateFavoriteRestaurant(context.Context, uint64, uint64) error
+	GetRestaurantFavorite(context.Context, uint64) (models.RestaurantList, error)
+	DeleteFavoriteRestaurant(context.Context, uint64, uint64) error
 }
 
 type restaurantRepository struct {
@@ -184,4 +187,75 @@ func (rr *restaurantRepository) GetRestaurantMenuById(ctx context.Context, id ui
 		return models.DishList{}, err
 	}
 	return dishes, nil
+}
+
+func (rr *restaurantRepository) CreateFavoriteRestaurant(ctx context.Context, uid uint64, restaurantId uint64) error {
+	var id uint64
+	err := rr.Conn.QueryRow(
+		`INSERT INTO restaurants_users (user_id, restaurant_id)
+		VALUES ($1, $2)
+		RETURNING id;`,
+		uid,
+		restaurantId,
+	).Scan(&id)
+
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (rr *restaurantRepository) GetRestaurantFavorite(ctx context.Context, uid uint64) (models.RestaurantList, error) {
+	rows, err := rr.Conn.Query(
+		`SELECT r.id, r.title, r.description, r.address, r.metro, r.number, r.open_time, r.close_time, r.kitchen, r.img
+		FROM restaurants_users AS ru
+		JOIN restaurants AS r ON (r.id = ru.restaurant_id)
+		WHERE ru.user_id = $1;`,
+		uid,
+	)
+	if err != nil {
+		return models.RestaurantList{}, err
+	}
+	defer rows.Close()
+
+	var restaurants models.RestaurantList
+	var curRestaurant models.Restaurant
+	for rows.Next() {
+		err := rows.Scan(
+			&curRestaurant.Id,
+			&curRestaurant.Title,
+			&curRestaurant.Description,
+			&curRestaurant.Address,
+			&curRestaurant.Metro,
+			&curRestaurant.Number,
+			&curRestaurant.OpenTime,
+			&curRestaurant.CloseTime,
+			&curRestaurant.Kitchen,
+			&curRestaurant.Img,
+		)
+		if err != nil {
+			return models.RestaurantList{}, err
+		}
+		restaurants = append(restaurants, curRestaurant)
+	}
+	if err := rows.Err(); err != nil {
+		return models.RestaurantList{}, err
+	}
+	return restaurants, nil
+}
+
+func (rr *restaurantRepository) DeleteFavoriteRestaurant(ctx context.Context, uid uint64, restaurantId uint64) error {
+	var id uint64
+	err := rr.Conn.QueryRow(
+		`DELETE FROM restaurants_users
+		WHERE user_id = $1 AND restaurant_id = $2
+		RETURNING id;`,
+		uid,
+		restaurantId,
+	).Scan(&id)
+
+	if err != nil {
+		return err
+	}
+	return nil
 }

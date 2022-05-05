@@ -24,6 +24,15 @@ create table if not exists restaurants
     img         varchar(255) not null
 );
 
+create table if not exists restaurants_users
+(
+    id       serial primary key,
+    user_id int not null,
+    constraint fk_ru_users foreign key (user_id) references users (id),
+    restaurant_id  int not null,
+    constraint fk_ru_restaurants foreign key (restaurant_id) references restaurants (id)
+);
+
 create table if not exists places
 (
     id            serial primary key,
