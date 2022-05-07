@@ -43,6 +43,12 @@ type Dish struct {
 }
 
 //easyjson:json
+type DishOrder struct {
+	Id     uint64 `json:"id,omitempty"`
+	Number int32  `json:"number"`
+}
+
+//easyjson:json
 type OrderList []Order
 
 //easyjson:json
@@ -55,6 +61,9 @@ type Order struct {
 	RestaurantMetro   string    `json:"restaurantMetro,omitempty"`
 	PlaceNumber       int32     `json:"placeNumber,omitempty"`
 	PlaceCapacity     int32     `json:"placeCapacity,omitempty"`
+	Dishes            []string  `json:"dishes,omitempty"`
+	DishesPrices      []int32   `json:"dishesPrices,omitempty"`
+	DishesCounts      []int32   `json:"dishesCounts,omitempty"`
 	StartTime         time.Time `json:"startTime,omitempty"`
 	EndTime           time.Time `json:"endTime,omitempty"`
 	Cost              int32     `json:"cost,omitempty"`

@@ -84,5 +84,6 @@ create table if not exists dishes_orders
     order_id int not null,
     constraint fk_do_orders foreign key (order_id) references orders (id),
     dish_id  int not null,
-    constraint fk_do_dishes foreign key (dish_id) references dishes (id)
+    constraint fk_do_dishes foreign key (dish_id) references dishes (id),
+    number   int not null default 1
 );

@@ -1067,6 +1067,75 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels10(in *jlexer.Lexer, out *Order)
 			out.PlaceNumber = int32(in.Int32())
 		case "placeCapacity":
 			out.PlaceCapacity = int32(in.Int32())
+		case "dishes":
+			if in.IsNull() {
+				in.Skip()
+				out.Dishes = nil
+			} else {
+				in.Delim('[')
+				if out.Dishes == nil {
+					if !in.IsDelim(']') {
+						out.Dishes = make([]string, 0, 4)
+					} else {
+						out.Dishes = []string{}
+					}
+				} else {
+					out.Dishes = (out.Dishes)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v10 string
+					v10 = string(in.String())
+					out.Dishes = append(out.Dishes, v10)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		case "dishesPrices":
+			if in.IsNull() {
+				in.Skip()
+				out.DishesPrices = nil
+			} else {
+				in.Delim('[')
+				if out.DishesPrices == nil {
+					if !in.IsDelim(']') {
+						out.DishesPrices = make([]int32, 0, 16)
+					} else {
+						out.DishesPrices = []int32{}
+					}
+				} else {
+					out.DishesPrices = (out.DishesPrices)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v11 int32
+					v11 = int32(in.Int32())
+					out.DishesPrices = append(out.DishesPrices, v11)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		case "dishesCounts":
+			if in.IsNull() {
+				in.Skip()
+				out.DishesCounts = nil
+			} else {
+				in.Delim('[')
+				if out.DishesCounts == nil {
+					if !in.IsDelim(']') {
+						out.DishesCounts = make([]int32, 0, 16)
+					} else {
+						out.DishesCounts = []int32{}
+					}
+				} else {
+					out.DishesCounts = (out.DishesCounts)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v12 int32
+					v12 = int32(in.Int32())
+					out.DishesCounts = append(out.DishesCounts, v12)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
 		case "startTime":
 			if data := in.Raw(); in.Ok() {
 				in.AddError((out.StartTime).UnmarshalJSON(data))
@@ -1171,6 +1240,63 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels10(out *jwriter.Writer, in Order
 		}
 		out.Int32(int32(in.PlaceCapacity))
 	}
+	if len(in.Dishes) != 0 {
+		const prefix string = ",\"dishes\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		{
+			out.RawByte('[')
+			for v13, v14 := range in.Dishes {
+				if v13 > 0 {
+					out.RawByte(',')
+				}
+				out.String(string(v14))
+			}
+			out.RawByte(']')
+		}
+	}
+	if len(in.DishesPrices) != 0 {
+		const prefix string = ",\"dishesPrices\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		{
+			out.RawByte('[')
+			for v15, v16 := range in.DishesPrices {
+				if v15 > 0 {
+					out.RawByte(',')
+				}
+				out.Int32(int32(v16))
+			}
+			out.RawByte(']')
+		}
+	}
+	if len(in.DishesCounts) != 0 {
+		const prefix string = ",\"dishesCounts\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		{
+			out.RawByte('[')
+			for v17, v18 := range in.DishesCounts {
+				if v17 > 0 {
+					out.RawByte(',')
+				}
+				out.Int32(int32(v18))
+			}
+			out.RawByte(']')
+		}
+	}
 	if true {
 		const prefix string = ",\"startTime\":"
 		if first {
@@ -1237,7 +1363,86 @@ func (v *Order) UnmarshalJSON(data []byte) error {
 func (v *Order) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonD2b7633eDecodeHurrlesInternalModels10(l, v)
 }
-func easyjsonD2b7633eDecodeHurrlesInternalModels11(in *jlexer.Lexer, out *DishList) {
+func easyjsonD2b7633eDecodeHurrlesInternalModels11(in *jlexer.Lexer, out *DishOrder) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "id":
+			out.Id = uint64(in.Uint64())
+		case "number":
+			out.Number = int32(in.Int32())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonD2b7633eEncodeHurrlesInternalModels11(out *jwriter.Writer, in DishOrder) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	if in.Id != 0 {
+		const prefix string = ",\"id\":"
+		first = false
+		out.RawString(prefix[1:])
+		out.Uint64(uint64(in.Id))
+	}
+	{
+		const prefix string = ",\"number\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Int32(int32(in.Number))
+	}
+	out.RawByte('}')
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v DishOrder) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonD2b7633eEncodeHurrlesInternalModels11(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v DishOrder) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonD2b7633eEncodeHurrlesInternalModels11(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *DishOrder) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonD2b7633eDecodeHurrlesInternalModels11(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *DishOrder) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonD2b7633eDecodeHurrlesInternalModels11(l, v)
+}
+func easyjsonD2b7633eDecodeHurrlesInternalModels12(in *jlexer.Lexer, out *DishList) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		in.Skip()
@@ -1254,9 +1459,9 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels11(in *jlexer.Lexer, out *DishLi
 			*out = (*out)[:0]
 		}
 		for !in.IsDelim(']') {
-			var v10 Dish
-			(v10).UnmarshalEasyJSON(in)
-			*out = append(*out, v10)
+			var v19 Dish
+			(v19).UnmarshalEasyJSON(in)
+			*out = append(*out, v19)
 			in.WantComma()
 		}
 		in.Delim(']')
@@ -1265,16 +1470,16 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels11(in *jlexer.Lexer, out *DishLi
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeHurrlesInternalModels11(out *jwriter.Writer, in DishList) {
+func easyjsonD2b7633eEncodeHurrlesInternalModels12(out *jwriter.Writer, in DishList) {
 	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
 		out.RawString("null")
 	} else {
 		out.RawByte('[')
-		for v11, v12 := range in {
-			if v11 > 0 {
+		for v20, v21 := range in {
+			if v20 > 0 {
 				out.RawByte(',')
 			}
-			(v12).MarshalEasyJSON(out)
+			(v21).MarshalEasyJSON(out)
 		}
 		out.RawByte(']')
 	}
@@ -1283,27 +1488,27 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels11(out *jwriter.Writer, in DishL
 // MarshalJSON supports json.Marshaler interface
 func (v DishList) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonD2b7633eEncodeHurrlesInternalModels11(&w, v)
+	easyjsonD2b7633eEncodeHurrlesInternalModels12(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v DishList) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeHurrlesInternalModels11(w, v)
+	easyjsonD2b7633eEncodeHurrlesInternalModels12(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *DishList) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonD2b7633eDecodeHurrlesInternalModels11(&r, v)
+	easyjsonD2b7633eDecodeHurrlesInternalModels12(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *DishList) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeHurrlesInternalModels11(l, v)
+	easyjsonD2b7633eDecodeHurrlesInternalModels12(l, v)
 }
-func easyjsonD2b7633eDecodeHurrlesInternalModels12(in *jlexer.Lexer, out *Dish) {
+func easyjsonD2b7633eDecodeHurrlesInternalModels13(in *jlexer.Lexer, out *Dish) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1342,7 +1547,7 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels12(in *jlexer.Lexer, out *Dish) 
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeHurrlesInternalModels12(out *jwriter.Writer, in Dish) {
+func easyjsonD2b7633eEncodeHurrlesInternalModels13(out *jwriter.Writer, in Dish) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1398,27 +1603,27 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels12(out *jwriter.Writer, in Dish)
 // MarshalJSON supports json.Marshaler interface
 func (v Dish) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonD2b7633eEncodeHurrlesInternalModels12(&w, v)
+	easyjsonD2b7633eEncodeHurrlesInternalModels13(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v Dish) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeHurrlesInternalModels12(w, v)
+	easyjsonD2b7633eEncodeHurrlesInternalModels13(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *Dish) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonD2b7633eDecodeHurrlesInternalModels12(&r, v)
+	easyjsonD2b7633eDecodeHurrlesInternalModels13(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *Dish) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeHurrlesInternalModels12(l, v)
+	easyjsonD2b7633eDecodeHurrlesInternalModels13(l, v)
 }
-func easyjsonD2b7633eDecodeHurrlesInternalModels13(in *jlexer.Lexer, out *Base) {
+func easyjsonD2b7633eDecodeHurrlesInternalModels14(in *jlexer.Lexer, out *Base) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1451,7 +1656,7 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels13(in *jlexer.Lexer, out *Base) 
 		in.Consumed()
 	}
 }
-func easyjsonD2b7633eEncodeHurrlesInternalModels13(out *jwriter.Writer, in Base) {
+func easyjsonD2b7633eEncodeHurrlesInternalModels14(out *jwriter.Writer, in Base) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1477,23 +1682,23 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels13(out *jwriter.Writer, in Base)
 // MarshalJSON supports json.Marshaler interface
 func (v Base) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjsonD2b7633eEncodeHurrlesInternalModels13(&w, v)
+	easyjsonD2b7633eEncodeHurrlesInternalModels14(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v Base) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjsonD2b7633eEncodeHurrlesInternalModels13(w, v)
+	easyjsonD2b7633eEncodeHurrlesInternalModels14(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *Base) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjsonD2b7633eDecodeHurrlesInternalModels13(&r, v)
+	easyjsonD2b7633eDecodeHurrlesInternalModels14(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *Base) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjsonD2b7633eDecodeHurrlesInternalModels13(l, v)
+	easyjsonD2b7633eDecodeHurrlesInternalModels14(l, v)
 }

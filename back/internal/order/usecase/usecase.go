@@ -13,6 +13,8 @@ type IOrderUsecase interface {
 	OrdersPost(context.Context, models.Order) (models.Order, int, error)
 	OrderUserIdGet(context.Context) (models.OrderList, int, error)
 	OrderUserIdDelete(context.Context, uint64) (models.Order, int, error)
+	DishIdPost(context.Context, uint64, uint64) (models.DishOrder, int, error)
+	DishIdDelete(context.Context, uint64, uint64) (models.DishOrder, int, error)
 }
 
 type orderUsecase struct {
@@ -51,6 +53,11 @@ func (ou *orderUsecase) OrderUserIdGet(ctx context.Context) (models.OrderList, i
 	if err != nil {
 		return models.OrderList{}, http.StatusInternalServerError, err
 	}
+	for i := range orders {
+		for j := range orders[i].Dishes {
+			orders[i].Cost += orders[i].DishesCounts[j] * orders[i].DishesPrices[j]
+		}
+	}
 
 	return orders, http.StatusOK, nil
 }
@@ -66,4 +73,42 @@ func (ou *orderUsecase) OrderUserIdDelete(ctx context.Context, orderId uint64) (
 		return models.Order{}, http.StatusInternalServerError, err
 	}
 	return deletedOrder, http.StatusOK, nil
+}
+
+func (ou *orderUsecase) DishIdPost(ctx context.Context, dishId uint64, orderId uint64) (models.DishOrder, int, error) {
+	_, err := ou.OrderPostgresRepository.GetOrderById(ctx, orderId)
+	if err != nil {
+		return models.DishOrder{}, http.StatusNotFound, err
+	}
+
+	number, err := ou.OrderPostgresRepository.AddDishToOrder(ctx, orderId, dishId)
+	if err != nil {
+		return models.DishOrder{}, http.StatusInternalServerError, err
+	}
+
+	dishes := models.DishOrder{
+		Id:     dishId,
+		Number: number,
+	}
+
+	return dishes, http.StatusOK, nil
+}
+
+func (ou *orderUsecase) DishIdDelete(ctx context.Context, dishId uint64, orderId uint64) (models.DishOrder, int, error) {
+	_, err := ou.OrderPostgresRepository.GetOrderById(ctx, orderId)
+	if err != nil {
+		return models.DishOrder{}, http.StatusNotFound, err
+	}
+
+	number, err := ou.OrderPostgresRepository.DeleteDishFromOrder(ctx, orderId, dishId)
+	if err != nil {
+		return models.DishOrder{}, http.StatusInternalServerError, err
+	}
+
+	dishes := models.DishOrder{
+		Id:     dishId,
+		Number: number,
+	}
+
+	return dishes, http.StatusOK, nil
 }
