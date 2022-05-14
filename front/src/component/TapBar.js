@@ -7,8 +7,8 @@ import CartEnable from '../imgs/tapbar/cartEnable.svg';
 import CartDisable from '../imgs/tapbar/cartDisable.svg';
 import ProfileEnable from '../imgs/tapbar/profileEnable.svg';
 import ProfileDisable from '../imgs/tapbar/profileDisable.svg';
+import Exit from '../imgs/tapbar/exit.svg';
 import '../css/TapBar.css';
-import '../css/App.css';
 
 export default class TapBar extends React.Component {
     handleOnClick(payload) {
@@ -17,12 +17,7 @@ export default class TapBar extends React.Component {
 
     render() {
         return (
-            <footer className="tapbar-reserve">
-                {this.props.reserveFlag && 
-                <button className="tapbar-reserve__reserve">
-                Забронировать
-                </button>}
-                <div className="tapbar-reserve__tapbar tapbar">
+            <nav className="tapbar">
                 <button className="tapbar__icon" onClick={() => this.handleOnClick('home')}>
                     {this.props.mainPage === 'home' &&
                         <img src={HomeEnable} alt="HomeEnable" />
@@ -55,8 +50,10 @@ export default class TapBar extends React.Component {
                         <img src={ProfileDisable} alt="ProfileDisable" />
                     }
                 </button>
-                </div>
-            </footer>            
+                <button className="tapbar__exit-icon">
+                    <img src={Exit} alt="Exit" />
+                </button>
+            </nav>            
         )
     }
 }

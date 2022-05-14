@@ -1,28 +1,19 @@
-input[type="text"] {
-    background-color: transparent;
-    border: 0px;
-    outline: none;
+.app{
+    background: #6247AA;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-    font-family: SF Pro Rounded;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 17px;
-    line-height: 20px;
-
-    color: #000000;
-}
-
-button {
-    background-color: Transparent;
-    background-repeat:no-repeat;
-    border: none;
-    cursor:pointer;
-    overflow: hidden;
-}
-
-.app {
-    width: 414px;
-
-    background: #FFFFFF;
-    border-radius: 20px;
+    &__tapbar{
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        flex: 1;
+    }
+    &__body{
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        flex: 12;
+    }
 }

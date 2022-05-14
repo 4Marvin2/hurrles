@@ -1,8 +1,8 @@
 import React from 'react'
-import Restors from './Restors'
-import NavBar from './NavBar'
-import '../../css/Restors/Home.css'
-import "../../css/App.css";
+// import Restors from './Restors'
+// import NavBar from '../../NavBar'
+// import '../../css/Restors/Home.css'
+// import "../../css/App.css";
 
 export default class Home extends React.Component {
     render(){
@@ -24,9 +24,12 @@ export default class Home extends React.Component {
           ];
 
         return (
-            <div className='app__home home'>
-                <NavBar />
-                <Restors restors={restors} />
+            // <div className='app__home home'>
+            //     <NavBar />
+            //     <Restors restors={restors} />
+            // </div>
+            <div>
+                <img src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fgithub.com%2Folehan%2Fkek&psig=AOvVaw3zhgdZ0-get2pdxJVkJFVJ&ust=1652626757054000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCMj3r8mg3_cCFQAAAAAdAAAAABAD' alt='kek' />
             </div>
         );
     }
