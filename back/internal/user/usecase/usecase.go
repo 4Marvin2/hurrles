@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"fmt"
+	"hurrles/config"
 	"hurrles/internal/models"
 	"hurrles/internal/pkg/hasher"
 	"hurrles/internal/user/repository"
@@ -16,6 +17,7 @@ type IUserUsecase interface {
 	GetUserById(context.Context, uint64) (models.User, int, error)
 	LoginUser(context.Context, models.UserCredentials) (models.User, int, error)
 	SignupUser(context.Context, models.User) (models.User, int, error)
+	GetUserFromCtx(context.Context) (models.User, int, error)
 }
 
 type userUsecase struct {
@@ -81,4 +83,13 @@ func (uu *userUsecase) GetUserById(ctx context.Context, uid uint64) (models.User
 	}
 
 	return user, http.StatusOK, nil
+}
+
+func (uu *userUsecase) GetUserFromCtx(ctx context.Context) (models.User, int, error) {
+	curUser, ok := ctx.Value(config.ContextUser).(models.User)
+	if !ok {
+		return models.User{}, http.StatusNotFound, nil
+	}
+
+	return curUser, http.StatusOK, nil
 }

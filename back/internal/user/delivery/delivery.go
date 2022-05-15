@@ -35,6 +35,8 @@ func SetUserRouting(router *mux.Router, us usecase.IUserUsecase, ss usecase.ISes
 	router.HandleFunc("/api/v1/user/signup", p.SetCSRF(userHandler.UserSignupPost)).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/v1/user/login", p.SetCSRF(userHandler.UserLoginPost)).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/v1/user/logout", perm.CheckAuth(userHandler.UserLogoutGet)).Methods("GET", "OPTIONS")
+
+	router.HandleFunc("/api/v1/user", p.SetCSRF(perm.CheckAuth(perm.GetCurrentUser(userHandler.UserGet)))).Methods("GET", "OPTIONS")
 }
 
 func (uh *UserHandler) UserLoginPost(w http.ResponseWriter, r *http.Request) {
@@ -150,6 +152,19 @@ func (uh *UserHandler) UserLogoutGet(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, csrfCookie)
 
 	ioutils.SendWithoutBody(w, http.StatusOK)
+}
+
+func (uh *UserHandler) UserGet(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	user, status, err := uh.UserUseCase.GetUserFromCtx(r.Context())
+	if err != nil || status != http.StatusOK {
+		log.Errorf("UserDelivery.UserGet: failed getting user from context with [error: %w] [status: %d]", err, status)
+		ioutils.SendError(w, status, "")
+		return
+	}
+
+	ioutils.Send(w, http.StatusOK, user)
 }
 
 func (uh *UserHandler) createSessionCookie(email string) (http.Cookie, error) {
