@@ -7,6 +7,10 @@ import '../../css/AuthForm.css'
 import InputField from '../Common/InputField';
 import Button from '../Common/Button';
 
+import validator from 'validator'
+
+import { getUserRequest, loginRequest, signupRequest } from '../../requests/requests';
+
 export default class AuthForm extends React.Component {
     constructor(props) {
         super(props);
@@ -19,6 +23,12 @@ export default class AuthForm extends React.Component {
         }
     }
 
+    componentDidMount = () => {
+        getUserRequest().then((data) => {
+            console.log(data)
+        });
+    }
+
     loginSwitchClick = (payload) => {
         this.setState({login: true, signup: false})
         console.log('login button touched')
@@ -29,16 +39,58 @@ export default class AuthForm extends React.Component {
         console.log('signup button touched')
     }
 
+    emailOnChange = (payload) => {
+        this.setState({email: payload.target.value})
+        if (validator.isEmail(payload.target.value)) {
+            this.setState({emailIsValid: true})
+        } else {
+            this.setState({emailIsValid: false})
+        }
+    }
+
+    passwordOnChange = (payload) => {
+        this.setState({password: payload.target.value})
+        if (validator.isStrongPassword(payload.target.value)) {
+        // if (payload.target.value) {
+            this.setState({passwordIsValid: true})
+        } else {
+            this.setState({passwordIsValid: false})
+        }
+    }
+
+    repeatPasswordOnChange = (payload) => {
+        this.setState({repeatPassword: payload.target.value})
+        if (this.state.passwordIsValid !== payload.target.value) {
+            this.setState({repeatPasswordIsValid: true})
+        } else {
+            this.setState({repeatPasswordIsValid: false})
+        }
+    }
+
     formButtonClick = (payload) => {
-        // TODO: check valid
         if (this.state.login) {
             // login request
-            console.log('login req')
+            if (this.state.emailIsValid && this.state.passwordIsValid) {
+                loginRequest().then((data) => {
+                    console.log(data)
+                })
+            } else {
+                // error
+                console.log('login error')
+            }
         } else if (this.state.signup) {
             // signup request
-            console.log('signup req')
+            if (this.state.emailIsValid && this.state.passwordIsValid && this.state.repeatPasswordIsValid) {
+                signupRequest().then((data) => {
+                    console.log(data)
+                })
+            } else {
+                // error
+                console.log('signup error')
+            }
         } else {
             // error
+            console.log('error')
         }
     }
 
@@ -48,7 +100,7 @@ export default class AuthForm extends React.Component {
                 <div className='auth-form__card'>
                     <div className='auth-form__header'>
                         <div className='auth-form__logo'>
-                            <img src={Logo} className='auth-form__logo-img'/>
+                            <img src={Logo} className='auth-form__logo-img' alt='logo'/>
                             <span className='auth-form__logo-text'>hurrles</span>
                         </div>
                         <div className='auth-form__switches'>
@@ -61,10 +113,10 @@ export default class AuthForm extends React.Component {
                         </div>
                     </div>
                     <div className='auth-form__fields'>
-                        <InputField type='email' name='email' label='Почта или номер телефона' placeholder='hurrles@example.com'/>
-                        <InputField type='password' name='password' label='Пароль' placeholder='password'/>
+                        <InputField type='email' name='email' label='Почта или номер телефона' placeholder='hurrles@example.com' onChange={(e) => {this.emailOnChange(e)}}/>
+                        <InputField type='password' name='password' label='Пароль' placeholder='password' onChange={(e) => {this.passwordOnChange(e)}}/>
                         { this.state.signup &&
-                            <InputField type='password' name='repeatPassword' label='Повторите пароль' placeholder='repeat password'/>
+                            <InputField type='password' name='repeatPassword' label='Повторите пароль' placeholder='repeat password' onChange={(e) => {this.repeatPasswordOnChange(e)}}/>
                         }
                     </div>
                     {/* forggot password link here */}

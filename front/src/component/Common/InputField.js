@@ -26,6 +26,11 @@ export default class InputField extends React.Component {
         } else {
             this.state['type'] = 'default'
         }
+        if (props.onChange) {
+            this.state['onChange'] = props.onChange
+        } else {
+            // error
+        }
     }
 
     // TODO: handlers for focus and input in fields
@@ -34,7 +39,13 @@ export default class InputField extends React.Component {
         return (
             <div className='input-field'>
                 <label htmlFor={this.state.name} className='input-field__label'>{this.state.label}</label>
-                <input id={this.state.name} className='input-field__input' type={this.state.type} placeholder={this.state.placeholder}></input>
+                <input
+                    id={this.state.name}
+                    className='input-field__input'
+                    type={this.state.type}
+                    placeholder={this.state.placeholder}
+                    onChange={this.state.onChange}
+                />
             </div>
         );
     }
