@@ -1,6 +1,12 @@
 html{
     overflow: hidden;
+    background: #6247AA;
 }
+
+// body {
+//     width: 100vw;
+//     height: 100vh;
+// }
 
 ::-webkit-scrollbar {
     width: 0;  /* Remove scrollbar space */
@@ -11,12 +17,13 @@ html{
     background: #FF0000;
 }
 
-.app{
-    background: #6247AA;
+.app {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     overflow: hidden;
+    width: 100%;
+    height: 100%;
 
     &__tapbar{
         display: flex;
@@ -25,6 +32,11 @@ html{
         flex: 1;
     }
     &__body{
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: center;
+        // width: 100%;
+        // height: 100%;
     }
 }
 
