@@ -1,13 +1,7 @@
 .dish {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
   height: 78px;
   width: 100%;
   background: #F2F2F2;
@@ -18,42 +12,21 @@
   width: 100%;
 }
 .dish__img-column {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
-  -webkit-box-flex: 9;
-      -ms-flex: 9;
-          flex: 9;
-  -o-object-fit: contain;
-     object-fit: contain;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 9;
+  object-fit: contain;
   max-width: 100%;
   max-height: 100%;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 .dish__info-column {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
-  -webkit-box-flex: 11;
-      -ms-flex: 11;
-          flex: 11;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 11;
   margin-left: 5px;
 }
 .dish__title {
@@ -71,8 +44,6 @@
   opacity: 0.9;
 }
 .dish__desc {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   height: 30px;
   width: 90%;
@@ -97,3 +68,5 @@
   color: #000000;
   opacity: 0.9;
 }
+
+/*# sourceMappingURL=Dish.css.map */

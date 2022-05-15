@@ -1,7 +1,8 @@
 import React from "react";
-import Home from './Restors/Home'
-import RestorOpen from './RestorOpen/RestorOpen'
-import TapBar from './TapBar'
+// import Home from './Restors/Home'
+// import RestorOpen from './RestorOpen/RestorOpen'
+// import TapBar from './TapBar'
+import AuthForm from "./AuthForm/AuthForm";
 // import '../css/RestorOpen/RestorOpen.css'
 // import '../css/RestorOpen/Menu.css'
 // import '../css/RestorOpen/Info.css'
@@ -38,17 +39,22 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div className="app">
-                <div className="app__tapbar">
-                    <TapBar reserveFlag={true} mainPage={this.state.mainPage} tapBarClick={this.tapBarClick} />
-                </div>
-                <div className="app__body">
-                    {this.state.mainPage === 'home' &&
-                    <Home />}
-                    {this.state.mainPage === 'restorOpen' &&
-                    <RestorOpen />}
-                </div>
+            <div className="app__body">
+                <AuthForm authType='login'/>
             </div>
         )
+        // return (
+        //     <div className="app">
+        //         <div className="app__tapbar">
+        //             <TapBar reserveFlag={true} mainPage={this.state.mainPage} tapBarClick={this.tapBarClick} />
+        //         </div>
+        //         <div className="app__body">
+        //             {this.state.mainPage === 'home' &&
+        //             <Home />}
+        //             {this.state.mainPage === 'restorOpen' &&
+        //             <RestorOpen />}
+        //         </div>
+        //     </div>
+        // )
     }
 }

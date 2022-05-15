@@ -1,30 +1,28 @@
 .home {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
+
 .home__restors {
   margin: 15px;
-  -webkit-box-flex: 6;
-      -ms-flex: 6;
-          flex: 6;
+  flex: 6;
 }
+
 .home__restorOpen {
   width: 600px;
-  -webkit-box-flex: 6;
-      -ms-flex: 6;
-          flex: 6;
+  flex: 6;
   margin: 10px;
 }
+
 .home__restorOpen_in {
   margin: 10px;
 }
+
 .home__search {
   margin-left: 30px;
 }
+
+/*# sourceMappingURL=Home.css.map */
+
+/*# sourceMappingURL=Home.css.map */
