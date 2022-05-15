@@ -1,8 +1,8 @@
 import React from 'react'
-// import Restors from './Restors'
-// import NavBar from '../../NavBar'
-// import '../../css/Restors/Home.css'
-// import "../../css/App.css";
+import Restors from './Restors'
+import SearchBar from  '../Restors/SearchBar'
+import RestorOpen from '../RestorOpen/RestorOpen'
+import '../../css/Home.css'
 
 export default class Home extends React.Component {
     render(){
@@ -23,13 +23,19 @@ export default class Home extends React.Component {
             {id: 14, srcImg: './imgs/restors/nagoya.webp', title: 'RamenClub', rating: '4.8', 'metro': 'Бауманская'},
           ];
 
+        const restor = {id: 1, srcImg: './imgs/restors/nagoya.webp', title: 'NAGOYA', rating: '4.1', 'metro': 'Бауманская'}
+
         return (
-            // <div className='app__home home'>
-            //     <NavBar />
-            //     <Restors restors={restors} />
-            // </div>
-            <div>
-                <img src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fgithub.com%2Folehan%2Fkek&psig=AOvVaw3zhgdZ0-get2pdxJVkJFVJ&ust=1652626757054000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCMj3r8mg3_cCFQAAAAAdAAAAABAD' alt='kek' />
+            <div className='home'>
+                <div className='home__restors'>
+                    <SearchBar />
+                    <Restors restors={restors} />
+                </div>
+                <div className='home__restorOpen'>
+                    <div className='home__restorOpen_in'>
+                        <RestorOpen />
+                    </div>
+                </div>
             </div>
         );
     }

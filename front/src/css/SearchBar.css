@@ -1,0 +1,14 @@
+.search {
+  width: 90%;
+  height: 36px;
+  background: #F2F2F2;
+  border-radius: 12px;
+}
+.search__img {
+  margin: 8px;
+  margin-left: 15px;
+}
+.search__input {
+  position: absolute;
+  margin: 8px;
+}

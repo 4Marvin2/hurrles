@@ -1,8 +1,22 @@
+html{
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
 .app{
     background: #6247AA;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    overflow: hidden;
 
     &__tapbar{
         display: flex;
@@ -11,9 +25,28 @@
         flex: 1;
     }
     &__body{
-        display: flex;
-        flex-direction: column;
-        flex-basis: 100%;
-        flex: 12;
     }
+}
+
+
+input[type="text"] {
+    background-color: transparent;
+    border: 0px;
+    outline: none;
+
+    font-family: SF Pro Rounded;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 20px;
+
+    color: #000000;
+}
+
+button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
 }

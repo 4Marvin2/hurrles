@@ -1,3 +1,19 @@
+html {
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
+}
+
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #FF0000;
+}
+
 .app {
   background: #6247AA;
   display: -webkit-box;
@@ -9,6 +25,7 @@
           flex-direction: row;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  overflow: hidden;
 }
 .app__tapbar {
   display: -webkit-box;
@@ -24,17 +41,22 @@
       -ms-flex: 1;
           flex: 1;
 }
-.app__body {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
-  -webkit-box-flex: 12;
-      -ms-flex: 12;
-          flex: 12;
+input[type=text] {
+  background-color: transparent;
+  border: 0px;
+  outline: none;
+  font-family: SF Pro Rounded;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 20px;
+  color: #000000;
+}
+
+button {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
 }

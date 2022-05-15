@@ -1,12 +1,11 @@
 import React from 'react'
-// import Menu from './Menu'
-// import RestorNavBar from '../NavBar'
-// import Info from '../RestorOpen/Info'
-// import '../../css/RestorOpen/RestorOpen.css'
-// import '../../css/RestorOpen/Menu.css'
-// import '../../css/RestorOpen/Info.css'
-// import '../../css/RestorOpen/Dish.css'
-// import "../../css/App.css";
+import Menu from './Menu'
+import TitleBar from '../RestorOpen/TitleBar'
+import Info from '../RestorOpen/Info'
+import '../../css/RestorOpen/RestorOpen.css'
+import '../../css/RestorOpen/Menu.css'
+import '../../css/RestorOpen/Info.css'
+import '../../css/RestorOpen/Dish.css'
 
 export default class Home extends React.Component {
     render(){
@@ -34,15 +33,12 @@ export default class Home extends React.Component {
           ];
 
         return (
-            // <div className="app_restor-open restor-open">
-            //     <RestorNavBar />
-            //     <div className="restor-open__main">
-            //         <Info  restorInfo={restorInfo}/>
-            //         <Menu dishes={dishes} />
-            //     </div>
-            // </div>
-            <div>
-                <img src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.desicomments.com%2Fdesi%2Flol%2F&psig=AOvVaw1iYizGcKZiZYUgDkq7Jtzz&ust=1652626719109000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCND-ybag3_cCFQAAAAAdAAAAABAD' alt='lol' />
+            <div className="app_restor-open restor-open">
+                <TitleBar />
+                <div className="restor-open__main">
+                    <Info  restorInfo={restorInfo}/>
+                    <Menu dishes={dishes} />
+                </div>
             </div>
         );
     }

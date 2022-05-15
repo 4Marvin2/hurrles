@@ -1,0 +1,21 @@
+.home{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    &__restors {
+        margin: 15px;
+        flex: 6;
+    }
+    &__restorOpen {
+        width: 600px;
+        flex: 6;
+        margin: 10px;
+    }
+    &__restorOpen_in {
+        margin: 10px;
+    }
+    &__search {
+        margin-left: 30px;
+    }
+}

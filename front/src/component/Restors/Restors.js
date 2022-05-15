@@ -1,6 +1,6 @@
 import React from 'react'
 import Restor from './Restor'
-import '../../css/Restors/Restors.css'
+import '../../css/Restors.css'
 
 export default class Restors extends React.Component {
     render(){
