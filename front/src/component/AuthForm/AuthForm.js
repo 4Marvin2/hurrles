@@ -50,8 +50,8 @@ export default class AuthForm extends React.Component {
 
     passwordOnChange = (payload) => {
         this.setState({password: payload.target.value})
-        if (validator.isStrongPassword(payload.target.value)) {
-        // if (payload.target.value) {
+        // if (validator.isStrongPassword(payload.target.value)) {
+        if (payload.target.value) {
             this.setState({passwordIsValid: true})
         } else {
             this.setState({passwordIsValid: false})
@@ -71,7 +71,7 @@ export default class AuthForm extends React.Component {
         if (this.state.login) {
             // login request
             if (this.state.emailIsValid && this.state.passwordIsValid) {
-                loginRequest().then((data) => {
+                loginRequest(this.state.email, this.state.password).then((data) => {
                     console.log(data)
                 })
             } else {
@@ -81,7 +81,7 @@ export default class AuthForm extends React.Component {
         } else if (this.state.signup) {
             // signup request
             if (this.state.emailIsValid && this.state.passwordIsValid && this.state.repeatPasswordIsValid) {
-                signupRequest().then((data) => {
+                signupRequest(this.state.email, this.state.password).then((data) => {
                     console.log(data)
                 })
             } else {
