@@ -1,11 +1,7 @@
 import React from "react";
-import Home from './Restors/Home'
-import RestorOpen from './RestorOpen/RestorOpen'
+import Home from './Home'
+import Favor from './Favor'
 import TapBar from './TapBar'
-// import '../css/RestorOpen/RestorOpen.css'
-// import '../css/RestorOpen/Menu.css'
-// import '../css/RestorOpen/Info.css'
-// import '../css/RestorOpen/Dish.css'
 import '../css/App.css'
 
 export default class App extends React.Component {
@@ -38,7 +34,7 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="app">
                 <div className="app__tapbar">
                     <TapBar reserveFlag={true} mainPage={this.state.mainPage} tapBarClick={this.tapBarClick} />
                 </div>
@@ -46,7 +42,7 @@ export default class App extends React.Component {
                     {this.state.mainPage === 'home' &&
                     <Home />}
                     {this.state.mainPage === 'restorOpen' &&
-                    <RestorOpen />}
+                    <Favor />}
                 </div>
             </div>
         )

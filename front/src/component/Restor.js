@@ -1,15 +1,19 @@
 import React from "react";
-import Star from "../../imgs/restor/star.svg";
-import Metro from "../../imgs/restor/metro.svg";
-import MetroBlue from "../../imgs/restor/metro_blue.svg";
-import "../../css/Restor.css";
+import Star from "../imgs/restor/star.svg";
+import Metro from "../imgs/restor/metro.svg";
+import MetroBlue from "../imgs/restor/metro_blue.svg";
+import "../css/Restor.css";
 
 export default class Restor extends React.Component {
+  restorClick(payload) {
+    this.props.restorClick(payload);
+  }
+
   render() {
     return (
-      <div className="restor">
+      <button className="restor" onClick={() => this.restorClick(this.props.index)}>
         <div className="restor__img-column">
-          <img src={require("../../imgs/restors/nagoya.webp")} alt="restor" />
+          <img src={require("../imgs/restors/nagoya.webp")} alt="restor" />
         </div>
         <div className="restor__info-column">
           <div className="restor__title">{this.props.restor.title}</div>
@@ -23,7 +27,7 @@ export default class Restor extends React.Component {
             <div>{this.props.restor.metro}</div>
           </div>
         </div>
-      </div>
+      </button>
     );
   }
 }
