@@ -9,9 +9,6 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             mainPage: 'home',
-            user: {
-                name: '',
-            }
         };
 
         this.tapBarClick = this.tapBarClick.bind(this);
@@ -19,17 +16,6 @@ export default class App extends React.Component {
 
     tapBarClick(payload) {
         this.setState({mainPage: payload});
-    }
-
-    tapBarClickProfile(payload) {
-        if (payload === 'profile') {
-            this.setState({
-                mainPage: payload,
-                user: {
-                    name: payload.name
-                }
-            });
-        }
     }
 
     render() {

@@ -4,9 +4,14 @@ import SearchBar from  './SearchBar'
 import RestorOpen from './RestorOpen/RestorOpen'
 import '../css/Home.css'
 
+import { getRestors } from '../requests/getRestors';
+
 export default class Home extends React.Component {
     constructor(props) {
         super(props);
+        getRestors().then((data) => {
+            console.log(data)
+        });
         this.state = {
             currentID: 0,
             restors: [
