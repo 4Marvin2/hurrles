@@ -1,0 +1,39 @@
+version: "3"
+
+volumes:
+  dbbackups:
+  postgis-data:
+  tarantool:
+
+services:
+  hurrles:
+    image: hurrles
+    ports:
+      - "8000:8000"
+    restart: on-failure
+    depends_on:
+      - tarantool
+      - postgres
+
+  tarantool:
+    image: "hurrles_tarantool"
+    ports:
+      - "3301:3301"
+    restart: on-failure
+    volumes:
+      - tarantool:/var/lib/tarantool
+
+  postgres:
+    image: postgres:latest
+    volumes:
+      - postgis-data:/var/lib/postgresql
+      - $PWD/db/postgreSQL/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    environment:
+        POSTGRES_DB: "hurrles"
+        POSTGRES_USER: "admin"
+        POSTGRES_PASSWORD: "password"
+    ports:
+      - "5432:5432"
+    restart: on-failure
+    healthcheck:
+      test: "exit 0"

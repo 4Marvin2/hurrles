@@ -4,18 +4,43 @@ import SearchBar from  './SearchBar'
 import RestorOpen from './RestorOpen/RestorOpen'
 import '../css/Home.css'
 
-import { getRestors } from '../requests/getRestors';
+import { getRestors } from '../requests/restors';
 
 export default class Home extends React.Component {
     constructor(props) {
         super(props);
+        let lol = [];
         getRestors().then((data) => {
-            console.log(data)
-        });
+            const restors = [];
+            data.forEach(e => {
+                const restorElement = {
+                    id: e.id, 
+                    srcImg: e.img ? e.img : '', 
+                    title: e.title, 
+                    rating: '4.1', 
+                    metro: e.metro,
+                    restorInfo: {
+                        rating: '4.8',
+                        address: e.address,
+                        workTime: `Понедельник-суббота ${e.openTime} - ${e.closeTime}`,
+                        desc: e.description,
+                        tag1: e.kitchen
+                    },
+                    dishes: [
+                        {id: 1, title: 'Сет Карри Райсу', desc: 'Мисо-суп, рис, овощное Карри, капуста', price: '340 p.'},
+                        {id: 2, title: 'Сет Карри Райсу', desc: 'Мисо-суп, рис, овощное Карри, капуста', price: '340 p.'},
+                        {id: 3, title: 'Сет Карри Райсу', desc: 'Мисо-суп, рис, овощное Карри, капуста', price: '340 p.'},
+                    ]
+                };
+                restors.push(restorElement);
+            });
+            lol = restors;
+            return restors
+        }); 
+        console.log(lol)
         this.state = {
             currentID: 0,
-            restors: [
-                {id: 1, srcImg: '../imgs/restors/nagoya.webp', title: 'NAGOYA', rating: '4.1', 'metro': 'Бауманская',
+            restors: [ {id: 1, srcImg: '../imgs/restors/nagoya.webp', title: 'NAGOYA', rating: '4.1', 'metro': 'Бауманская',
                 restorInfo: {rating: '4.8',
                 address: 'м.Буманская, Старокирочный переулок 16/2 стр.1',
                 workTime: 'Понедельник-суббота 11:00-22:00, Воскресенье 12:00-22:00',
@@ -60,11 +85,13 @@ export default class Home extends React.Component {
                     <Restors restors={this.state.restors} restorClick={this.restorClick} />
                 </div>
                 <div className='home__right'>
-                    <div className='home__restorOpen_in'>
-                        <RestorOpen
-                        restorInfo={this.state.restors[this.state.currentID].restorInfo}
-                        dishes={this.state.restors[this.state.currentID].dishes} />
-                    </div>
+                    {this.state.restors.length !== 0 && 
+                        <div className='home__restorOpen_in'>
+                            <RestorOpen
+                            restorInfo={this.state.restors[this.state.currentID].restorInfo}
+                            dishes={this.state.restors[this.state.currentID].dishes} />
+                        </div>
+                    }
                 </div>
             </div>
         );

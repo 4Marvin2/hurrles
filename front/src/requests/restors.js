@@ -4,7 +4,6 @@ import http from '../utils/http.js';
 const getRestors = () => {
     return http
         .get(restaurantsURL)
-        .then(res => res.json())
         .then(
             (result) => {
                 console.log(result)
