@@ -4,47 +4,93 @@ import SearchBar from  './SearchBar'
 import RestorOpen from './RestorOpen/RestorOpen'
 import '../css/Favor.css'
 
+import { getFavoriteRestors, getRestorMenu } from '../requests/restors';
+
+var BreakException = {};
+
 export default class Favor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentID: 0,
-            restors: [
-                {id: 1, srcImg: '../imgs/restors/nagoya.webp', title: 'NAGOYA', rating: '4.1', 'metro': 'Бауманская',
-                restorInfo: {rating: '4.8',
-                address: 'м.Буманская, Старокирочный переулок 16/2 стр.1',
-                workTime: 'Понедельник-суббота 11:00-22:00, Воскресенье 12:00-22:00',
-                desc: 'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.Вдали от всех живут они в буквенных домах на берегу Семантика большого языкового океана.Маленький ручеек Даль журчит по всей стране и обеспечивает ее всеми необходимыми правилами.',
-                tag1: 'Japan'},
-                dishes: [
-                    {id: 1, title: 'Сет Карри Райсу', desc: 'Мисо-суп, рис, овощное Карри, капуста', price: '340 p.'},
-                    {id: 2, title: 'Сет Карри Райсу', desc: 'Мисо-суп, рис, овощное Карри, капуста', price: '340 p.'},
-                    {id: 3, title: 'Сет Карри Райсу', desc: 'Мисо-суп, рис, овощное Карри, капуста', price: '340 p.'},
-                ]},
-                {id: 2, srcImg: '../imgs/restors/nagoya.webp', title: 'LOLCLUB', rating: '5', 'metro': 'Динамо',
-                restorInfo: {rating: '4.8',
-                address: 'м.Динамо, Старокирочный переулок 16/2 стр.1',
-                workTime: 'Понедельник-суббота 11:00-22:00, Воскресенье 12:00-22:00',
-                desc: 'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.Вдали от всех живут они в буквенных домах на берегу Семантика большого языкового океана.Маленький ручеек Даль журчит по всей стране и обеспечивает ее всеми необходимыми правилами.',
-                tag1: 'Japan'},
-                dishes: [
-                    {id: 1, title: 'Сет Карри Райсу', desc: 'Мисо-суп, рис, овощное Карри, капуста', price: '340 p.'},
-                ]},
-                {id: 3, srcImg: '../imgs/restors/nagoya.webp', title: 'FUCKCLUB', rating: '2', 'metro': 'Котельники',
-                restorInfo: {rating: '4.8',
-                address: 'м.Котельники, Старокирочный переулок 16/2 стр.1',
-                workTime: 'Понедельник-суббота 11:00-22:00, Воскресенье 12:00-22:00',
-                desc: 'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты.Вдали от всех живут они в буквенных домах на берегу Семантика большого языкового океана.Маленький ручеек Даль журчит по всей стране и обеспечивает ее всеми необходимыми правилами.',
-                tag1: 'Russia'},
-                dishes: []},
-              ],
-        };
+            currentIndex: 0,
+            isFavorite: false,
+            restors:[],
+        }
+        getFavoriteRestors().then((data) => {
+            const restors = [];
+            data.forEach(e => {
+                getRestorMenu(e.id).then((data) => {
+                    const dishes = [];
+                    data.forEach(e => {
+                        const dishElement = {
+                            id: e.id,
+                            title: e.title,
+                            desc: e.description,
+                            price: e.price
+                        };
+                        dishes.push(dishElement);
+                    });
+
+                    const restorElement = {
+                        id: e.id, 
+                        srcImg: e.img ? e.img : '', 
+                        title: e.title, 
+                        rating: '4.1', 
+                        metro: e.metro,
+                        restorInfo: {
+                            rating: '4.8',
+                            address: e.address,
+                            workTime: `Понедельник-суббота ${e.openTime} - ${e.closeTime}`,
+                            desc: e.description,
+                            tag1: e.kitchen
+                        },
+                        dishes: dishes,
+                    };
+                    restors.push(restorElement);
+                    this.setState({
+                        currentIndex: 0,
+                        restors: restors,
+                    });
+                    getFavoriteRestors().then((data) => {
+                        try {
+                            if (this.state.restors.length === 0) {
+                                throw BreakException;
+                            }
+                            const id = this.state.restors[0].id
+                            data.forEach(e => {
+                                if (e.id === id) {
+                                    this.setState({isFavorite: true});
+                                    throw BreakException;
+                                };
+                            });
+                            this.setState({isFavorite: false});
+                          } catch (e) {
+                            if (e !== BreakException) throw e;
+                          }
+                    });
+                });
+            });
+        });
 
         this.restorClick = this.restorClick.bind(this);
     }
 
     restorClick(payload) {
-        this.setState({currentID: payload});
+        getFavoriteRestors().then((data) => {
+            const id = this.state.restors[this.state.currentIndex].id
+            try {
+                data.forEach(e => {
+                    if (e.id === id) {
+                        this.setState({isFavorite: true});
+                        throw BreakException;
+                    };
+                });
+                this.setState({isFavorite: false});
+              } catch (e) {
+                if (e !== BreakException) throw e;
+              }
+        });
+        this.setState({currentIndex: payload});
     }
 
     render(){
@@ -55,11 +101,14 @@ export default class Favor extends React.Component {
                     <Restors restors={this.state.restors} restorClick={this.restorClick} />
                 </div>
                 <div className='favor__right'>
-                    <div className='favor__restorOpen_in'>
-                        <RestorOpen
-                            restorInfo={this.state.restors[this.state.currentID].restorInfo}
-                            dishes={this.state.restors[this.state.currentID].dishes} />
-                    </div>
+                    {this.state.restors.length !== 0 && 
+                        <div className='favor__restorOpen_in'>
+                            <RestorOpen
+                            isFavorite={this.state.isFavorite}
+                            dishes={this.state.restors[this.state.currentIndex].dishes}
+                            restorInfo={this.state.restors[this.state.currentIndex].restorInfo} />
+                        </div>
+                    }
                 </div>
             </div>
         );

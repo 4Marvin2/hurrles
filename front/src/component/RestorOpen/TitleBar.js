@@ -1,5 +1,6 @@
 import React from "react";
 import LikeDisable from "../../imgs/titlebar/like_disable.svg"
+import LikeEnable from "../../imgs/titlebar/like_enable.svg"
 import "../../css/RestorOpen/TitleBar.css"
 
 export default class TitleBar extends React.Component {
@@ -15,7 +16,12 @@ export default class TitleBar extends React.Component {
           <div className="restor-titlebar__like"></div>
           <div className="restor-titlebar__like">
             <button>
-              <img src={LikeDisable} alt="like" />
+              {this.props.isFavorite &&
+                <img src={LikeEnable} alt="like" />
+              }
+              {!this.props.isFavorite &&
+                <img src={LikeDisable} alt="like" />
+              }
             </button>
           </div>
         </nav>

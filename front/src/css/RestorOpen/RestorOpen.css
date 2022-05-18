@@ -86,7 +86,7 @@
   color: #000000;
   opacity: 0.9;
 }
-.restor-open__tag {
+.restor-open__tag1 {
   margin: 10px;
   width: 90px;
   height: 30px;
@@ -94,6 +94,18 @@
   text-overflow: ellipsis;
   padding-left: 7px;
   background: rgba(255, 0, 34, 0.7);
+  border-radius: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+.restor-open__tag2 {
+  margin: 10px;
+  width: 90px;
+  height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 7px;
+  background: rgba(251, 177, 60, 0.7);
   border-radius: 30px;
   text-align: center;
   line-height: 30px;

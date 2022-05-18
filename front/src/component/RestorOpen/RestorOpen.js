@@ -7,11 +7,12 @@ import '../../css/RestorOpen/Menu.css'
 import '../../css/RestorOpen/Info.css'
 import '../../css/RestorOpen/Dish.css'
 
-export default class Home extends React.Component {
+
+export default class RestorOpen extends React.Component {
     render(){
         return (
             <div className="app_restor-open restor-open">
-                <TitleBar />
+                <TitleBar isFavorite={this.props.isFavorite} />
                 <div className="restor-open__main">
                     <Info  restorInfo={this.props.restorInfo}/>
                     <Menu dishes={this.props.dishes} />

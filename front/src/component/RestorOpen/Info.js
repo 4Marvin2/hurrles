@@ -30,11 +30,11 @@ export default class Info extends React.Component {
             </div>
           </div>
           <div className="restor-open__tags">
-            <div className="restor-open__tag">
+            <div className="restor-open__tag1">
               {this.props.restorInfo.tag1}
             </div>
             {this.props.restorInfo.tag2 && 
-              <div className="restor-open__tag" style="background: rgba(251, 177, 60, 0.7);">
+              <div className="restor-open__tag2">
               {this.props.restorInfo.tag2}
             </div>}
           </div>
