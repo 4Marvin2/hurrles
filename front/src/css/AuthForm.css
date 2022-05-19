@@ -46,29 +46,16 @@
   justify-content: space-evenly;
   width: 100%;
 }
-.auth-form__login-switch {
+.auth-form__switch {
   width: 30%;
   cursor: pointer;
 }
-.auth-form__login-switch_active {
+.auth-form__switch_active {
   border-bottom: 3px #6247AA solid;
   border-radius: 1px;
   transition: 0.2s;
 }
-.auth-form__login-switch-text {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  margin-bottom: 100px;
-}
-.auth-form__signup-switch {
-  width: 30%;
-  cursor: pointer;
-}
-.auth-form__signup-switch_active {
-  border-bottom: 3px #6247AA solid;
-  border-radius: 1px;
-  transition: 0.2s;
-}
-.auth-form__signup-switch-text {
+.auth-form__switch-text {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin-bottom: 100px;
 }
@@ -84,9 +71,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 100%;
   height: 30%;
+}
+.auth-form__form-error {
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  color: #EB6534;
+  visibility: collapse;
+}
+.auth-form__form-error_active {
+  visibility: visible;
 }
 
 /*# sourceMappingURL=AuthForm.css.map */

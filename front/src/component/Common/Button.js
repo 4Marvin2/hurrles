@@ -7,9 +7,9 @@ export default class Button extends React.Component {
         super(props);
 
         if (props.text) {
-            this.state = {buttonText: props.text}
+            this.state = {text: props.text}
         } else {
-            this.state = {buttonText: 'default'}
+            this.state = {text: 'default'}
         }
         if (props.onClick) {
             this.state['onClick'] = props.onClick
@@ -18,15 +18,18 @@ export default class Button extends React.Component {
         }
     }
 
-    buttonClick = (payload) => {
-        this.setState({login: true, signup: false})
-        console.log('login button touched')
+    shouldComponentUpdate = (newProps) => {
+        if (this.state.text !== newProps.text && newProps.text !== undefined) {
+            this.setState({text: newProps.text})
+            return true
+        }
+        return false
     }
 
     render(){
         return (
             <button className='button' onClick={this.state.onClick}>
-                <span className='button__text'>{this.state.buttonText}</span>
+                <span className='button__text'>{this.state.text}</span>
             </button>
         );
     }

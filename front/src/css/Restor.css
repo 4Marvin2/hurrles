@@ -9,7 +9,6 @@
   box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
   border-radius: 12px;
 }
-
 .restor__img-column {
   display: flex;
   flex-direction: column;
@@ -21,11 +20,9 @@
   margin-right: 6px;
   overflow: hidden;
 }
-
 .restor__img-column img {
   object-fit: cover;
 }
-
 .restor__info-column {
   display: flex;
   flex-direction: column;
@@ -36,7 +33,6 @@
   margin-left: 6px;
   margin-bottom: 12px;
 }
-
 .restor__title {
   font-family: SF Pro Rounded;
   font-style: normal;
@@ -46,29 +42,23 @@
   color: #000000;
   opacity: 0.9;
 }
-
 .restor__rating {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: baseline;
 }
-
 .restor__rating img {
   margin-right: 10px;
 }
-
 .restor__metro {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: baseline;
 }
-
 .restor__metro img {
   margin-right: 10px;
 }
-
-/*# sourceMappingURL=Restor.css.map */
 
 /*# sourceMappingURL=Restor.css.map */

@@ -7,7 +7,6 @@
   flex: wrap;
   flex-flow: column;
 }
-
 .tapbar__icon {
   margin: auto;
   background-color: Transparent;
@@ -16,7 +15,6 @@
   cursor: pointer;
   overflow: hidden;
 }
-
 .tapbar__exit-icon {
   margin: 300px auto auto auto;
   background-color: Transparent;
@@ -25,7 +23,5 @@
   cursor: pointer;
   overflow: hidden;
 }
-
-/*# sourceMappingURL=TapBar.css.map */
 
 /*# sourceMappingURL=TapBar.css.map */

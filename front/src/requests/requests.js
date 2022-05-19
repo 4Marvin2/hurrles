@@ -9,16 +9,15 @@ const signupRequest = (email, password) => {
 
     return http
         .post(userURL+'/signup', body)
-        .then(res => res.json())
-        .then(
-            (result) => {
-                console.log(result)
-                return result
-            },
-            (error) => {
-                console.log(error)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
             }
-        )
+            return result
+        })
+        .catch((error) => {
+            throw error
+        })
 };
 
 const loginRequest = (email, password) => {
@@ -29,46 +28,43 @@ const loginRequest = (email, password) => {
 
     return http
         .post(userURL+'/login', body)
-        .then(res => res.json())
-        .then(
-            (result) => {
-                console.log(result)
-                return result
-            },
-            (error) => {
-                console.log(error)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
             }
-        )
+            return result
+        })
+        .catch((error) => {
+            throw error
+        })
 };
 
 const getUserRequest = () => {
     return http
         .get(userURL)
-        .then(res => res.json())
-        .then(
-            (result) => {
-                console.log(result)
-                return result
-            },
-            (error) => {
-                console.log(error)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
             }
-        )
+            return result
+        })
+        .catch((error) => {
+            throw error
+        })
 };
 
 const logoutRequest = () => {
     return http
         .delete(userURL+'logout')
-        .then(res => res.json())
-        .then(
-            (result) => {
-                console.log(result)
-                return result
-            },
-            (error) => {
-                console.log(error)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
             }
-        )
+            return result
+        })
+        .catch((error) => {
+            throw error
+        })
 };
 
 // const editProfileRequest = (name, gender, prefer, date, description, photoPaths, tags) => {
