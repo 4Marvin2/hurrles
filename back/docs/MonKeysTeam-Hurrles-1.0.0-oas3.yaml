@@ -1,0 +1,488 @@
+---
+openapi: 3.0.0
+info:
+  title: Hurrles Api
+  version: 1.0.0-oas3
+servers:
+- url: /
+tags:
+- name: user
+  description: User Endpoints
+- name: restaurant
+  description: Restaurants Endpoints
+paths:
+  /user/signup:
+    post:
+      tags:
+      - user
+      summary: Create user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user_signup_body'
+      responses:
+        "200":
+          description: OK
+          headers:
+            Set-Cookie:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_signup_body'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+  /user/login:
+    post:
+      tags:
+      - user
+      summary: Logs user into the system
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user_login_body'
+      responses:
+        "200":
+          description: OK
+          headers:
+            Set-Cookie:
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "404":
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+  /user/logout:
+    get:
+      tags:
+      - user
+      summary: Logs out current logged in user session
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Bad request
+        "500":
+          description: Internal Server Error
+  /restaurants:
+    get:
+      tags:
+      - restaurant
+      summary: Get list of restaurants
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "404":
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+  /restaurant/{id}/menu:
+    get:
+      tags:
+      - restaurant
+      summary: Get info about restaurant
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "404":
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+  /orders:
+    post:
+      tags:
+      - order
+      summary: Create order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/orders_body'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "404":
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+  /order/{userId}/open:
+    get:
+      tags:
+      - order
+      summary: Get orders
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "404":
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+    delete:
+      tags:
+      - order
+      summary: Delete order
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "404":
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+  /restaurant/{id}/places:
+    get:
+      tags:
+      - restaurant
+      summary: Get info about restaurant
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "404":
+          description: User Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+components:
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        userId:
+          type: integer
+          format: int64
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        cost:
+          type: integer
+          format: int32
+        createdTime:
+          type: string
+          format: date-time
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        email:
+          type: string
+        password:
+          type: string
+        fullName:
+          type: string
+        number:
+          type: string
+    Credentials:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    Payment:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        orderId:
+          type: integer
+          format: int64
+        totalCost:
+          type: integer
+          format: int32
+        format:
+          type: string
+          enum:
+          - online
+          - offline
+        status:
+          type: string
+          enum:
+          - success
+          - pending
+          - rejected
+    Restaurant:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        description:
+          type: string
+        address:
+          type: string
+        number:
+          type: string
+        workTime:
+          type: string
+          format: date-time
+        kitchen:
+          type: string
+        img:
+          type: string
+    Dish:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        restaurantId:
+          type: integer
+          format: int64
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: integer
+          format: int32
+    Place:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        orderId:
+          type: integer
+          format: int64
+        restaurantId:
+          type: integer
+          format: int64
+        capacity:
+          type: integer
+          format: int32
+        number:
+          type: integer
+          format: int32
+        leftTop:
+          type: number
+          format: float64
+        rightBottom:
+          type: number
+          format: float64
+    Base:
+      type: object
+      properties:
+        isError:
+          type: boolean
+        message:
+          type: string
+    user_signup_body:
+      allOf:
+      - $ref: '#/components/schemas/User'
+    inline_response_400:
+      allOf:
+      - $ref: '#/components/schemas/Base'
+    user_login_body:
+      allOf:
+      - $ref: '#/components/schemas/Credentials'
+    inline_response_200:
+      allOf:
+      - type: object
+        properties:
+          restaurants:
+            type: array
+            items:
+              $ref: '#/components/schemas/Restaurant'
+    inline_response_200_1:
+      allOf:
+      - type: object
+        properties:
+          restaurants:
+            type: array
+            items:
+              $ref: '#/components/schemas/Dish'
+    orders_body:
+      allOf:
+      - $ref: '#/components/schemas/Order'
+    inline_response_200_2:
+      allOf:
+      - type: object
+        properties:
+          restaurants:
+            type: array
+            items:
+              $ref: '#/components/schemas/Place'
