@@ -1,15 +1,13 @@
-.home{
+.favor{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    height: 97vh;
 
     &__left {
         display: flex;
         flex-direction: column;
         margin: 15px;
-        flex: 4;
-        height: 100%;
+        flex: 6;
     }
     &__right {
         display: flex;

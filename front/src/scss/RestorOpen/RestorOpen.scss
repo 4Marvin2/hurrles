@@ -1,0 +1,105 @@
+.restor-open {
+    width: 90%;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    &__main {
+        overflow-y: scroll;
+        height: 700px;
+    }
+    &__add-button{
+        margin: 0 auto;
+    }
+    &__rating-reviews {
+        height: 40px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    &__rating-reviews img {
+        margin-left: 20px;
+        margin-right: 10px;     
+        height: 20px;
+        width: 20px;
+    }
+    &__address-schedule {
+        font-family: SF Pro Text;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 17px;
+
+        display: flex;
+        flex-direction: column;
+    }
+    &__address-schedule p {
+        margin-top: 1px;
+        margin-bottom: 5px;
+    }
+    &__title {
+        font-family: SF Pro Rounded;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 22px;
+    }
+    &__subtitle {
+        margin-top: 7px;
+
+        font-family: SF Pro Text;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 19px;
+
+        letter-spacing: 0.02em;
+
+        opacity: 0.5;
+    }
+    &__tags {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        font-family: 'SF Pro Rounded';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 14px;
+
+        color: #000000;
+
+        opacity: 0.9;
+    }
+    &__tag1 {
+        margin: 10px;
+        width: 90px;
+        height: 30px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-left: 7px;
+
+        background: rgba(255, 0, 34, 0.7);
+        border-radius: 30px;
+
+        text-align: center;
+        line-height: 30px;
+    }
+    &__tag2 {
+        margin: 10px;
+        width: 90px;
+        height: 30px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-left: 7px;
+
+        background: rgba(251, 177, 60, 0.7);
+        border-radius: 30px;
+
+        text-align: center;
+        line-height: 30px;
+    }
+}

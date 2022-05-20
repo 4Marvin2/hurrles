@@ -1,0 +1,96 @@
+.dish {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+
+    height: 123px;
+    width: 90%;
+
+    background: #FFFFFF;
+    box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
+    border-radius: 12px;
+
+    &__hidden {
+        height: 78px;
+        width: 100%;
+    }
+
+    &__img-column {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        flex: 9;
+
+        object-fit: contain;
+        justify-content: center;
+        align-items: center;
+    }
+    &__info-column {
+        display: flex;
+        flex-direction: column;
+        flex-basis: 100%;
+        flex: 11;
+
+        margin-left: 5px;
+        justify-content: center;
+    }
+    &__title {
+        height: 15px;
+        width: 90%;
+
+        font-family: 'SF Pro Rounded';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 14px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        margin: 3px;
+
+        color: #000000;
+
+        opacity: 0.9;
+    }
+    &__desc {
+        display: flex;
+        height: 30px;
+        width: 90%;
+
+        font-family: 'SF Pro Rounded';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 12px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        color: #9F9F9F;
+
+        opacity: 0.9;
+
+        margin: 3px;
+    }
+    &__price {
+        font-family: 'SF Pro Rounded';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 14px;
+
+        margin: 3px;
+
+
+        color: #000000;
+
+        opacity: 0.9;
+    }
+    &__add-button {
+        position:absolute;
+        right: 15px;
+        bottom: 20px;
+    }
+}

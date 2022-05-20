@@ -1,6 +1,4 @@
 import React from "react";
-import Star from "../../imgs/restor/star.svg";
-import Review from "../../imgs/restor/review.svg";
 import '../../css/RestorOpen/RestorOpen.css'
 import '../../css/RestorOpen/Menu.css'
 import '../../css/RestorOpen/Info.css'
@@ -11,11 +9,8 @@ export default class Info extends React.Component {
   render() {
     return (
         <div className="restor-open__info">
-          <div className="restor-open__rating-reviews">
-            <img src={Star} alt="star" />
-            {this.props.restorInfo.rating}
-            <img src={Review} alt="review" />
-            Отзывы
+          <div className="restor-open__address-schedule">
+            Номер ресторана:  {this.props.restorInfo.number}
           </div>
           <div className="restor-open__address-schedule">
             <p>{this.props.restorInfo.address}</p>
@@ -30,11 +25,11 @@ export default class Info extends React.Component {
             </div>
           </div>
           <div className="restor-open__tags">
-            <div className="restor-open__tag">
+            <div className="restor-open__tag1">
               {this.props.restorInfo.tag1}
             </div>
             {this.props.restorInfo.tag2 && 
-              <div className="restor-open__tag" style="background: rgba(251, 177, 60, 0.7);">
+              <div className="restor-open__tag2">
               {this.props.restorInfo.tag2}
             </div>}
           </div>

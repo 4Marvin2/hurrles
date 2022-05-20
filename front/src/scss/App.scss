@@ -9,12 +9,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-    width: 0;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
-}
-/* Optional: show position indicator in red */
-::-webkit-scrollbar-thumb {
-    background: #FF0000;
+    width: 0;
+    background: transparent;
 }
 
 .app {
@@ -28,14 +24,15 @@ body {
     &__tapbar{
         display: flex;
         flex-direction: column;
-        flex-basis: 100%;
-        flex: 1;
+        width: 10%;
     }
     &__body{
         display: flex;
         flex-direction: column;
         justify-content: center;
         width: 100%;
+        // from ilyagu
+        // width: 90%;
         height: 100%;
     }
 }

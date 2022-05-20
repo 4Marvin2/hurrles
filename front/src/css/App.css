@@ -10,17 +10,15 @@ body {
 
 ::-webkit-scrollbar {
   width: 0;
-  /* Remove scrollbar space */
   background: transparent;
-  /* Optional: just make scrollbar invisible */
-}
-
-/* Optional: show position indicator in red */
-::-webkit-scrollbar-thumb {
-  background: #FF0000;
 }
 
 .app {
+<<<<<<< HEAD
+=======
+  display: -webkit-box;
+  display: -ms-flexbox;
+>>>>>>> desktop_ilyagu
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -30,6 +28,7 @@ body {
 }
 .app__tapbar {
   display: flex;
+<<<<<<< HEAD
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
@@ -39,6 +38,26 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 100%;
+=======
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 10%;
+}
+.app__body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 90%;
+>>>>>>> desktop_ilyagu
   height: 100%;
 }
 

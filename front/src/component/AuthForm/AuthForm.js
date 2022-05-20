@@ -9,7 +9,7 @@ import Button from '../Common/Button';
 
 import validator from 'validator'
 
-import { getUserRequest, loginRequest, signupRequest } from '../../requests/requests';
+import { getUserRequest, loginRequest, signupRequest } from '../../requests/auth';
 
 import { emailErrorMsg, passwordErrorMsg, repeatPasswordErrorMsg, loginFormErrorMsg, signupFormErrorMsg } from '../../constants/errorMsg';
 

@@ -6,6 +6,7 @@
 }
 
 .menu__dish {
+<<<<<<< HEAD
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -13,3 +14,7 @@
 /*# sourceMappingURL=Menu.css.map */
 
 /*# sourceMappingURL=Menu.css.map */
+=======
+  margin: 10px auto;
+}
+>>>>>>> desktop_ilyagu

@@ -1,6 +1,11 @@
 .restor {
-  width: 492px;
   height: 144px;
+<<<<<<< HEAD
+=======
+  width: 96%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+>>>>>>> desktop_ilyagu
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -11,9 +16,22 @@
 }
 .restor__img-column {
   display: flex;
+<<<<<<< HEAD
   flex-direction: column;
   flex-basis: 100%;
   flex: 4;
+=======
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
+  height: 80%;
+>>>>>>> desktop_ilyagu
   margin-top: 6px;
   margin-left: 12px;
   margin-bottom: 12px;
@@ -21,13 +39,32 @@
   overflow: hidden;
 }
 .restor__img-column img {
+<<<<<<< HEAD
   object-fit: cover;
+=======
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100%;
+>>>>>>> desktop_ilyagu
 }
 .restor__info-column {
   display: flex;
+<<<<<<< HEAD
   flex-direction: column;
   flex-basis: 100%;
   flex: 6;
+=======
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+  -webkit-box-flex: 6;
+      -ms-flex: 6;
+          flex: 6;
+  height: 80%;
+>>>>>>> desktop_ilyagu
   margin-top: 12px;
   margin-right: 12px;
   margin-left: 6px;

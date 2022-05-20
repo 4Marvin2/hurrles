@@ -1,16 +1,24 @@
 .restor-open {
   width: 90%;
   margin: 0px auto;
+<<<<<<< HEAD
   box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
   border-radius: 12px;
   background: white;
+=======
+  display: -webkit-box;
+  display: -ms-flexbox;
+>>>>>>> desktop_ilyagu
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
 }
 .restor-open__main {
   overflow-y: scroll;
-  height: 800px;
+  height: 700px;
+}
+.restor-open__add-button {
+  margin: 0 auto;
 }
 .restor-open__rating-reviews {
   height: 40px;
@@ -65,7 +73,7 @@
   color: #000000;
   opacity: 0.9;
 }
-.restor-open__tag {
+.restor-open__tag1 {
   margin: 10px;
   width: 90px;
   height: 30px;
@@ -77,5 +85,20 @@
   text-align: center;
   line-height: 30px;
 }
+<<<<<<< HEAD
 
 /*# sourceMappingURL=RestorOpen.css.map */
+=======
+.restor-open__tag2 {
+  margin: 10px;
+  width: 90px;
+  height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 7px;
+  background: rgba(251, 177, 60, 0.7);
+  border-radius: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+>>>>>>> desktop_ilyagu

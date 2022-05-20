@@ -1,19 +1,15 @@
-.home {
+.favor {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-<<<<<<< HEAD
-  flex-direction: row;
-  flex-wrap: wrap;
-=======
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  height: 97vh;
->>>>>>> desktop_ilyagu
 }
-.home__left {
+.favor__left {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -22,12 +18,11 @@
       -ms-flex-direction: column;
           flex-direction: column;
   margin: 15px;
-  -webkit-box-flex: 4;
-      -ms-flex: 4;
-          flex: 4;
-  height: 100%;
+  -webkit-box-flex: 6;
+      -ms-flex: 6;
+          flex: 6;
 }
-.home__right {
+.favor__right {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -36,17 +31,11 @@
       -ms-flex-direction: column;
           flex-direction: column;
   margin: 15px;
-  flex: 6;
+  -webkit-box-flex: 6;
+      -ms-flex: 6;
+          flex: 6;
 }
-<<<<<<< HEAD
-.home__restorOpen {
-  width: 600px;
-  flex: 6;
-  margin: 10px;
-}
-=======
->>>>>>> desktop_ilyagu
-.home__restorOpen_in {
+.favor__restorOpen_in {
   -webkit-box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
           box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
   border-radius: 12px;
@@ -54,13 +43,6 @@
   width: 90%;
   height: 95vh;
 }
-.home__search {
-<<<<<<< HEAD
-  margin-left: 30px;
-}
-
-/*# sourceMappingURL=Home.css.map */
-=======
+.favor__search {
   margin: 0 auto;
 }
->>>>>>> desktop_ilyagu
