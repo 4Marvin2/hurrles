@@ -4,19 +4,27 @@ import SearchBar from  './SearchBar'
 import RestorOpen from './RestorOpen/RestorOpen'
 import '../css/Favor.css'
 
-import { getFavoriteRestors, getRestorMenu } from '../requests/restors';
+import { getFavoriteRestors, getRestorMenu, addFavorite, deleteFavorite } from '../requests/restors';
 
 var BreakException = {};
 
 export default class Favor extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             currentIndex: 0,
             isFavorite: false,
             restors:[],
         }
+
+        this.likeClick = this.likeClick.bind(this);
+        this.restorClick = this.restorClick.bind(this);
+
         getFavoriteRestors().then((data) => {
+            if (!data) {
+                return
+            }
             const restors = [];
             data.forEach(e => {
                 getRestorMenu(e.id).then((data) => {
@@ -52,6 +60,9 @@ export default class Favor extends React.Component {
                         restors: restors,
                     });
                     getFavoriteRestors().then((data) => {
+                        if (!data) {
+                            return
+                        }
                         try {
                             if (this.state.restors.length === 0) {
                                 throw BreakException;
@@ -71,12 +82,13 @@ export default class Favor extends React.Component {
                 });
             });
         });
-
-        this.restorClick = this.restorClick.bind(this);
     }
 
     restorClick(payload) {
         getFavoriteRestors().then((data) => {
+            if (!data) {
+                return
+            }
             const id = this.state.restors[this.state.currentIndex].id
             try {
                 data.forEach(e => {
@@ -93,6 +105,27 @@ export default class Favor extends React.Component {
         this.setState({currentIndex: payload});
     }
 
+    likeClick(payload) {
+        const id  = this.state.restors[this.state.currentIndex].id
+        if (!id) {
+            return
+        }
+        if (!payload) {
+            deleteFavorite(id).then((data) => {
+                const restors = this.state.restors;
+                const idx = this.state.currentIndex
+                restors.splice(idx, 1);
+                this.setState({
+                    restors: restors,
+                    currentIndex: idx !== 0 ? idx-1 : 0,
+                });
+            });
+        } else {
+            addFavorite(id).then((data) => {
+            });
+        }
+    }
+
     render(){
         return (
             <div className='favor'>
@@ -104,6 +137,7 @@ export default class Favor extends React.Component {
                     {this.state.restors.length !== 0 && 
                         <div className='favor__restorOpen_in'>
                             <RestorOpen
+                            likeClick={this.likeClick}
                             isFavorite={this.state.isFavorite}
                             dishes={this.state.restors[this.state.currentIndex].dishes}
                             restorInfo={this.state.restors[this.state.currentIndex].restorInfo} />

@@ -43,4 +43,32 @@ const getRestorMenu = (id) => {
         )
 };
 
-export { getRestors, getRestorMenu, getFavoriteRestors };
+const addFavorite = (id) => {
+    return http
+        .post(`${restaurantURL}/favorite/${id}`, null)
+        .then(
+            (result) => {
+                console.log(result)
+                return result
+            },
+            (error) => {
+                console.log(error)
+            }
+        )
+};
+
+const deleteFavorite = (id) => {
+    return http
+        .delete(`${restaurantURL}/favorite/${id}`, null)
+        .then(
+            (result) => {
+                console.log(result)
+                return result
+            },
+            (error) => {
+                console.log(error)
+            }
+        )
+};
+
+export { getRestors, getRestorMenu, getFavoriteRestors, addFavorite, deleteFavorite };

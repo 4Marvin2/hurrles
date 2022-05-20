@@ -16,7 +16,7 @@ export default class Dish extends React.Component {
         <div className="dish__info-column">
             <div className="dish__title">{this.props.dish.title}</div>
             <div className="dish__desc">{this.props.dish.desc}</div>
-            <div className="dish__price">{this.props.dish.price}</div>
+            <div className="dish__price">{this.props.dish.price} р.</div>
         </div>
     </div>
     );

@@ -11,14 +11,14 @@ import Exit from '../imgs/tapbar/exit.svg';
 import '../css/TapBar.css';
 
 export default class TapBar extends React.Component {
-    handleOnClick(payload) {
+    tapBarClick(payload) {
         this.props.tapBarClick(payload);
     }
 
     render() {
         return (
             <nav className="tapbar">
-                <button className="tapbar__icon" onClick={() => this.handleOnClick('home')}>
+                <button className="tapbar__icon" onClick={() => this.tapBarClick('home')}>
                     {this.props.mainPage === 'home' &&
                         <img src={HomeEnable} alt="HomeEnable" />
                     }
@@ -26,7 +26,7 @@ export default class TapBar extends React.Component {
                         <img src={HomeDisable} alt="HomeDisable" />
                     }
                 </button>
-                <button className="tapbar__icon" onClick={() => this.handleOnClick('restorOpen')}>
+                <button className="tapbar__icon" onClick={() => this.tapBarClick('restorOpen')}>
                     {this.props.mainPage === 'restorOpen' &&
                         <img src={LikedEnable} alt="LikedEnable" />
                     }

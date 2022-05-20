@@ -19,9 +19,9 @@
       -ms-flex-direction: column;
           flex-direction: column;
   margin: 15px;
-  -webkit-box-flex: 6;
-      -ms-flex: 6;
-          flex: 6;
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
   height: 100%;
 }
 .home__right {
