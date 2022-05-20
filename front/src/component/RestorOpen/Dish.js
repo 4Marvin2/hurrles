@@ -1,4 +1,5 @@
 import React from "react";
+import AddButton from '../Common/NormalButton'
 import DishLogo from "../../imgs/restors/nagoya/set_curry_rise.svg";
 import '../../css/RestorOpen/RestorOpen.css'
 import '../../css/RestorOpen/Menu.css'
@@ -17,6 +18,9 @@ export default class Dish extends React.Component {
             <div className="dish__title">{this.props.dish.title}</div>
             <div className="dish__desc">{this.props.dish.desc}</div>
             <div className="dish__price">{this.props.dish.price} р.</div>
+            <div className="dish__add-button">
+              <AddButton text={'Добавить'} />
+            </div>
         </div>
     </div>
     );
