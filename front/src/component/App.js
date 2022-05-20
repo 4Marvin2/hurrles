@@ -1,11 +1,8 @@
 import React from "react";
-import Home from './Restors/Home'
-import RestorOpen from './RestorOpen/RestorOpen'
+import Home from './Home'
+import Favor from './Favor'
+import Cart from "./Cart/Cart";
 import TapBar from './TapBar'
-// import '../css/RestorOpen/RestorOpen.css'
-// import '../css/RestorOpen/Menu.css'
-// import '../css/RestorOpen/Info.css'
-// import '../css/RestorOpen/Dish.css'
 import '../css/App.css'
 
 export default class App extends React.Component {
@@ -13,9 +10,6 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             mainPage: 'home',
-            user: {
-                name: '',
-            }
         };
 
         this.tapBarClick = this.tapBarClick.bind(this);
@@ -23,17 +17,6 @@ export default class App extends React.Component {
 
     tapBarClick(payload) {
         this.setState({mainPage: payload});
-    }
-
-    tapBarClickProfile(payload) {
-        if (payload === 'profile') {
-            this.setState({
-                mainPage: payload,
-                user: {
-                    name: payload.name
-                }
-            });
-        }
     }
 
     render() {
@@ -46,7 +29,9 @@ export default class App extends React.Component {
                     {this.state.mainPage === 'home' &&
                     <Home />}
                     {this.state.mainPage === 'restorOpen' &&
-                    <RestorOpen />}
+                    <Favor />}
+                    {this.state.mainPage === 'cart' &&
+                    <Cart />}
                 </div>
             </div>
         )

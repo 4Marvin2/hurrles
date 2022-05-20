@@ -8,9 +8,12 @@
           flex-direction: row;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  height: 78px;
-  width: 100%;
-  background: #F2F2F2;
+  position: relative;
+  height: 123px;
+  width: 90%;
+  background: #FFFFFF;
+  -webkit-box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
+          box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
   border-radius: 12px;
 }
 .dish__hidden {
@@ -32,14 +35,12 @@
           flex: 9;
   -o-object-fit: contain;
      object-fit: contain;
-  max-width: 100%;
-  max-height: 100%;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .dish__info-column {
   display: -webkit-box;
@@ -55,6 +56,9 @@
       -ms-flex: 11;
           flex: 11;
   margin-left: 5px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 .dish__title {
   height: 15px;
@@ -96,4 +100,9 @@
   margin: 3px;
   color: #000000;
   opacity: 0.9;
+}
+.dish__add-button {
+  position: absolute;
+  right: 15px;
+  bottom: 20px;
 }

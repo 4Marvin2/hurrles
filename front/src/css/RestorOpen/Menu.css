@@ -5,6 +5,5 @@
   font-size: 22px;
 }
 .menu__dish {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px auto;
 }
