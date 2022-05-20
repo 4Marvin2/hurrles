@@ -1,7 +1,12 @@
 .dish {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
+<<<<<<< HEAD
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 78px;
+  width: 100%;
+  background: #F2F2F2;
+=======
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -14,6 +19,7 @@
   background: #FFFFFF;
   -webkit-box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
           box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
+>>>>>>> desktop_ilyagu
   border-radius: 12px;
 }
 .dish__hidden {
@@ -21,9 +27,17 @@
   width: 100%;
 }
 .dish__img-column {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
+<<<<<<< HEAD
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 9;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+  align-items: center;
+  justify-content: center;
+=======
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -41,20 +55,13 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+>>>>>>> desktop_ilyagu
 }
 .dish__info-column {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
-  -webkit-box-flex: 11;
-      -ms-flex: 11;
-          flex: 11;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 11;
   margin-left: 5px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -75,8 +82,6 @@
   opacity: 0.9;
 }
 .dish__desc {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   height: 30px;
   width: 90%;
@@ -101,8 +106,13 @@
   color: #000000;
   opacity: 0.9;
 }
+<<<<<<< HEAD
+
+/*# sourceMappingURL=Dish.css.map */
+=======
 .dish__add-button {
   position: absolute;
   right: 15px;
   bottom: 20px;
 }
+>>>>>>> desktop_ilyagu

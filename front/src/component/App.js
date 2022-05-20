@@ -3,6 +3,7 @@ import Home from './Home'
 import Favor from './Favor'
 import Cart from "./Cart/Cart";
 import TapBar from './TapBar'
+import AuthForm from "./AuthForm/AuthForm";
 import '../css/App.css'
 
 export default class App extends React.Component {
@@ -21,6 +22,10 @@ export default class App extends React.Component {
 
     render() {
         return (
+            // login
+            // <div className="app__body">
+                // <AuthForm authType='login'/>
+
             <div className="app">
                 <div className="app__tapbar">
                     <TapBar reserveFlag={true} mainPage={this.state.mainPage} tapBarClick={this.tapBarClick} />

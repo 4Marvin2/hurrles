@@ -39,7 +39,10 @@ class Http {
             sessionStorage.setItem('csrf', csrfTokenResp);
         }
 
-        return responseData;
+        return {
+            status: response.status,
+            data: responseData,
+        };
     }
 
     /**

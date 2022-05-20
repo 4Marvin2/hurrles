@@ -1,7 +1,9 @@
 .home {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
+<<<<<<< HEAD
+  flex-direction: row;
+  flex-wrap: wrap;
+=======
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -9,6 +11,7 @@
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   height: 97vh;
+>>>>>>> desktop_ilyagu
 }
 .home__left {
   display: -webkit-box;
@@ -33,10 +36,16 @@
       -ms-flex-direction: column;
           flex-direction: column;
   margin: 15px;
-  -webkit-box-flex: 6;
-      -ms-flex: 6;
-          flex: 6;
+  flex: 6;
 }
+<<<<<<< HEAD
+.home__restorOpen {
+  width: 600px;
+  flex: 6;
+  margin: 10px;
+}
+=======
+>>>>>>> desktop_ilyagu
 .home__restorOpen_in {
   -webkit-box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
           box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
@@ -46,5 +55,12 @@
   height: 95vh;
 }
 .home__search {
+<<<<<<< HEAD
+  margin-left: 30px;
+}
+
+/*# sourceMappingURL=Home.css.map */
+=======
   margin: 0 auto;
 }
+>>>>>>> desktop_ilyagu
