@@ -4,71 +4,71 @@ import http from '../utils/http.js';
 const getRestors = () => {
     return http
         .get(restaurantsURL)
-        .then(
-            (result) => {
-                console.log(result)
-                return result
-            },
-            (error) => {
-                console.log(error)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
             }
-        )
+            return result.data
+        })
+        .catch((error) => {
+            throw error
+        })
 };
 
 const getFavoriteRestors = () => {
     return http
         .get(`${restaurantURL}/favorite`)
-        .then(
-            (result) => {
-                console.log(result)
-                return result
-            },
-            (error) => {
-                console.log(error)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
             }
-        )
+            return result.data
+        })
+        .catch((error) => {
+            throw error
+        })
 };
 
 const getRestorMenu = (id) => {
     return http
         .get(`${restaurantURL}/${id}/menu`)
-        .then(
-            (result) => {
-                console.log(result)
-                return result
-            },
-            (error) => {
-                console.log(error)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
             }
-        )
+            return result.data
+        })
+        .catch((error) => {
+            throw error
+        })
 };
 
 const addFavorite = (id) => {
     return http
         .post(`${restaurantURL}/favorite/${id}`, null)
-        .then(
-            (result) => {
-                console.log(result)
-                return result
-            },
-            (error) => {
-                console.log(error)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
             }
-        )
+            return result.data
+        })
+        .catch((error) => {
+            throw error
+        })
 };
 
 const deleteFavorite = (id) => {
     return http
         .delete(`${restaurantURL}/favorite/${id}`, null)
-        .then(
-            (result) => {
-                console.log(result)
-                return result
-            },
-            (error) => {
-                console.log(error)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
             }
-        )
+            return result.data
+        })
+        .catch((error) => {
+            throw error
+        })
 };
 
 export { getRestors, getRestorMenu, getFavoriteRestors, addFavorite, deleteFavorite };

@@ -13,7 +13,7 @@ const signupRequest = (email, password) => {
             if (result.status !== 200) {
                 throw 'Non 200 response';
             }
-            return result
+            return result.data
         })
         .catch((error) => {
             throw error
@@ -32,7 +32,7 @@ const loginRequest = (email, password) => {
             if (result.status !== 200) {
                 throw 'Non 200 response';
             }
-            return result
+            return result.data
         })
         .catch((error) => {
             throw error
@@ -46,7 +46,7 @@ const getUserRequest = () => {
             if (result.status !== 200) {
                 throw 'Non 200 response';
             }
-            return result
+            return result.data
         })
         .catch((error) => {
             throw error
@@ -60,7 +60,7 @@ const logoutRequest = () => {
             if (result.status !== 200) {
                 throw 'Non 200 response';
             }
-            return result
+            return result.data
         })
         .catch((error) => {
             throw error

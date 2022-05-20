@@ -23,23 +23,23 @@ export default class App extends React.Component {
     render() {
         return (
             // login
-            <div className="app__body">
-                <AuthForm authType='login'/>
-            </div>
-
-            // <div className="app">
-            //     <div className="app__tapbar">
-            //         <TapBar reserveFlag={true} mainPage={this.state.mainPage} tapBarClick={this.tapBarClick} />
-            //     </div>
-            //     <div className="app__body">
-            //         {this.state.mainPage === 'home' &&
-            //         <Home />}
-            //         {this.state.mainPage === 'restorOpen' &&
-            //         <Favor />}
-            //         {this.state.mainPage === 'cart' &&
-            //         <Cart />}
-            //     </div>
+            // <div className="app__body">
+            //     <AuthForm authType='login'/>
             // </div>
+
+            <div className="app">
+                <div className="app__tapbar">
+                    <TapBar reserveFlag={true} mainPage={this.state.mainPage} tapBarClick={this.tapBarClick} />
+                </div>
+                <div className="app__body">
+                    {this.state.mainPage === 'home' &&
+                    <Home />}
+                    {this.state.mainPage === 'restorOpen' &&
+                    <Favor />}
+                    {this.state.mainPage === 'cart' &&
+                    <Cart />}
+                </div>
+            </div>
         )
     }
 }
