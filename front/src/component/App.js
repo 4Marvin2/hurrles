@@ -1,6 +1,7 @@
 import React from "react";
 import Home from './Home'
 import Favor from './Favor'
+import Cart from "./Cart/Cart";
 import TapBar from './TapBar'
 import '../css/App.css'
 
@@ -29,6 +30,8 @@ export default class App extends React.Component {
                     <Home />}
                     {this.state.mainPage === 'restorOpen' &&
                     <Favor />}
+                    {this.state.mainPage === 'cart' &&
+                    <Cart />}
                 </div>
             </div>
         )

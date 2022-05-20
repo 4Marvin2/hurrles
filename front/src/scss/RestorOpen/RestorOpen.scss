@@ -7,7 +7,10 @@
 
     &__main {
         overflow-y: scroll;
-        height: 800px;
+        height: 700px;
+    }
+    &__add-button{
+        margin: 0 auto;
     }
     &__rating-reviews {
         height: 40px;

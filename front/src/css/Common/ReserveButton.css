@@ -1,11 +1,11 @@
-.button {
+.reserve-button {
   background-color: #6247AA;
   border-radius: 30px;
   cursor: pointer;
-  width: 90px;
-  height: 25px;
+  width: 314px;
+  height: 62px;
 }
-.button__text {
+.reserve-button__text {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
   color: #FFFFFF;

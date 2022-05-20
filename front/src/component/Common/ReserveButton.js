@@ -1,8 +1,8 @@
 import React from 'react'
 
-import '../../css/Common/NormalButton.css'
+import '../../css/Common/ReserveButton.css'
 
-export default class Button extends React.Component {
+export default class AddButton extends React.Component {
     constructor(props) {
         super(props);
 
@@ -28,8 +28,8 @@ export default class Button extends React.Component {
 
     render(){
         return (
-            <button className='button' onClick={this.state.onClick}>
-                <span className='button__text'>{this.state.text}</span>
+            <button className='reserve-button' onClick={this.state.onClick}>
+                <span className='reserve-button__text'>{this.state.text}</span>
             </button>
         );
     }

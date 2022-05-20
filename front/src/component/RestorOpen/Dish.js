@@ -1,5 +1,5 @@
 import React from "react";
-import AddButton from '../Common/NormalButton'
+import AddButton from '../Common/AddButton'
 import DishLogo from "../../imgs/restors/nagoya/set_curry_rise.svg";
 import '../../css/RestorOpen/RestorOpen.css'
 import '../../css/RestorOpen/Menu.css'

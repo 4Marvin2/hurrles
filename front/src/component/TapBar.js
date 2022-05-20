@@ -34,7 +34,7 @@ export default class TapBar extends React.Component {
                         <img src={LikedDisable} alt="LikedDisable" />
                     }
                 </button>
-                <button className="tapbar__icon">
+                <button className="tapbar__icon" onClick={() => this.tapBarClick('cart')}>
                     {this.props.mainPage === 'cart' &&
                         <img src={CartEnable} alt="CartEnable" />
                     }
