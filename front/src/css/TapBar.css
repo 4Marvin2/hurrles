@@ -1,0 +1,27 @@
+.tapbar {
+  width: 109px;
+  height: 950px;
+  background: #FFFFFF;
+  border-radius: 0px 30px 30px 0px;
+  display: flex;
+  flex: wrap;
+  flex-flow: column;
+}
+.tapbar__icon {
+  margin: auto;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+.tapbar__exit-icon {
+  margin: 300px auto auto auto;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/*# sourceMappingURL=TapBar.css.map */

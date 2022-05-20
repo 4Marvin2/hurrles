@@ -1,0 +1,11 @@
+.restors {
+  overflow-y: scroll;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+.restors__restor {
+  margin: 10px;
+}
+
+/*# sourceMappingURL=Restors.css.map */

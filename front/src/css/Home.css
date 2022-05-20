@@ -1,0 +1,31 @@
+.home {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 97vh;
+}
+.home__left {
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+  flex: 4;
+  height: 100%;
+}
+.home__right {
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+  flex: 6;
+}
+.home__restorOpen_in {
+  box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
+  border-radius: 12px;
+  background: white;
+  width: 90%;
+  height: 95vh;
+}
+.home__search {
+  margin: 0 auto;
+}
+
+/*# sourceMappingURL=Home.css.map */
