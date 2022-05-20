@@ -3,7 +3,6 @@ import AddButton from '../Common/AddButton'
 import DishLogo from "../../imgs/restors/nagoya/set_curry_rise.svg";
 import '../../css/RestorOpen/RestorOpen.css'
 import '../../css/RestorOpen/Menu.css'
-import '../../css/RestorOpen/Info.css'
 import '../../css/RestorOpen/Dish.css'
 import "../../css/App.css";
 

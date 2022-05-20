@@ -1,7 +1,6 @@
 import React from "react";
 import '../../css/RestorOpen/RestorOpen.css'
 import '../../css/RestorOpen/Menu.css'
-import '../../css/RestorOpen/Info.css'
 import '../../css/RestorOpen/Dish.css'
 import "../../css/App.css";
 

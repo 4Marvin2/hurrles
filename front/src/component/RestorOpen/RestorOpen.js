@@ -5,7 +5,6 @@ import TitleBar from '../RestorOpen/TitleBar'
 import Info from '../RestorOpen/Info'
 import '../../css/RestorOpen/RestorOpen.css'
 import '../../css/RestorOpen/Menu.css'
-import '../../css/RestorOpen/Info.css'
 import '../../css/RestorOpen/Dish.css'
 
 

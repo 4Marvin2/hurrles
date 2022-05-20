@@ -1,0 +1,39 @@
+.restor-titlebar {
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.restor-titlebar__back {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+.restor-titlebar__img {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 3;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.restor-titlebar__img img {
+  width: 100%;
+  object-fit: contain;
+}
+.restor-titlebar__like {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+/*# sourceMappingURL=TitleBar.css.map */
