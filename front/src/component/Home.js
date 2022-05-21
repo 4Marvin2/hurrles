@@ -49,7 +49,6 @@ export default class Home extends React.Component {
             const restors = [];
             data.forEach(e => {
                 getRestorMenu(e.id).then((data) => {
-                    console.log(e.id)
                     const dishes = [];
                     data.forEach(e => {
                         const dishElement = {
