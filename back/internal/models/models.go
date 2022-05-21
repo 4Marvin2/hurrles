@@ -18,7 +18,7 @@ type UserCredentials struct {
 type User struct {
 	Id       uint64 `json:"id,omitempty"`
 	Email    string `json:"email,omitempty"`
-	Password string `json:"password,omitempty"`
+	Password string `json:"-"`
 	FullName string `json:"fullName,omitempty"`
 	Number   string `json:"number,omitempty"`
 	IsAdmin  bool   `json:"isAdmin,omitempty"`

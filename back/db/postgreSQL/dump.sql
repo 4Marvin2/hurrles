@@ -5,8 +5,8 @@ create table if not exists users
     id          serial primary key,
     email       citext unique,
     password    varchar(64) not null,
-    full_name   varchar(128) not null,
-    number      varchar(16) not null,
+    full_name   varchar(128) default '',
+    number      varchar(16) default '',
     is_admin    boolean default false
 );
 
@@ -30,7 +30,8 @@ create table if not exists restaurants_users
     user_id int not null,
     constraint fk_ru_users foreign key (user_id) references users (id),
     restaurant_id  int not null,
-    constraint fk_ru_restaurants foreign key (restaurant_id) references restaurants (id)
+    constraint fk_ru_restaurants foreign key (restaurant_id) references restaurants (id),
+    unique(user_id, restaurant_id)
 );
 
 create table if not exists places

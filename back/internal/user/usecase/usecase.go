@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/jackc/pgx"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type IUserUsecase interface {
@@ -18,6 +19,7 @@ type IUserUsecase interface {
 	LoginUser(context.Context, models.UserCredentials) (models.User, int, error)
 	SignupUser(context.Context, models.User) (models.User, int, error)
 	GetUserFromCtx(context.Context) (models.User, int, error)
+	EditUser(context.Context, models.User) (models.User, int, error)
 }
 
 type userUsecase struct {
@@ -41,7 +43,7 @@ func (uu *userUsecase) LoginUser(ctx context.Context, credentials models.UserCre
 	}
 
 	isVerify, err := hasher.ComparePasswords(user.Password, credentials.Password)
-	if err != nil {
+	if err != nil && err != bcrypt.ErrMismatchedHashAndPassword {
 		return models.User{}, http.StatusInternalServerError, err
 	}
 
@@ -92,4 +94,23 @@ func (uu *userUsecase) GetUserFromCtx(ctx context.Context) (models.User, int, er
 	}
 
 	return curUser, http.StatusOK, nil
+}
+
+func (uu *userUsecase) EditUser(ctx context.Context, user models.User) (models.User, int, error) {
+	curUser, ok := ctx.Value(config.ContextUser).(models.User)
+	if !ok {
+		return models.User{}, http.StatusNotFound, nil
+	}
+
+	if curUser.Email != user.Email {
+		return models.User{}, http.StatusNotFound, nil
+	}
+	user.Id = curUser.Id
+
+	updatedUser, err := uu.UserPostgresRepository.UpdateUser(ctx, user)
+	if err != nil {
+		return models.User{}, http.StatusInternalServerError, err
+	}
+
+	return updatedUser, http.StatusOK, nil
 }
