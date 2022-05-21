@@ -1,5 +1,6 @@
 .cart{
-    margin-top: 20px;
+    margin: 20px auto;
+
     &__title{
         font-family: 'SF Pro Text';
         font-style: normal;
@@ -15,6 +16,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: 900px;
+    }
+    &__cart-restors_scroll {
+        overflow-y: scroll;
     }
     &__cart-restor {
         margin-top: 10px;

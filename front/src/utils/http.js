@@ -32,7 +32,12 @@ class Http {
             credentials: 'include',
         });
 
-        const responseData = await response.json();
+        var responseData
+        try {
+            responseData = await response.json();
+        } catch (error) {
+            console.error(error);
+        }
 
         const csrfTokenResp = response.headers.get('csrf');
         if (csrfTokenResp) {

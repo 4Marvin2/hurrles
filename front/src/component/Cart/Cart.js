@@ -11,7 +11,10 @@ export default class Cart extends React.Component {
             {id: 3},
         ]
         return (
-            <div className="cart">
+            <div className='cart'>
+                <div className="cart__title">
+                    Ближайшие бронирования
+                </div>
                 <CartRestors cartRestors={cartRestors} />
             </div>
         );

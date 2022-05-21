@@ -17,7 +17,7 @@ export default class RestorOpen extends React.Component {
                     <Info  restorInfo={this.props.restorInfo}/>
                     <Menu dishes={this.props.dishes} />
                 </div>
-                <div className="restor-open__add-button">
+                <div className="restor-open__reverse-button">
                     <ReserveButton text={'Забронировать'} />
                 </div>
             </div>

@@ -42,7 +42,7 @@ export default class TapBar extends React.Component {
                         <img src={CartDisable} alt="CartDisable" />
                     }
                 </button>
-                <button className="tapbar__icon">
+                <button className="tapbar__icon" onClick={() => this.tapBarClick('profile')}>
                     {this.props.mainPage === 'profile' &&
                         <img src={ProfileEnable} alt="ProfileEnable" />
                     }
