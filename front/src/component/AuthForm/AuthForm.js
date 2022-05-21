@@ -9,7 +9,7 @@ import Button from '../Common/Button';
 
 import validator from 'validator'
 
-import { loginRequest, signupRequest } from '../../requests/auth';
+import { loginRequest, signupRequest } from '../../requests/user';
 
 import { emailErrorMsg, passwordErrorMsg, repeatPasswordErrorMsg, loginFormErrorMsg, signupFormErrorMsg } from '../../constants/errorMsg';
 
@@ -99,14 +99,11 @@ export default class AuthForm extends React.Component {
 
     formButtonClick = (payload) => {
         if (this.state.login) {
-            // login request
             if (this.state.emailIsValid && this.state.passwordIsValid) {
                 loginRequest(this.state.email, this.state.password)
                     .then((data) => {
                         this.setState({formErrorIsActive: false})
-                        // TODO: set user data to store
-                        console.log(data);
-                        this.logInHandler({loggedIn: true})
+                        this.logInHandler({loggedIn: true, user: data})
                     })
                     .catch((error) => {
                         this.setState({formErrorIsActive: true})
@@ -116,14 +113,11 @@ export default class AuthForm extends React.Component {
                 console.log('login error');
             }
         } else if (this.state.signup) {
-            // signup request
             if (this.state.emailIsValid && this.state.passwordIsValid && this.state.repeatPasswordIsValid) {
                 signupRequest(this.state.email, this.state.password)
                 .then((data) => {
                     this.setState({formErrorIsActive: false})
-                    // TODO: set user data to store
-                    console.log(data);
-                    this.logInHandler({loggedIn: true})
+                    this.logInHandler({loggedIn: true, user: data})
                 })
                 .catch((error) => {
                     this.setState({formErrorIsActive: true})
@@ -165,6 +159,7 @@ export default class AuthForm extends React.Component {
                             prompt={emailErrorMsg}
                             promptIsActive={!this.state.emailIsValid}
                             onInput={(e) => {this.emailOnInput(e)}}
+                            theme='dark'
                         />
                         <InputField
                             type='password'
@@ -176,6 +171,7 @@ export default class AuthForm extends React.Component {
                             onInput={(e) => {this.passwordOnInput(e)}}
                             disableCope={true}
                             disablePaste={true}
+                            theme='dark'
                         />
 
                         { this.state.signup &&
@@ -189,13 +185,14 @@ export default class AuthForm extends React.Component {
                                 onInput={(e) => {this.repeatPasswordOnInput(e)}}
                                 disableCope={true}
                                 disablePaste={true}
+                                theme='dark'
                             />
                         }
                     </div>
                     {/* TODO: forggot password link here */}
                     <div className='auth-form__form-button'>
                         <span className={ this.state.formErrorIsActive ? 'auth-form__form-error auth-form__form-error_active' : 'auth-form__form-error' }>{this.state.formError}</span>
-                        <Button text={this.state.buttonText} onClick={this.formButtonClick}/>
+                        <Button text={this.state.buttonText} theme='dark' width={300} height={72} onClick={this.formButtonClick}/>
                     </div>
                 </div>
             </div>
