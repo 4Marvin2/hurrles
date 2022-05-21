@@ -46,6 +46,11 @@ export default class InputField extends React.Component {
         } else {
             this.state['promptIsActive'] = false
         }
+        if (props.value) {
+            this.state['value'] = props.value
+        } else {
+            this.state['promptIsActive'] = false
+        }
         if (props.onInput) {
             this.state['onInput'] = props.onInput
         } else {
@@ -71,6 +76,7 @@ export default class InputField extends React.Component {
                         className={ this.state.promptIsActive ? 'input-field__input input-field__input_error' : 'input-field__input' }
                         type={this.state.type}
                         placeholder={this.state.placeholder}
+                        value={this.state.value}
                         onInput={this.state.onInput}
                         onPaste={(e) => {
                             e.preventDefault();
