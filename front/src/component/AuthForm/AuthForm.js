@@ -9,20 +9,13 @@ import Button from '../Common/Button';
 
 import validator from 'validator'
 
-import { getUserRequest, loginRequest, signupRequest } from '../../requests/auth';
+import { loginRequest, signupRequest } from '../../requests/auth';
 
 import { emailErrorMsg, passwordErrorMsg, repeatPasswordErrorMsg, loginFormErrorMsg, signupFormErrorMsg } from '../../constants/errorMsg';
 
 export default class AuthForm extends React.Component {
     constructor(props) {
         super(props);
-        getUserRequest()
-        .then((data) => {
-            console.log(data);
-        })
-        .catch((error) => {
-            // error
-        })
         if (props.authType && props.authType === 'signup') {
             this.state = {
                 login: false,
@@ -45,6 +38,15 @@ export default class AuthForm extends React.Component {
                 buttonText: 'Войти',
             };
         }
+        if (props.callback) {
+            this.state['callback'] = props.callback
+        } else {
+            // error
+        }
+    }
+
+    logInHandler(payload) {
+        this.props.logInHandler(payload);
     }
 
     loginSwitchClick = (payload) => {
@@ -102,7 +104,9 @@ export default class AuthForm extends React.Component {
                 loginRequest(this.state.email, this.state.password)
                     .then((data) => {
                         this.setState({formErrorIsActive: false})
+                        // TODO: set user data to store
                         console.log(data);
+                        this.logInHandler({loggedIn: true})
                     })
                     .catch((error) => {
                         this.setState({formErrorIsActive: true})
@@ -117,7 +121,9 @@ export default class AuthForm extends React.Component {
                 signupRequest(this.state.email, this.state.password)
                 .then((data) => {
                     this.setState({formErrorIsActive: false})
+                    // TODO: set user data to store
                     console.log(data);
+                    this.logInHandler({loggedIn: true})
                 })
                 .catch((error) => {
                     this.setState({formErrorIsActive: true})

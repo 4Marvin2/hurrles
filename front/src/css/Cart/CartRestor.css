@@ -1,10 +1,86 @@
 .cart-restor {
   width: 665px;
-  height: 395px;
-  margin-top: 15px;
+  min-height: 395px;
+  margin-top: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   background: #FFFFFF;
-  box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
+  -webkit-box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
+          box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
   border-radius: 12px;
 }
-
-/*# sourceMappingURL=CartRestor.css.map */
+.cart-restor__content {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 90%;
+  min-height: 395px;
+  margin: 20px;
+  font-family: "SF Pro Rounded";
+  font-style: normal;
+  font-weight: 600;
+  color: #000000;
+}
+.cart-restor__title {
+  font-size: 36px;
+  line-height: 36px;
+  margin-bottom: 10px;
+}
+.cart-restor__column-comp {
+  margin: 10px 0;
+}
+.cart-restor__row-comp {
+  margin-right: 10px;
+}
+.cart-restor__menu {
+  margin: 0 0 0 20px;
+}
+.cart-restor__dish {
+  margin-bottom: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.cart-restor__total {
+  list-style-type: none;
+}
+.cart-restor__dish-title {
+  width: 200px;
+}
+.cart-restor__total-title {
+  width: 310px;
+}
+.cart-restor__metro {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin: 5px 0;
+}
+.cart-restor__cancel-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  width: 100%;
+}

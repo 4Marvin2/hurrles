@@ -10,11 +10,8 @@ export default class CartRestors extends React.Component {
         );
 
         return (
-            <div className="cart">
-                <div className="cart__title">
-                    Ближайшие бронирования
-                </div>
-                <div className="cart__cart-restors">
+            <div className="cart__cart-restors">
+                <div className='cart__cart-restors_scroll'>
                     {cartRestors}
                 </div>
             </div>

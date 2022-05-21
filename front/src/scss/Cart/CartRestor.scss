@@ -1,9 +1,66 @@
 .cart-restor{
     width: 665px;
-    height: 395px;
-    margin-top: 15px;
+    min-height: 395px;
+    margin-top: 30px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     background: #FFFFFF;
     box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
     border-radius: 12px;
+
+    &__content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+        min-height: 395px;
+        margin: 20px;
+
+        font-family: 'SF Pro Rounded';
+        font-style: normal;
+        font-weight: 600;
+
+        color: #000000;
+    }
+    &__title {
+        font-size: 36px;
+        line-height: 36px;
+        margin-bottom: 10px;
+    }
+    &__column-comp {
+        margin: 10px 0;
+    }
+    &__row-comp {
+        margin-right: 10px;
+    }
+    &__menu {
+        margin: 0 0 0 20px;
+    }
+    &__dish {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+    }
+    &__total {
+        list-style-type: none;
+    }
+    &__dish-title {
+        width: 200px;
+    }
+    &__total-title {
+        width: 310px;
+    }
+    &__metro {
+        display: flex;
+        flex-direction: row;
+        margin: 5px 0;
+    }
+    &__cancel-button {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
 }
