@@ -5,5 +5,5 @@ export const loginFormErrorMsg = 'Не верный логин или парол
 export const signupFormErrorMsg = 'Такой пользователь уже зарегистрирован';
 
 export const nameErorrMsg = 'Введите ваше имя'
-export const phoneNumberErrorMsg = 'Введите номер телефона в формате +7-(922)-213-32-23'
+export const phoneNumberErrorMsg = 'Введите номер телефона'
 export const profileFormErrorMsg = 'Проверьте правильность введенных данных'

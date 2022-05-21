@@ -11,6 +11,32 @@ export default class Button extends React.Component {
         } else {
             this.state = {text: 'default'}
         }
+        if (props.theme) {
+            if (props.theme === 'light') {
+                this.state['buttonClassName'] = 'button button_light'
+                this.state['buttonTextClassName'] = 'button__text button__text_light'
+            } else if (props.theme === 'dark') {
+                this.state['buttonClassName'] = 'button button_dark'
+                this.state['buttonTextClassName'] = 'button__text button__text_dark'
+            } else {
+                this.state['buttonClassName'] = 'button'
+                this.state['buttonTextClassName'] = 'button__text'
+            }
+        } else {
+            this.state['buttonClassName'] = 'button'
+            this.state['buttonTextClassName'] = 'button__text'
+        }
+        if (props.height) {
+            this.state['height'] = props.height
+        } else {
+            this.state['height'] = 100
+        }
+        if (props.width) {
+            this.state['width'] = props.width
+        } else {
+            this.state['width'] = 100
+        }
+        console.log(this.state)
         if (props.onClick) {
             this.state['onClick'] = props.onClick
         } else {
@@ -28,8 +54,8 @@ export default class Button extends React.Component {
 
     render(){
         return (
-            <button className='button' onClick={this.state.onClick}>
-                <span className='button__text'>{this.state.text}</span>
+            <button className={this.state.buttonClassName} onClick={this.state.onClick} style={{width: this.state.width, height: this.state.height}}>
+                <span className={this.state.buttonTextClassName}>{this.state.text}</span>
             </button>
         );
     }

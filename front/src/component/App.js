@@ -7,10 +7,9 @@ import AuthForm from "./AuthForm/AuthForm";
 import Profile from "./Profile";
 import '../css/App.css'
 
-import { getUserRequest } from '../requests/auth';
+import { getUserRequest } from '../requests/user';
 
 import { Bars } from  'react-loader-spinner'
-
 
 export default class App extends React.Component {
     constructor(props) {
@@ -25,6 +24,7 @@ export default class App extends React.Component {
                     promiseInProgress: false,
                     loggedIn: true,
                     mainPage: 'home',
+                    user: data,
                 }
             )
         })
@@ -46,7 +46,7 @@ export default class App extends React.Component {
     }
 
     logInHandler(payload) {
-        this.setState({loggedIn: payload.loggedIn, mainPage: 'home'})
+        this.setState({loggedIn: payload.loggedIn, mainPage: 'home', user: payload.user})
     }
 
     render() {
@@ -73,7 +73,7 @@ export default class App extends React.Component {
                             {this.state.mainPage === 'cart' &&
                             <Cart />}
                             {this.state.mainPage === 'profile' &&
-                            <Profile />}
+                            <Profile name={this.state.user.fullName} email={this.state.user.email} phoneNumber={this.state.number}/>}
                         </div>
                     </div>
                 }

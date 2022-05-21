@@ -29,25 +29,11 @@ body {
     &__body{
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
         width: 100%;
-        // from ilyagu
-        // width: 90%;
         height: 100%;
     }
-}
-
-input[type="text"] {
-    background-color: transparent;
-    border: 0px;
-    outline: none;
-
-    font-family: SF Pro Rounded;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 17px;
-    line-height: 20px;
-
-    color: #000000;
 }
 
 button {

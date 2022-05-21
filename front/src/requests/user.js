@@ -55,7 +55,7 @@ const getUserRequest = () => {
 
 const logoutRequest = () => {
     return http
-        .delete(userURL+'logout')
+        .delete(userURL+'/logout')
         .then((result) => {
             if (result.status !== 200) {
                 throw 'Non 200 response';
@@ -67,30 +67,24 @@ const logoutRequest = () => {
         })
 };
 
-// const editProfileRequest = (name, gender, prefer, date, description, photoPaths, tags) => {
-//     const body = JSON.stringify({
-//         name: name,
-//         gender: gender,
-//         prefer: prefer,
-//         date: date,
-//         description: description,
-//         imgs: photoPaths,
-//         tags: tags,
-//     });
+const editRequest = (name, email, phoneNumber) => {
+    const body = JSON.stringify({
+        fullName: name,
+        email: email,
+        number: phoneNumber,
+    });
 
-//     return http
-//         .put(profileURL, body)
-//         .then((response) => {
-//             if (response.status !== HTTPSuccess) {
-//                 throw 'server internal error';
-//             }
+    return http
+        .put(userURL+'/edit', body)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
+            }
+            return result.data
+        })
+        .catch((error) => {
+            throw error
+        })
+};
 
-//             return response.data;
-//         })
-//         .catch((err) => {
-//             errorManager.pushAPIError();
-//             throw err;
-//         });
-// };
-
-export { signupRequest, loginRequest, getUserRequest, logoutRequest };
+export { signupRequest, loginRequest, getUserRequest, logoutRequest, editRequest };

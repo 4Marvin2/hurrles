@@ -37,6 +37,7 @@ func SetUserRouting(router *mux.Router, us usecase.IUserUsecase, ss usecase.ISes
 	router.HandleFunc("/api/v1/user/logout", perm.CheckAuth(userHandler.UserLogoutGet)).Methods("GET", "OPTIONS")
 
 	router.HandleFunc("/api/v1/user", p.SetCSRF(perm.CheckAuth(perm.GetCurrentUser(userHandler.UserGet)))).Methods("GET", "OPTIONS")
+	router.HandleFunc("/api/v1/user/edit", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(userHandler.UserEditPut)))).Methods("PUT", "OPTIONS")
 }
 
 func (uh *UserHandler) UserLoginPost(w http.ResponseWriter, r *http.Request) {
@@ -152,6 +153,27 @@ func (uh *UserHandler) UserLogoutGet(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, csrfCookie)
 
 	ioutils.SendWithoutBody(w, http.StatusOK)
+}
+
+func (uh *UserHandler) UserEditPut(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	var user models.User
+	err := ioutils.ReadJSON(r, &user)
+	if err != nil {
+		log.Errorf("UserDelivery.UserEditPut: failed read json with error: %w", err)
+		ioutils.SendError(w, http.StatusBadRequest, "")
+		return
+	}
+
+	updatedUser, status, err := uh.UserUseCase.EditUser(r.Context(), user)
+	if err != nil || status != http.StatusOK {
+		log.Errorf("UserDelivery.UserEditPut: failed update user with [error: %w] [status: %d]", err, status)
+		ioutils.SendError(w, status, "")
+		return
+	}
+
+	ioutils.Send(w, http.StatusOK, updatedUser)
 }
 
 func (uh *UserHandler) UserGet(w http.ResponseWriter, r *http.Request) {

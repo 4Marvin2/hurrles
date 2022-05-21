@@ -14,6 +14,7 @@ type IUserRepository interface {
 	GetUserById(context.Context, uint64) (models.User, error)
 	GetUserByEmail(context.Context, string) (models.User, error)
 	CreateUser(context.Context, models.User) (models.User, error)
+	UpdateUser(context.Context, models.User) (models.User, error)
 }
 
 type userRepository struct {
@@ -86,13 +87,12 @@ func (ur *userRepository) GetUserByEmail(ctx context.Context, email string) (mod
 func (ur *userRepository) CreateUser(ctx context.Context, user models.User) (models.User, error) {
 	var createdUser models.User
 	err := ur.Conn.QueryRow(
-		`INSERT INTO users (email, password, full_name, number)
-		VALUES ($1, $2, $3, $4) RETURNING email, password, full_name, number;`,
+		`INSERT INTO users (email, password)
+		VALUES ($1, $2) RETURNING id, email, password, full_name, number;`,
 		user.Email,
 		user.Password,
-		user.FullName,
-		user.Number,
 	).Scan(
+		&createdUser.Id,
 		&createdUser.Email,
 		&createdUser.Password,
 		&createdUser.FullName,
@@ -103,4 +103,29 @@ func (ur *userRepository) CreateUser(ctx context.Context, user models.User) (mod
 		return models.User{}, err
 	}
 	return createdUser, nil
+}
+
+func (ur *userRepository) UpdateUser(ctx context.Context, user models.User) (models.User, error) {
+	var updatedUser models.User
+	err := ur.Conn.QueryRow(
+		`UPDATE users
+		SET (full_name, email, number) = ($2, $3, $4)
+		WHERE id = $1
+		RETURNING id, email, password, full_name, number;`,
+		user.Id,
+		user.FullName,
+		user.Email,
+		user.Number,
+	).Scan(
+		&updatedUser.Id,
+		&updatedUser.Email,
+		&updatedUser.Password,
+		&updatedUser.FullName,
+		&updatedUser.Number,
+	)
+
+	if err != nil {
+		return models.User{}, err
+	}
+	return updatedUser, nil
 }
