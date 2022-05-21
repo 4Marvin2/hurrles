@@ -57,6 +57,7 @@ create table if not exists orders
     end_time     timestamptz not null,
     cost         int         not null,
     created_time timestamptz default now()
+    status       varchar(15) not null default 'open'
 );
 
 create table if not exists payments

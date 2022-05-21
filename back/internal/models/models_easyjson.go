@@ -1138,6 +1138,8 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels10(in *jlexer.Lexer, out *Order)
 			if data := in.Raw(); in.Ok() {
 				in.AddError((out.CreatedTime).UnmarshalJSON(data))
 			}
+		case "status":
+			out.Status = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -1324,6 +1326,16 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels10(out *jwriter.Writer, in Order
 			out.RawString(prefix)
 		}
 		out.Raw((in.CreatedTime).MarshalJSON())
+	}
+	if in.Status != "" {
+		const prefix string = ",\"status\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.Status))
 	}
 	out.RawByte('}')
 }

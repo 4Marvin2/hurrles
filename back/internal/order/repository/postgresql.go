@@ -54,7 +54,7 @@ func (or *orderRepository) CreateOrder(ctx context.Context, order models.Order) 
 	err := or.Conn.QueryRow(
 		`INSERT INTO orders (user_id, place_id, start_time, end_time, cost)
 		VALUES ($1, $2, $3, $4, $5)
-		RETURNING id, user_id, place_id, start_time, end_time, cost, created_time;`,
+		RETURNING id, user_id, place_id, start_time, end_time, cost, created_time, status;`,
 		order.UserId,
 		order.PlaceId,
 		order.StartTime,
@@ -68,6 +68,7 @@ func (or *orderRepository) CreateOrder(ctx context.Context, order models.Order) 
 		&createdOrder.EndTime,
 		&createdOrder.Cost,
 		&createdOrder.CreatedTime,
+		&createdOrder.Status,
 	)
 
 	if err != nil {
@@ -86,6 +87,7 @@ func (or *orderRepository) GetOrders(ctx context.Context, uid uint64) (models.Or
 			o.end_time,
 			o.cost,
 			o.created_time,
+			o.status,
 			r.title,
 			r.address,
 			r.metro,
@@ -132,6 +134,7 @@ func (or *orderRepository) GetOrders(ctx context.Context, uid uint64) (models.Or
 			&curOrder.EndTime,
 			&curOrder.Cost,
 			&curOrder.CreatedTime,
+			&curOrder.Status,
 			&curOrder.RestaurantTitle,
 			&curOrder.RestaurantAddress,
 			&curOrder.RestaurantMetro,
@@ -179,7 +182,7 @@ func (or *orderRepository) DeleteOrder(ctx context.Context, orderId uint64, uid 
 func (or *orderRepository) GetOrderById(ctx context.Context, orderId uint64) (models.Order, error) {
 	var createdOrder models.Order
 	err := or.Conn.QueryRow(
-		`SELECT id, user_id, place_id, start_time, end_time, cost, created_time
+		`SELECT id, user_id, place_id, start_time, end_time, cost, created_time, status
 		FROM orders
 		WHERE id = $1;`,
 		orderId,
@@ -191,6 +194,7 @@ func (or *orderRepository) GetOrderById(ctx context.Context, orderId uint64) (mo
 		&createdOrder.EndTime,
 		&createdOrder.Cost,
 		&createdOrder.CreatedTime,
+		&createdOrder.Status
 	)
 	if err != nil {
 		return models.Order{}, err

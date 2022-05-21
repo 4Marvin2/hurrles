@@ -68,6 +68,7 @@ type Order struct {
 	EndTime           time.Time `json:"endTime,omitempty"`
 	Cost              int32     `json:"cost,omitempty"`
 	CreatedTime       time.Time `json:"createdTime,omitempty"`
+	Status            string    `json:"status,omitempty"`
 }
 
 //easyjson:json
