@@ -194,7 +194,7 @@ func (or *orderRepository) GetOrderById(ctx context.Context, orderId uint64) (mo
 		&createdOrder.EndTime,
 		&createdOrder.Cost,
 		&createdOrder.CreatedTime,
-		&createdOrder.Status
+		&createdOrder.Status,
 	)
 	if err != nil {
 		return models.Order{}, err
