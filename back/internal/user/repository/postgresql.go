@@ -50,7 +50,7 @@ func NewPostgresUserRepository(config config.PostgresConfig) (IUserRepository, e
 func (ur *userRepository) GetUserById(ctx context.Context, uid uint64) (models.User, error) {
 	var user models.User
 	err := ur.Conn.QueryRow(
-		"SELECT id, email, password, full_name, number, is_admin FROM users WHERE id = $1;",
+		"SELECT id, email, password, full_name, number, is_admin, is_restaurant FROM users WHERE id = $1;",
 		uid,
 	).Scan(
 		&user.Id,
@@ -59,6 +59,7 @@ func (ur *userRepository) GetUserById(ctx context.Context, uid uint64) (models.U
 		&user.FullName,
 		&user.Number,
 		&user.IsAdmin,
+		&user.IsRestaurant,
 	)
 	if err != nil {
 		return models.User{}, err

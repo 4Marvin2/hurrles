@@ -119,12 +119,16 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels1(in *jlexer.Lexer, out *User) {
 			out.Id = uint64(in.Uint64())
 		case "email":
 			out.Email = string(in.String())
+		case "password":
+			out.Password = string(in.String())
 		case "fullName":
 			out.FullName = string(in.String())
 		case "number":
 			out.Number = string(in.String())
 		case "isAdmin":
 			out.IsAdmin = bool(in.Bool())
+		case "isRestaurant":
+			out.IsRestaurant = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -155,6 +159,16 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels1(out *jwriter.Writer, in User) 
 		}
 		out.String(string(in.Email))
 	}
+	if in.Password != "" {
+		const prefix string = ",\"password\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.String(string(in.Password))
+	}
 	if in.FullName != "" {
 		const prefix string = ",\"fullName\":"
 		if first {
@@ -184,6 +198,16 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels1(out *jwriter.Writer, in User) 
 			out.RawString(prefix)
 		}
 		out.Bool(bool(in.IsAdmin))
+	}
+	if in.IsRestaurant {
+		const prefix string = ",\"isRestaurant\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Bool(bool(in.IsRestaurant))
 	}
 	out.RawByte('}')
 }

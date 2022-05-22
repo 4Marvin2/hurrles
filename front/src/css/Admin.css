@@ -1,0 +1,38 @@
+.admin {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 97vh;
+}
+.admin__left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px;
+  flex: 4;
+  height: 100%;
+}
+.admin__add-button {
+  margin-top: 24px;
+}
+.admin__right {
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+  flex: 8;
+}
+.admin__right_hidden {
+  visibility: collapse;
+}
+.admin__form {
+  box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
+  border-radius: 12px;
+  background: white;
+  width: 90%;
+  height: 95vh;
+}
+.admin__search {
+  margin: 0 auto;
+}
+
+/*# sourceMappingURL=Admin.css.map */

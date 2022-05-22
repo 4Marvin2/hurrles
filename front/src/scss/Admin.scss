@@ -1,0 +1,42 @@
+.admin{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 97vh;
+
+    &__left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 15px;
+        flex: 4;
+        height: 100%;
+    }
+
+    &__add-button {
+        margin-top: 24px;
+    }
+
+    &__right {
+        display: flex;
+        flex-direction: column;
+        margin: 15px;
+        flex: 8;
+
+        &_hidden {
+            visibility: collapse;
+        }
+    }
+
+    &__form {
+        box-shadow: 5px 5px 20px 5px rgb(57 57 57 / 15%);
+        border-radius: 12px;
+        background: white;
+        width: 90%;
+        height: 95vh;
+    }
+
+    &__search {
+        margin: 0 auto;
+    }
+}

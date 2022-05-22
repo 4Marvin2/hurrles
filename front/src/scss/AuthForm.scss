@@ -77,6 +77,14 @@
         height: 40%;
     }
 
+    &__checkbox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        color: green;
+    }
+
     &__form-button {
         display: flex;
         flex-direction: column;

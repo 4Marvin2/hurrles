@@ -19,7 +19,7 @@ export default class InputField extends React.Component {
         if (props.placeholder) {
             this.state['placeholder'] = props.placeholder
         } else {
-            this.state['placeholder'] = 'default'
+            this.state['placeholder'] = ''
         }
         if (props.type) {
             this.state['type'] = props.type
@@ -49,26 +49,62 @@ export default class InputField extends React.Component {
         if (props.value) {
             this.state['value'] = props.value
         } else {
-            this.state['promptIsActive'] = false
+            this.state['value'] = ''
         }
         if (props.pattern) {
             this.state['pattern'] = props.pattern
         } else {
             this.state['pattern'] = ''
         }
+        if (props.rows) {
+            this.state['rows'] = props.rows
+        } else {
+            this.state['rows'] = 30
+        }
+        if (props.cols) {
+            this.state['cols'] = props.cols
+        } else {
+            this.state['cols'] = 30
+        }
+        if (props.maxLength) {
+            this.state['maxLength'] = props.maxLength
+        } else {
+            this.state['maxLength'] = 50
+        }
+        if (props.step) {
+            this.state['step'] = props.step
+        } else {
+            this.state['step'] = 1
+        }
         if (props.theme) {
             if (props.theme === 'light') {
-                this.state['inputClassName'] = 'input-field__input input-field__input_light'
+                if (props.type === 'textarea') {
+                    this.state['inputClassName'] = 'input-field__textarea input-field__textarea_light'   
+                } else {
+                    this.state['inputClassName'] = 'input-field__input input-field__input_light'
+                }
                 this.state['labelClassName'] = 'input-field__label input-field__label_light'
             } else if (props.theme === 'dark') {
-                this.state['inputClassName'] = 'input-field__input input-field__input_dark'
+                if (props.type === 'textarea') {
+                    this.state['inputClassName'] = 'input-field__textarea input-field__textarea_dark'   
+                } else {
+                    this.state['inputClassName'] = 'input-field__input input-field__input_dark'
+                }
                 this.state['labelClassName'] = 'input-field__label input-field__label_dark'
             } else {
-                this.state['inputClassName'] = 'input-field__input'
+                if (props.type === 'textarea') {
+                    this.state['inputClassName'] = 'input-field__textarea'   
+                } else {
+                    this.state['inputClassName'] = 'input-field__input'
+                }
                 this.state['labelClassName'] = 'input-field__label input-field__label'
             }
         } else {
-            this.state['inputClassName'] = 'input-field__input input-field__input_light'
+            if (props.type === 'textarea') {
+                this.state['inputClassName'] = 'input-field__textarea input-field__textarea_light'   
+            } else {
+                this.state['inputClassName'] = 'input-field__input input-field__input_light'
+            }
             this.state['labelClassName'] = 'input-field__label input-field__label_light'
         }
         if (props.onInput) {
@@ -95,13 +131,16 @@ export default class InputField extends React.Component {
         return (
             <div className='input-field'>
                 <label htmlFor={this.state.name} className={this.state.labelClassName}>{this.state.label}</label>
-                { this.state.disableCopy && this.state.disablePaste &&
+                { this.state.disableCopy && this.state.disablePaste && this.state.type !== 'textarea' &&
                     <input
                         id={this.state.name}
                         className={ this.state.promptIsActive ? this.state.inputClassName + ' input-field__input_error' : this.state.inputClassName }
                         type={this.state.type}
                         placeholder={this.state.placeholder}
                         defaultValue={this.state.value}
+                        pattern={this.state.pattern}
+                        maxLength={this.state.maxLength}
+                        step={this.state.step}
                         onInput={this.state.onInput}
                         onFocus={this.state.onFocus}
                         onPaste={(e) => {
@@ -114,7 +153,7 @@ export default class InputField extends React.Component {
                         }}
                     />
                 }
-                { !this.state.disableCopy && this.state.disablePaste &&
+                { !this.state.disableCopy && this.state.disablePaste && this.state.type !== 'textarea' &&
                     <input
                         id={this.state.name}
                         className={ this.state.promptIsActive ? this.state.inputClassName + ' input-field__input_error' : this.state.inputClassName }
@@ -122,6 +161,8 @@ export default class InputField extends React.Component {
                         placeholder={this.state.placeholder}
                         defaultValue={this.state.value}
                         pattern={this.state.pattern}
+                        maxLength={this.state.maxLength}
+                        step={this.state.step}
                         onInput={this.state.onInput}
                         onFocus={this.state.onFocus}
                         onPaste={(e) => {
@@ -130,7 +171,7 @@ export default class InputField extends React.Component {
                         }}
                     />
                 }
-                { this.state.disableCopy && !this.state.disablePaste &&
+                { this.state.disableCopy && !this.state.disablePaste && this.state.type !== 'textarea' &&
                     <input
                         id={this.state.name}
                         className={ this.state.promptIsActive ? this.state.inputClassName + ' input-field__input_error' : this.state.inputClassName }
@@ -138,6 +179,8 @@ export default class InputField extends React.Component {
                         placeholder={this.state.placeholder}
                         defaultValue={this.state.value}
                         pattern={this.state.pattern}
+                        maxLength={this.state.maxLength}
+                        step={this.state.step}
                         onInput={this.state.onInput}
                         onFocus={this.state.onFocus}
                         onCope={(e) => {
@@ -146,7 +189,7 @@ export default class InputField extends React.Component {
                         }}
                     />
                 }
-                { !this.state.disableCopy && !this.state.disablePaste &&
+                { !this.state.disableCopy && !this.state.disablePaste && this.state.type !== 'textarea' &&
                     <input
                         id={this.state.name}
                         className={ this.state.promptIsActive ? this.state.inputClassName + ' input-field__input_error' : this.state.inputClassName }
@@ -154,6 +197,22 @@ export default class InputField extends React.Component {
                         placeholder={this.state.placeholder}
                         defaultValue={this.state.value}
                         pattern={this.state.pattern}
+                        maxLength={this.state.maxLength}
+                        step={this.state.step}
+                        onInput={this.state.onInput}
+                        onFocus={this.state.onFocus}
+                    />
+                }
+                { !this.state.disableCopy && !this.state.disablePaste && this.state.type === 'textarea' &&
+                    <textarea
+                        id={this.state.name}
+                        className={ this.state.promptIsActive ? this.state.inputClassName + ' input-field__textarea_error' : this.state.inputClassName }
+                        placeholder={this.state.placeholder}
+                        defaultValue={this.state.value}
+                        pattern={this.state.pattern}
+                        rows={this.state.rows}
+                        cols={this.state.cols}
+                        maxLength={this.state.maxLength}
                         onInput={this.state.onInput}
                         onFocus={this.state.onFocus}
                     />

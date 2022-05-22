@@ -6,6 +6,7 @@ import '../../css/AuthForm.css'
 
 import InputField from '../Common/InputField';
 import Button from '../Common/Button';
+import Checkbox from '../Common/Checkbox';
 
 import validator from 'validator'
 
@@ -23,6 +24,8 @@ export default class AuthForm extends React.Component {
                 emailIsValid: true,
                 passwordIsValid: true,
                 repeatPasswordIsValid: true,
+                admin: false,
+                restor: false,
                 formError: signupFormErrorMsg,
                 formErrorIsActive: false,
                 buttonText: 'Зарегистрироваться',
@@ -33,16 +36,15 @@ export default class AuthForm extends React.Component {
                 signup: false,
                 emailIsValid: true,
                 passwordIsValid: true,
+                admin: false,
+                restor: false,
                 formErrorIsActive: false,
                 formError: loginFormErrorMsg,
                 buttonText: 'Войти',
             };
         }
-        if (props.callback) {
-            this.state['callback'] = props.callback
-        } else {
-            // error
-        }
+
+        this.checkboxOnChange = this.checkboxOnChange.bind(this);
     }
 
     logInHandler(payload) {
@@ -53,6 +55,8 @@ export default class AuthForm extends React.Component {
         this.setState({
             login: true,
             signup: false,
+            admin: false,
+            restor: false,
             formError: loginFormErrorMsg,
             formErrorIsActive: false,
             buttonText: 'Войти',
@@ -64,6 +68,8 @@ export default class AuthForm extends React.Component {
             login: false,
             signup: true,
             repeatPasswordIsValid: true,
+            admin: false,
+            restor: false,
             formError: signupFormErrorMsg,
             formErrorIsActive: false,
             buttonText: 'Зарегистрироваться',
@@ -97,6 +103,20 @@ export default class AuthForm extends React.Component {
         }
     }
 
+    checkboxOnChange = (payload) => {
+        if (payload.target.value === 'admin' && this.state.admin) {
+            this.setState({admin: false, restor: false})
+        } else if (payload.target.value === 'restor' && this.state.restor) {
+            this.setState({admin: false, restor: false})
+        } else if (payload.target.value === 'admin') {
+            this.setState({admin: true, restor: false})
+        } else if (payload.target.value === 'restor') {
+            this.setState({admin: false, restor: true})
+        } else {
+            this.setState({admin: false, restor: false})
+        }
+    }
+
     formButtonClick = (payload) => {
         if (this.state.login) {
             if (this.state.emailIsValid && this.state.passwordIsValid) {
@@ -109,8 +129,7 @@ export default class AuthForm extends React.Component {
                         this.setState({formErrorIsActive: true})
                     })
             } else {
-                // error
-                console.log('login error');
+                // user see error msg under each fields
             }
         } else if (this.state.signup) {
             if (this.state.emailIsValid && this.state.passwordIsValid && this.state.repeatPasswordIsValid) {
@@ -123,8 +142,7 @@ export default class AuthForm extends React.Component {
                     this.setState({formErrorIsActive: true})
                 })
             } else {
-                // error
-                console.log('signup error');
+                // user see error msg under each fields
             }
         } else {
             // error
@@ -158,6 +176,7 @@ export default class AuthForm extends React.Component {
                             placeholder='hurrles@example.com'
                             prompt={emailErrorMsg}
                             promptIsActive={!this.state.emailIsValid}
+                            maxLength={100}
                             onInput={(e) => {this.emailOnInput(e)}}
                             theme='dark'
                         />
@@ -168,6 +187,7 @@ export default class AuthForm extends React.Component {
                             placeholder='password'
                             prompt={passwordErrorMsg}
                             promptIsActive={!this.state.passwordIsValid}
+                            maxLength={64}
                             onInput={(e) => {this.passwordOnInput(e)}}
                             disableCope={true}
                             disablePaste={true}
@@ -182,6 +202,7 @@ export default class AuthForm extends React.Component {
                                 placeholder='repeat password'
                                 prompt={repeatPasswordErrorMsg}
                                 promptIsActive={!this.state.repeatPasswordIsValid}
+                                maxLength={64}
                                 onInput={(e) => {this.repeatPasswordOnInput(e)}}
                                 disableCope={true}
                                 disablePaste={true}
@@ -190,6 +211,26 @@ export default class AuthForm extends React.Component {
                         }
                     </div>
                     {/* TODO: forggot password link here */}
+                    {/* <div className='auth-form__checkbox'> */}
+                        {/* { this.state.login &&
+                            <Checkbox
+                                name='adminFlags'
+                                id='admin'
+                                value='admin'
+                                text='Я админ'
+                                checked={this.state.admin}
+                                onChange={this.checkboxOnChange}
+                            />
+                        } */}
+                        {/* <Checkbox
+                            name='adminFlags'
+                            id='restor'
+                            value='restor'
+                            text='Я админ ресторана'
+                            checked={this.state.restor}
+                            onChange={this.checkboxOnChange}
+                        /> */}
+                    {/* </div> */}
                     <div className='auth-form__form-button'>
                         <span className={ this.state.formErrorIsActive ? 'auth-form__form-error auth-form__form-error_active' : 'auth-form__form-error' }>{this.state.formError}</span>
                         <Button text={this.state.buttonText} theme='dark' width={300} height={72} onClick={this.formButtonClick}/>

@@ -2,12 +2,13 @@ create extension if not exists citext;
 
 create table if not exists users
 (
-    id          serial primary key,
-    email       citext unique,
-    password    varchar(64) not null,
-    full_name   varchar(128) default '',
-    number      varchar(16) default '',
-    is_admin    boolean default false
+    id            serial primary key,
+    email         citext unique,
+    password      varchar(64) not null,
+    full_name     varchar(128) default '',
+    number        varchar(16) default '',
+    is_admin      boolean default false,
+    is_restaurant boolean default false
 );
 
 create table if not exists restaurants
@@ -56,7 +57,7 @@ create table if not exists orders
     start_time   timestamptz not null,
     end_time     timestamptz not null,
     cost         int         not null,
-    created_time timestamptz default now()
+    created_time timestamptz default now(),
     status       varchar(15) not null default 'open'
 );
 
