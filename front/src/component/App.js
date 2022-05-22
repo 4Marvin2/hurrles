@@ -10,6 +10,8 @@ import '../css/App.css'
 import { getUserRequest } from '../requests/user';
 
 import { Bars } from  'react-loader-spinner'
+import Admin from "./Admin";
+import RestorAdmin from "./RestorAdmin";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -17,8 +19,6 @@ export default class App extends React.Component {
         this.state = {promiseInProgress: true}
         getUserRequest()
         .then((data) => {
-            // TODO: set user data to store
-            console.log(data)
             this.setState(
                 {
                     promiseInProgress: false,
@@ -51,7 +51,7 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div className="app__body">
+            <div className={ this.state.promiseInProgress ? 'app__body app__body_center' : 'app__body'}>
                 { this.state.promiseInProgress &&
                     <Bars color="#FFFFFF" height={80} width={80} />
                 }
@@ -60,7 +60,7 @@ export default class App extends React.Component {
                         <AuthForm authType='login' logInHandler={this.logInHandler}/>
                     </div>
                 }
-                { !this.state.promiseInProgress && this.state.loggedIn &&
+                { !this.state.promiseInProgress && this.state.loggedIn && !this.state.user.isAdmin && !this.state.user.isRestaurant &&
                     <div className="app">
                         <div className="app__tapbar">
                             <TapBar reserveFlag={true} mainPage={this.state.mainPage} tapBarClick={this.tapBarClick} />
@@ -76,6 +76,12 @@ export default class App extends React.Component {
                             <Profile name={this.state.user.fullName} email={this.state.user.email} phoneNumber={this.state.number}/>}
                         </div>
                     </div>
+                }
+                { !this.state.promiseInProgress && this.state.loggedIn && this.state.user.isAdmin &&
+                    <Admin />
+                }
+                { !this.state.promiseInProgress && this.state.loggedIn && this.state.user.isRestaurant &&
+                    <RestorAdmin />
                 }
             </div>
         )

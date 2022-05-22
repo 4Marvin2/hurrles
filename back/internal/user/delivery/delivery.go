@@ -34,6 +34,9 @@ func SetUserRouting(router *mux.Router, us usecase.IUserUsecase, ss usecase.ISes
 
 	router.HandleFunc("/api/v1/user/signup", p.SetCSRF(userHandler.UserSignupPost)).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/v1/user/login", p.SetCSRF(userHandler.UserLoginPost)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/v1/user/login/admin", p.SetCSRF(userHandler.UserLoginAdminPost)).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/v1/user/login/restaurant", p.SetCSRF(userHandler.UserLoginRestaurantPost)).Methods("POST", "OPTIONS")
+
 	router.HandleFunc("/api/v1/user/logout", perm.CheckAuth(userHandler.UserLogoutGet)).Methods("GET", "OPTIONS")
 
 	router.HandleFunc("/api/v1/user", p.SetCSRF(perm.CheckAuth(perm.GetCurrentUser(userHandler.UserGet)))).Methods("GET", "OPTIONS")
@@ -73,6 +76,90 @@ func (uh *UserHandler) UserLoginPost(w http.ResponseWriter, r *http.Request) {
 	err = uh.SessionUseCase.AddSession(r.Context(), sess)
 	if err != nil {
 		log.Errorf("UserDelivery.UserLoginPost: failed add session in tnt for user with error: %w", err)
+		ioutils.SendError(w, http.StatusInternalServerError, "")
+		return
+	}
+
+	http.SetCookie(w, &cookie)
+
+	ioutils.Send(w, status, user)
+}
+
+func (uh *UserHandler) UserLoginAdminPost(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	var credentials models.UserCredentials
+	err := ioutils.ReadJSON(r, &credentials)
+	if err != nil {
+		log.Errorf("UserDelivery.UserLoginAdminPost: failed read json with error: %w", err)
+		ioutils.SendError(w, http.StatusBadRequest, "")
+		return
+	}
+
+	user, status, err := uh.UserUseCase.LoginAdminUser(r.Context(), credentials)
+	if err != nil || status != http.StatusOK {
+		log.Errorf("UserDelivery.UserLoginAdminPost: failed user verification with [error: %w] [status: %d]", err, status)
+		ioutils.SendError(w, status, "")
+		return
+	}
+
+	cookie, err := uh.createSessionCookie(user.Email)
+	if err != nil {
+		log.Errorf("UserDelivery.UserLoginAdminPost: failed create cookie for user with error: %w", err)
+		ioutils.SendError(w, http.StatusInternalServerError, "")
+		return
+	}
+
+	sess := models.Session{
+		Cookie: cookie.Value,
+		UserID: user.Id,
+	}
+
+	err = uh.SessionUseCase.AddSession(r.Context(), sess)
+	if err != nil {
+		log.Errorf("UserDelivery.UserLoginAdminPost: failed add session in tnt for user with error: %w", err)
+		ioutils.SendError(w, http.StatusInternalServerError, "")
+		return
+	}
+
+	http.SetCookie(w, &cookie)
+
+	ioutils.Send(w, status, user)
+}
+
+func (uh *UserHandler) UserLoginRestaurantPost(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	var credentials models.UserCredentials
+	err := ioutils.ReadJSON(r, &credentials)
+	if err != nil {
+		log.Errorf("UserDelivery.UserLoginAdminPost: failed read json with error: %w", err)
+		ioutils.SendError(w, http.StatusBadRequest, "")
+		return
+	}
+
+	user, status, err := uh.UserUseCase.LoginRestaurantUser(r.Context(), credentials)
+	if err != nil || status != http.StatusOK {
+		log.Errorf("UserDelivery.UserLoginAdminPost: failed user verification with [error: %w] [status: %d]", err, status)
+		ioutils.SendError(w, status, "")
+		return
+	}
+
+	cookie, err := uh.createSessionCookie(user.Email)
+	if err != nil {
+		log.Errorf("UserDelivery.UserLoginAdminPost: failed create cookie for user with error: %w", err)
+		ioutils.SendError(w, http.StatusInternalServerError, "")
+		return
+	}
+
+	sess := models.Session{
+		Cookie: cookie.Value,
+		UserID: user.Id,
+	}
+
+	err = uh.SessionUseCase.AddSession(r.Context(), sess)
+	if err != nil {
+		log.Errorf("UserDelivery.UserLoginAdminPost: failed add session in tnt for user with error: %w", err)
 		ioutils.SendError(w, http.StatusInternalServerError, "")
 		return
 	}

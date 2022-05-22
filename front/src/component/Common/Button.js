@@ -36,7 +36,11 @@ export default class Button extends React.Component {
         } else {
             this.state['width'] = 100
         }
-        console.log(this.state)
+        if (props.id) {
+            this.state['id'] = props.id
+        } else {
+            this.state['id'] = 'default'
+        }
         if (props.onClick) {
             this.state['onClick'] = props.onClick
         } else {
@@ -54,7 +58,7 @@ export default class Button extends React.Component {
 
     render(){
         return (
-            <button className={this.state.buttonClassName} onClick={this.state.onClick} style={{width: this.state.width, height: this.state.height}}>
+            <button className={this.state.buttonClassName} id={this.state.id} onClick={this.state.onClick} style={{width: this.state.width, height: this.state.height}}>
                 <span className={this.state.buttonTextClassName}>{this.state.text}</span>
             </button>
         );
