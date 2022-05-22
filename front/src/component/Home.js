@@ -2,6 +2,7 @@ import React from 'react'
 import Restors from './Restors'
 import SearchBar from  './SearchBar'
 import RestorOpen from './RestorOpen/RestorOpen'
+import Reserve from './Reserve/Reserve'
 import '../css/Home.css'
 
 import { getRestors, getRestorMenu, getFavoriteRestors, addFavorite, deleteFavorite } from '../requests/restors';
@@ -13,6 +14,7 @@ export default class Home extends React.Component {
         super(props);
 
         this.state = {
+            reserve: false,
             currentIndex: 0,
             isFavorite: false,
             restors:[],
@@ -20,6 +22,7 @@ export default class Home extends React.Component {
 
         this.likeClick = this.likeClick.bind(this);
         this.restorClick = this.restorClick.bind(this);
+        this.reserveClick = this.reserveClick.bind(this);
 
         getFavoriteRestors().then((data) => {
             if (!data) {
@@ -50,15 +53,17 @@ export default class Home extends React.Component {
             data.forEach(e => {
                 getRestorMenu(e.id).then((data) => {
                     const dishes = [];
-                    data.forEach(e => {
-                        const dishElement = {
-                            id: e.id,
-                            title: e.title,
-                            desc: e.description,
-                            price: e.price
-                        };
-                        dishes.push(dishElement);
-                    });
+                    if (data) {
+                        data.forEach(e => {
+                            const dishElement = {
+                                id: e.id,
+                                title: e.title,
+                                desc: e.description,
+                                price: e.price
+                            };
+                            dishes.push(dishElement);
+                        });
+                    }
 
                     const restorElement = {
                         id: e.id, 
@@ -123,6 +128,10 @@ export default class Home extends React.Component {
         }
     }
 
+    reserveClick(payload) {
+        this.setState({reserve: payload});
+    }
+
     render(){
         return (
             <div className='home'>
@@ -134,10 +143,16 @@ export default class Home extends React.Component {
                     {this.state.restors.length !== 0 && 
                         <div className='home__restorOpen_in'>
                             <RestorOpen
+                            reserveClick={this.reserveClick}
                             likeClick={this.likeClick}
                             isFavorite={this.state.isFavorite}
                             dishes={this.state.restors[this.state.currentIndex].dishes}
                             restorInfo={this.state.restors[this.state.currentIndex].restorInfo} />
+                        </div>
+                    }
+                    {this.state.reserve &&
+                        <div className='home__reserve'>
+                            <Reserve reserveClick={this.reserveClick} />
                         </div>
                     }
                 </div>

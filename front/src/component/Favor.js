@@ -29,15 +29,17 @@ export default class Favor extends React.Component {
             data.forEach(e => {
                 getRestorMenu(e.id).then((data) => {
                     const dishes = [];
-                    data.forEach(e => {
-                        const dishElement = {
-                            id: e.id,
-                            title: e.title,
-                            desc: e.description,
-                            price: e.price
-                        };
-                        dishes.push(dishElement);
-                    });
+                    if (data) {
+                        data.forEach(e => {
+                            const dishElement = {
+                                id: e.id,
+                                title: e.title,
+                                desc: e.description,
+                                price: e.price
+                            };
+                            dishes.push(dishElement);
+                        });
+                    }
 
                     const restorElement = {
                         id: e.id, 

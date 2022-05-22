@@ -51,7 +51,7 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <div className={ this.state.promiseInProgress ? 'app__body app__body_center' : 'app__body'}>
+            <div className={this.state.promiseInProgress ? "app__body app__body_center" : "app__body"} >
                 { this.state.promiseInProgress &&
                     <Bars color="#FFFFFF" height={80} width={80} />
                 }

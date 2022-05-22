@@ -42,8 +42,10 @@ create table if not exists places
     constraint fk_dishes_restaurants foreign key (restaurant_id) references restaurants (id),
     capacity      int not null,
     number        int not null,
-    left_top      double precision not null,
-    right_bottom  double precision not null,
+    left_top      int not null,
+    right_bottom  int not null,
+    width         int not null,
+    height        int not null,
     floor         int not null
 );
 
@@ -58,7 +60,7 @@ create table if not exists orders
     end_time     timestamptz not null,
     cost         int         not null,
     created_time timestamptz default now(),
-    status       varchar(15) not null default 'open'
+    status       varchar(15) default 'open'
 );
 
 create table if not exists payments

@@ -12,5 +12,16 @@
   position: absolute;
   margin: 8px;
 }
+.search input {
+  background-color: transparent;
+  border: 0px;
+  outline: none;
+  font-family: SF Pro Rounded;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 20px;
+  color: #000000;
+}
 
 /*# sourceMappingURL=SearchBar.css.map */

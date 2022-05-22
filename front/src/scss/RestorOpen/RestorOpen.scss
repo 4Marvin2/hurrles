@@ -1,5 +1,6 @@
 .restor-open {
     width: 90%;
+    height: 100%;
     margin: 0px auto;
     display: flex;
     flex-direction: column;
@@ -7,7 +8,7 @@
 
     &__main {
         overflow-y: scroll;
-        height: 700px;
+        height: 70%;
     }
     &__reverse-button {
         margin: 30px auto;
