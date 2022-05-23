@@ -99,8 +99,8 @@ func (or *orderRepository) GetOrders(ctx context.Context, uid uint64) (models.Or
 		FROM orders AS o
 		JOIN places AS p ON (p.id = o.place_id)
 		JOIN restaurants AS r ON (r.id = p.restaurant_id)
-		JOIN dishes_orders AS dso ON (dso.order_id = o.id)
-		JOIN dishes AS d ON (d.id = dso.dish_id)
+		LEFT JOIN dishes_orders AS dso ON (dso.order_id = o.id)
+		LEFT JOIN dishes AS d ON (d.id = dso.dish_id)
 		WHERE user_id = $1 AND end_time >= now()
 		GROUP BY
 			o.id,

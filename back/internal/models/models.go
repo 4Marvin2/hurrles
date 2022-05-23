@@ -90,8 +90,8 @@ type Place struct {
 	RestaurantId uint64 `json:"restaurantId,omitempty"`
 	Capacity     int    `json:"capacity,omitempty"`
 	Number       int    `json:"number,omitempty"`
-	LeftTop      int    `json:"leftTop,omitempty"`
-	RightBottom  int    `json:"rightBottom,omitempty"`
+	LeftTop      int    `json:"leftTop"`
+	RightBottom  int    `json:"rightBottom"`
 	Floor        int    `json:"floor,omitempty"`
 	Width        int    `json:"width,omitempty"`
 	Height       int    `json:"height,omitempty"`
