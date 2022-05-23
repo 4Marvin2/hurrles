@@ -4,35 +4,25 @@ export default class Canvas extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            places: [
-                {
-                    id: 1,
-                    left: 250,
-                    top: 250,
-                    width: 25,
-                    height:25,
-                    nubmer: 1,
-                    capacity: 1,
-                    floor: 1,
-                },
-                {
-                    id: 2,
-                    left: 0,
-                    top: 0,
-                    width: 25,
-                    height:25,
-                    nubmer: 1,
-                    capacity: 1,
-                    floor: 2,
-                }
-            ],
+            places: this.props.places,
+            currentFloor: 1,
             isMouseDown: false,
             currentIndex: -1,
             offsetX: 0,
             offsetY: 0,
         }
     }
+    componentDidUpdate(){
+        if (this.props.currentFloor !== this.state.currentFloor) {
+            this.setState({currentFloor: this.props.currentFloor});
+            setTimeout(() => {
+                console.log(this.state.currentFloor)
+                this.updateCanvas();
+            }, 100);
+        }
+    }
     componentDidMount() {
+        console.log(this.state.currentFloor)
         this.updateCanvas();
     }
     updateCanvas() {
@@ -40,6 +30,8 @@ export default class Canvas extends React.Component {
         const ctx = canv.getContext('2d');
         canv.style.width  = '600px';
         canv.style.height = '600px';
+        
+        console.log(this.state)
 
         const  roundRect = (ctx, x, y, width, height, radius, fill, stroke) => {
             if (typeof stroke === 'undefined') {
@@ -174,7 +166,7 @@ export default class Canvas extends React.Component {
             const x = Math.floor((event.clientX - rect.left)/2);
             const y = Math.floor((event.clientY - rect.top)/2);
             places.forEach((e, index) => {
-                if (e.floor === this.props.currentFloor) {
+                if (e.floor == this.state.currentFloor) {
                     if (index === idx) {
                         roundRect(
                             ctx,
@@ -205,9 +197,10 @@ export default class Canvas extends React.Component {
         };
 
         const paintRects = () => {
+            clear(ctx);
             const places = this.state.places;
             places.forEach(e => {
-                if (e.floor === this.props.currentFloor){
+                if (e.floor == this.state.currentFloor){
                     roundRect(
                         ctx,
                         e.left,

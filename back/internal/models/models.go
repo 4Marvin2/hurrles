@@ -86,14 +86,16 @@ type PlaceList []Place
 
 //easyjson:json
 type Place struct {
-	Id           uint64  `json:"id,omitempty"`
-	RestaurantId uint64  `json:"restaurantId,omitempty"`
-	Capacity     int32   `json:"capacity,omitempty"`
-	Number       int32   `json:"number,omitempty"`
-	LeftTop      float64 `json:"leftTop,omitempty"`
-	RightBottom  float64 `json:"rightBottom,omitempty"`
-	Floor        int32   `json:"floor,omitempty"`
-	IsBooked     bool    `json:"isBooked"`
+	Id           uint64 `json:"id,omitempty"`
+	RestaurantId uint64 `json:"restaurantId,omitempty"`
+	Capacity     int    `json:"capacity,omitempty"`
+	Number       int    `json:"number,omitempty"`
+	LeftTop      int    `json:"leftTop,omitempty"`
+	RightBottom  int    `json:"rightBottom,omitempty"`
+	Floor        int    `json:"floor,omitempty"`
+	Width        int    `json:"width,omitempty"`
+	Height       int    `json:"height,omitempty"`
+	IsBooked     bool   `json:"isBooked"`
 }
 
 //easyjson:json

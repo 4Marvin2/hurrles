@@ -1,9 +1,15 @@
 .admin-restor-open {
   width: 90%;
   margin: 0px auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   height: 100%;
 }
 .admin-restor-open_form-open {
@@ -18,9 +24,16 @@
 }
 .admin-restor-open__rating-reviews {
   height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .admin-restor-open__rating-reviews img {
   margin-left: 20px;
@@ -34,8 +47,13 @@
   font-weight: 600;
   font-size: 14px;
   line-height: 17px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 .admin-restor-open__address-schedule p {
   margin-top: 1px;
@@ -58,9 +76,15 @@
   opacity: 0.5;
 }
 .admin-restor-open__tags {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   font-family: "SF Pro Rounded";
   font-style: normal;
   font-weight: 600;
@@ -93,5 +117,3 @@
   text-align: center;
   line-height: 30px;
 }
-
-/*# sourceMappingURL=AdminRestorOpen.css.map */
