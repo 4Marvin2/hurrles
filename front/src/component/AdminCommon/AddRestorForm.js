@@ -114,6 +114,7 @@ export default class AddRestorForm extends React.Component {
         const d = moment(fullDate).format('L'); // d = "12/12/2017"
         const date = moment(d +' '+ payload.target.value).format();
         this.setState({openTime: date})
+        console.log(payload.target.value)
         if (payload.target.value.length !== 0) {
             this.setState({openTimeIsValid: true})
         } else {

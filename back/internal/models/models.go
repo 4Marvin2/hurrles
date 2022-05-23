@@ -1,6 +1,26 @@
 package models
 
-import "time"
+import (
+	"time"
+)
+
+// type CustomTime struct {
+// 	time.Time
+// }
+
+// const ctLayout = "15:04"
+
+// func (ct *CustomTime) UnmarshalJSON(b []byte) (err error) {
+// 	if b[0] == '"' && b[len(b)-1] == '"' {
+// 		b = b[1 : len(b)-1]
+// 	}
+// 	ct.Time, err = time.Parse(ctLayout, string(b))
+// 	return
+// }
+
+// func (ct *CustomTime) MarshalJSON() ([]byte, error) {
+// 	return []byte(ct.Time.Format(ctLayout)), nil
+// }
 
 //easyjson:json
 type Base struct {
@@ -86,14 +106,16 @@ type PlaceList []Place
 
 //easyjson:json
 type Place struct {
-	Id           uint64  `json:"id,omitempty"`
-	RestaurantId uint64  `json:"restaurantId,omitempty"`
-	Capacity     int32   `json:"capacity,omitempty"`
-	Number       int32   `json:"number,omitempty"`
-	LeftTop      float64 `json:"leftTop,omitempty"`
-	RightBottom  float64 `json:"rightBottom,omitempty"`
-	Floor        int32   `json:"floor,omitempty"`
-	IsBooked     bool    `json:"isBooked"`
+	Id           uint64 `json:"id,omitempty"`
+	RestaurantId uint64 `json:"restaurantId,omitempty"`
+	Capacity     int32  `json:"capacity,omitempty"`
+	Number       int32  `json:"number,omitempty"`
+	LeftTop      int32  `json:"leftTop,omitempty"`
+	RightBottom  int32  `json:"rightBottom,omitempty"`
+	Width        int32  `json:"width,omitempty"`
+	Height       int32  `json:"height,omitempty"`
+	Floor        int32  `json:"floor,omitempty"`
+	IsBooked     bool   `json:"isBooked"`
 }
 
 //easyjson:json

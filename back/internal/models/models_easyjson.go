@@ -740,9 +740,9 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels7(in *jlexer.Lexer, out *Place) 
 		case "number":
 			out.Number = int32(in.Int32())
 		case "leftTop":
-			out.LeftTop = float64(in.Float64())
+			out.LeftTop = int32(in.Int32())
 		case "rightBottom":
-			out.RightBottom = float64(in.Float64())
+			out.RightBottom = int32(in.Int32())
 		case "floor":
 			out.Floor = int32(in.Int32())
 		case "isBooked":
@@ -805,7 +805,7 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels7(out *jwriter.Writer, in Place)
 		} else {
 			out.RawString(prefix)
 		}
-		out.Float64(float64(in.LeftTop))
+		out.Int32(int32(in.LeftTop))
 	}
 	if in.RightBottom != 0 {
 		const prefix string = ",\"rightBottom\":"
@@ -815,7 +815,7 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels7(out *jwriter.Writer, in Place)
 		} else {
 			out.RawString(prefix)
 		}
-		out.Float64(float64(in.RightBottom))
+		out.Int32(int32(in.RightBottom))
 	}
 	if in.Floor != 0 {
 		const prefix string = ",\"floor\":"
