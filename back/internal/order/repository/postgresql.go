@@ -8,6 +8,7 @@ import (
 	"log"
 
 	"github.com/jackc/pgx"
+	"github.com/lib/pq"
 )
 
 type IOrderRepository interface {
@@ -93,15 +94,15 @@ func (or *orderRepository) GetOrders(ctx context.Context, uid uint64) (models.Or
 			r.metro,
 			p.number,
 			p.capacity,
-			ARRAY_AGG(d.title) AS dishes,
-			ARRAY_AGG(d.price) AS dish_prices,
-			ARRAY_AGG(dso.number) AS dish_numbers
+			ARRAY_REMOVE(ARRAY_AGG(d.title), NULL) AS dishes,
+			ARRAY_REMOVE(ARRAY_AGG(d.price), NULL) AS dish_prices,
+			ARRAY_REMOVE(ARRAY_AGG(dso.number), NULL) AS dish_numbers
 		FROM orders AS o
 		JOIN places AS p ON (p.id = o.place_id)
 		JOIN restaurants AS r ON (r.id = p.restaurant_id)
-		JOIN dishes_orders AS dso ON (dso.order_id = o.id)
-		JOIN dishes AS d ON (d.id = dso.dish_id)
-		WHERE user_id = $1 AND end_time >= now()
+		LEFT JOIN dishes_orders AS dso ON (dso.order_id = o.id)
+		LEFT JOIN dishes AS d ON (d.id = dso.dish_id)
+		WHERE user_id = $1 AND o.end_time >= now()
 		GROUP BY
 			o.id,
 			o.user_id,
@@ -140,9 +141,9 @@ func (or *orderRepository) GetOrders(ctx context.Context, uid uint64) (models.Or
 			&curOrder.RestaurantMetro,
 			&curOrder.PlaceNumber,
 			&curOrder.PlaceCapacity,
-			&curOrder.Dishes,
-			&curOrder.DishesPrices,
-			&curOrder.DishesCounts,
+			pq.Array(&curOrder.Dishes),
+			pq.Array(&curOrder.DishesPrices),
+			pq.Array(&curOrder.DishesCounts),
 		)
 		if err != nil {
 			return models.OrderList{}, err

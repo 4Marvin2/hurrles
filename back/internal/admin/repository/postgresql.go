@@ -112,6 +112,9 @@ func (ar *adminRepository) GetRestaurantByTitleAndAddress(ctx context.Context, t
 
 func (ar *adminRepository) CreateRestaurant(ctx context.Context, restaurant models.Restaurant) (models.Restaurant, error) {
 	var createdRestaurant models.Restaurant
+	// formattedOpenTime := restaurant.OpenTime.Format("15:04")
+	// formattedCloseTime := restaurant.CloseTime.Format("15:04")
+	// var openTime, closeTime interface{}
 	err := ar.Conn.QueryRow(
 		`INSERT INTO restaurants (title, description, address, metro, number, open_time, close_time, kitchen, img)
 		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
@@ -282,7 +285,7 @@ func (ar *adminRepository) UpdateDish(ctx context.Context, dish models.Dish) (mo
 func (ar *adminRepository) GetPlaceById(ctx context.Context, id uint64) (models.Place, error) {
 	var place models.Place
 	err := ar.Conn.QueryRow(
-		`SELECT id, restaurant_id, capacity, number, left_top, right_bottom, floor
+		`SELECT id, restaurant_id, capacity, number, left_top, right_bottom, width, height, floor
 		FROM places
 		WHERE id = $1;`,
 		id,
@@ -293,6 +296,8 @@ func (ar *adminRepository) GetPlaceById(ctx context.Context, id uint64) (models.
 		&place.Number,
 		&place.LeftTop,
 		&place.RightBottom,
+		&place.Width,
+		&place.Height,
 		&place.Floor,
 	)
 	if err != nil {
