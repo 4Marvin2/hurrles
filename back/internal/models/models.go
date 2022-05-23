@@ -108,13 +108,13 @@ type PlaceList []Place
 type Place struct {
 	Id           uint64 `json:"id,omitempty"`
 	RestaurantId uint64 `json:"restaurantId,omitempty"`
-	Capacity     int32  `json:"capacity,omitempty"`
-	Number       int32  `json:"number,omitempty"`
-	LeftTop      int32  `json:"leftTop,omitempty"`
-	RightBottom  int32  `json:"rightBottom,omitempty"`
-	Width        int32  `json:"width,omitempty"`
-	Height       int32  `json:"height,omitempty"`
-	Floor        int32  `json:"floor,omitempty"`
+	Capacity     int    `json:"capacity,omitempty"`
+	Number       int    `json:"number,omitempty"`
+	LeftTop      int    `json:"leftTop"`
+	RightBottom  int    `json:"rightBottom"`
+	Floor        int    `json:"floor,omitempty"`
+	Width        int    `json:"width,omitempty"`
+	Height       int    `json:"height,omitempty"`
 	IsBooked     bool   `json:"isBooked"`
 }
 

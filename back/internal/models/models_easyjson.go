@@ -655,7 +655,7 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels6(in *jlexer.Lexer, out *PlaceLi
 		in.Delim('[')
 		if *out == nil {
 			if !in.IsDelim(']') {
-				*out = make(PlaceList, 0, 1)
+				*out = make(PlaceList, 0, 0)
 			} else {
 				*out = PlaceList{}
 			}
@@ -736,15 +736,19 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels7(in *jlexer.Lexer, out *Place) 
 		case "restaurantId":
 			out.RestaurantId = uint64(in.Uint64())
 		case "capacity":
-			out.Capacity = int32(in.Int32())
+			out.Capacity = int(in.Int())
 		case "number":
-			out.Number = int32(in.Int32())
+			out.Number = int(in.Int())
 		case "leftTop":
-			out.LeftTop = int32(in.Int32())
+			out.LeftTop = int(in.Int())
 		case "rightBottom":
-			out.RightBottom = int32(in.Int32())
+			out.RightBottom = int(in.Int())
 		case "floor":
-			out.Floor = int32(in.Int32())
+			out.Floor = int(in.Int())
+		case "width":
+			out.Width = int(in.Int())
+		case "height":
+			out.Height = int(in.Int())
 		case "isBooked":
 			out.IsBooked = bool(in.Bool())
 		default:
@@ -785,7 +789,7 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels7(out *jwriter.Writer, in Place)
 		} else {
 			out.RawString(prefix)
 		}
-		out.Int32(int32(in.Capacity))
+		out.Int(int(in.Capacity))
 	}
 	if in.Number != 0 {
 		const prefix string = ",\"number\":"
@@ -795,7 +799,7 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels7(out *jwriter.Writer, in Place)
 		} else {
 			out.RawString(prefix)
 		}
-		out.Int32(int32(in.Number))
+		out.Int(int(in.Number))
 	}
 	if in.LeftTop != 0 {
 		const prefix string = ",\"leftTop\":"
@@ -805,7 +809,7 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels7(out *jwriter.Writer, in Place)
 		} else {
 			out.RawString(prefix)
 		}
-		out.Int32(int32(in.LeftTop))
+		out.Int(int(in.LeftTop))
 	}
 	if in.RightBottom != 0 {
 		const prefix string = ",\"rightBottom\":"
@@ -815,7 +819,7 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels7(out *jwriter.Writer, in Place)
 		} else {
 			out.RawString(prefix)
 		}
-		out.Int32(int32(in.RightBottom))
+		out.Int(int(in.RightBottom))
 	}
 	if in.Floor != 0 {
 		const prefix string = ",\"floor\":"
@@ -825,7 +829,27 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels7(out *jwriter.Writer, in Place)
 		} else {
 			out.RawString(prefix)
 		}
-		out.Int32(int32(in.Floor))
+		out.Int(int(in.Floor))
+	}
+	if in.Width != 0 {
+		const prefix string = ",\"width\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Int(int(in.Width))
+	}
+	if in.Height != 0 {
+		const prefix string = ",\"height\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Int(int(in.Height))
 	}
 	{
 		const prefix string = ",\"isBooked\":"

@@ -8,7 +8,33 @@ export default class Reserve extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            places: [
+                {
+                    id: 1,
+                    left: 250,
+                    top: 250,
+                    width: 25,
+                    height:25,
+                    nubmer: 1,
+                    capacity: 1,
+                    floor: 1,
+                },
+                {
+                    id: 2,
+                    left: 0,
+                    top: 0,
+                    width: 25,
+                    height:25,
+                    nubmer: 1,
+                    capacity: 1,
+                    floor: 2,
+                }
+            ],
             currentFloor: 1,
+            isMouseDown: false,
+            currentIndex: -1,
+            offsetX: 0,
+            offsetY: 0,
         }
         this.floorChange = this.floorChange.bind(this);
     }
@@ -32,7 +58,7 @@ export default class Reserve extends React.Component {
                 </select>
                 </div>
                 <div className='reserve__canvas'>
-                    <Canvas currentFloor={this.state.currentFloor} />
+                    <Canvas currentFloor={this.state.currentFloor} places={this.state.places} />
                 </div>
             </div>
         );

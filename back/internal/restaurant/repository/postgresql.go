@@ -87,7 +87,7 @@ func (rr *restaurantRepository) GetRestaurants(ctx context.Context) (models.Rest
 
 func (rr *restaurantRepository) GetRestaurantPlacesByFloor(ctx context.Context, placeParams models.PlaceParameters) (models.PlaceList, error) {
 	rows, err := rr.Conn.Query(
-		`SELECT id, capacity, number, left_top, right_bottom, floor
+		`SELECT id, capacity, number, left_top, right_bottom, width, height, floor
 		FROM places
 		WHERE restaurant_id = $1 AND floor = $2;`,
 		placeParams.RestaurantId,
@@ -107,6 +107,8 @@ func (rr *restaurantRepository) GetRestaurantPlacesByFloor(ctx context.Context, 
 			&curPlace.Number,
 			&curPlace.LeftTop,
 			&curPlace.RightBottom,
+			&curPlace.Width,
+			&curPlace.Height,
 			&curPlace.Floor,
 		)
 		if err != nil {
@@ -122,7 +124,7 @@ func (rr *restaurantRepository) GetRestaurantPlacesByFloor(ctx context.Context, 
 
 func (rr *restaurantRepository) GetRestaurantBookedPlaces(ctx context.Context, placeParams models.PlaceParameters) (models.PlaceList, error) {
 	rows, err := rr.Conn.Query(
-		`SELECT p.id, p.capacity, p.number, p.left_top, p.right_bottom, p.floor
+		`SELECT p.id, p.capacity, p.number, p.left_top, p.right_bottom, p.width, p.height, p.floor
 		FROM places as p
 		LEFT JOIN orders as o
 		ON o.place_id = p.id
@@ -146,6 +148,8 @@ func (rr *restaurantRepository) GetRestaurantBookedPlaces(ctx context.Context, p
 			&curPlace.Number,
 			&curPlace.LeftTop,
 			&curPlace.RightBottom,
+			&curPlace.Width,
+			&curPlace.Height,
 			&curPlace.Floor,
 		)
 		if err != nil {
