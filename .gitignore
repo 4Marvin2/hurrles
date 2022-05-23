@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+css/
 
 node_modules/
 package-lock.json

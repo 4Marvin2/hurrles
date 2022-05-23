@@ -44,7 +44,7 @@ export default class Home extends React.Component {
                 if (e !== BreakException) throw e;
               }
         });
-
+        
         getRestors().then((data) => {
             if (!data) {
                 return
