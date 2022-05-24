@@ -89,7 +89,7 @@ func (uu *userUsecase) LoginRestaurantUser(ctx context.Context, credentials mode
 		return models.User{}, http.StatusInternalServerError, err
 	}
 
-	if !isVerify || !user.IsRestaurant {
+	if !isVerify || !user.IsRestaurant || user.Restaurant == 0 {
 		return models.User{}, http.StatusForbidden, fmt.Errorf("wrong password for user %s", credentials.Email)
 	}
 

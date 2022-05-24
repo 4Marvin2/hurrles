@@ -33,6 +33,7 @@ func SetRestaurantRouting(router *mux.Router, rs usecase.IRestaurantUsecase, us 
 	router.HandleFunc("/api/v1/restaurant/favorite/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(restaurantHandler.RestaurantFavoritePost)))).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/v1/restaurant/favorite", p.SetCSRF(perm.CheckAuth(perm.GetCurrentUser(restaurantHandler.RestaurantFavoriteGet)))).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/v1/restaurant/favorite/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(restaurantHandler.RestaurantFavoriteDelete)))).Methods("DELETE", "OPTIONS")
+	router.HandleFunc("/api/v1/restaurant/search", p.CheckCSRF(perm.CheckAuth(restaurantHandler.RestaurantSearchPost))).Methods("POST", "OPTIONS")
 }
 
 func (rh *RestaurantHandler) RestaurantIdMenuGet(w http.ResponseWriter, r *http.Request) {
@@ -148,4 +149,25 @@ func (rh *RestaurantHandler) RestaurantFavoriteDelete(w http.ResponseWriter, r *
 	}
 
 	ioutils.SendWithoutBody(w, status)
+}
+
+func (rh *RestaurantHandler) RestaurantSearchPost(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	var search models.Search
+	err := ioutils.ReadJSON(r, &search)
+	if err != nil {
+		log.Errorf("RestaurantDelivery.RestaurantSearchPost: failed read json with error: %w", err)
+		ioutils.SendError(w, http.StatusBadRequest, "")
+		return
+	}
+
+	restaurants, status, err := rh.RestaurantUseCase.RestaurantSearchPost(r.Context(), search.SearchPattern)
+	if err != nil || status != http.StatusOK {
+		log.Errorf("RestaurantDelivery.RestaurantSearchPost: failed search restaurants by string=%s with [error: %w] [status: %d]", search.SearchPattern, err, status)
+		ioutils.SendError(w, status, "")
+		return
+	}
+
+	ioutils.Send(w, status, restaurants)
 }

@@ -10,6 +10,10 @@ import '../../css/Cart/CartRestor.css'
 import { addDish, deleteDish, deleteOrder } from "../../requests/orders";
 
 export default class CartRestor extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     updateCallback() {
         this.props.updateCallback();
     }
@@ -45,18 +49,27 @@ export default class CartRestor extends React.Component {
         })
     }
 
+    menuOpenClick(payload) {
+        this.props.menuOpenClick(payload)
+    }
+
     render() {
         return (
             <div className="cart-restor">
                 <div className="cart-restor__content">
-                    <div className='cart-restor__title'>{this.props.data.restaurantTitle}</div>
-                    <div className='cart-restor__metro'>
-                        <div className='cart-restor__row-comp'><img src={Metro} alt="metro" /></div>
-                        <div className='cart-restor__row-comp'><img src={MetroBlue} alt="metro_blue" /></div>
-                        <div className='cart-restor__row-comp'>{this.props.data.restaurantMetro}</div>
+                    <div className="cart-restor__topbar">
+                        <div className="cart-restor__title-metro">
+                            <div className='cart-restor__title'>{this.props.data.restaurantTitle}</div>
+                            <div className='cart-restor__metro'>
+                                <div className='cart-restor__row-comp'><img src={Metro} alt="metro" /></div>
+                                <div className='cart-restor__row-comp'><img src={MetroBlue} alt="metro_blue" /></div>
+                                <div className='cart-restor__row-comp'>{this.props.data.restaurantMetro}</div>
+                            </div>
+                        </div>
+                        <Button text='Меню' theme='dark' width={100} height={30} onClick={() => {this.menuOpenClick({restorId: this.props.data.restaurantId, orderId: this.props.data.id})}}/>
                     </div>
                     <div className='cart-restor__column-comp'>{this.props.data.restaurantAddress}</div>
-                    <div className='cart-restor__column-comp'>{this.props.data.startTime}</div>
+                    <div className='cart-restor__column-comp'>{this.props.data.startTimeString}</div>
                     <div className='cart-restor__column-comp'>Столик №{this.props.data.placeNumber} на {this.props.data.placeCapacity}</div>
                     { this.props.data.dishesIds &&
                         <ul className='cart-restor__menu'>
@@ -85,7 +98,9 @@ export default class CartRestor extends React.Component {
                     }
                     <div className='cart-restor__cancel-button'>
                         {/* <span className={ this.state.formErrorIsActive ? 'auth-form__form-error auth-form__form-error_active' : 'auth-form__form-error' }>{this.state.formError}</span> */}
-                        <Button text='Отменить' theme='cancel' width={100} height={30} onClick={() => {this.closeOrderButtonClick({orderId: this.props.data.id})}}/>
+                        { !this.props.isRestor &&
+                            <Button text='Отменить заказ' theme='cancel' width={150} height={30} onClick={() => {this.closeOrderButtonClick({orderId: this.props.data.id})}}/>
+                        }
                     </div>
                 </div>
             </div>

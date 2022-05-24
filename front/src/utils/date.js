@@ -31,3 +31,23 @@ export function dateToDateString(dateStr) {
   const fullDate = `${dayString}.${monthString} в ${hoursString}:${minutesString}`
   return fullDate
 }
+
+export function dateToTimeString(dateStr) {
+    const date = new Date(dateStr)
+    const hours = date.getHours()
+    let hoursString
+    if (~~(hours / 10) === 0) {
+        hoursString = `0${hours}`
+    } else {
+        hoursString = `${hours}`
+    }
+    const minutes = date.getMinutes()
+    let minutesString
+    if (~~(minutes / 10) === 0) {
+        minutesString = `0${minutes}`
+    } else {
+        minutesString = `${minutes}`
+    }
+    const fullDate = `${hoursString}:${minutesString}`
+    return fullDate
+  }

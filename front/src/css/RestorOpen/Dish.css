@@ -46,7 +46,7 @@
 }
 .dish__desc {
   display: flex;
-  height: 30px;
+  min-height: 30px;
   width: 90%;
   font-family: "SF Pro Rounded";
   font-style: normal;
@@ -73,6 +73,10 @@
   position: absolute;
   right: 15px;
   bottom: 20px;
+}
+.dish__add-delete-buttons {
+  display: flex;
+  align-items: center;
 }
 
 /*# sourceMappingURL=Dish.css.map */

@@ -76,7 +76,6 @@ export default class Reserve extends React.Component {
                     currentTime: 'T10:00:00.00Z',
                     currentDate: date,
                 });
-                console.log(this.state)
               } catch (e) {
                 if (e !== BreakException) throw e;
               }
@@ -90,8 +89,6 @@ export default class Reserve extends React.Component {
         canv.style.width  = '600px';
         canv.style.height = '600px';
         
-        console.log(this.state)
-
         const  roundRect = (ctx, x, y, width, height, radius, fill, stroke) => {
             if (typeof stroke === 'undefined') {
               stroke = true;
@@ -190,9 +187,6 @@ export default class Reserve extends React.Component {
                         ctx.fillStyle = 'black';
                     }
                     if (!e.isBooked && e.id === this.state.currentId) {
-                        console.log('aaaa')
-                        console.log(this.state.currentId)
-                        console.log(e.isBooked)
                         ctx.fillStyle = 'green';
                         ctx.fill();
                         ctx.fillStyle = 'black';
@@ -239,7 +233,6 @@ export default class Reserve extends React.Component {
                     currentIndex: -1,
                     currentID: 0,
                 });
-                console.log(this.state)
               } catch (e) {
                 if (e !== BreakException) throw e;
               }
@@ -281,7 +274,6 @@ export default class Reserve extends React.Component {
                     currentIndex: -1,
                     currentID: 0,
                 });
-                console.log(this.state)
               } catch (e) {
                 if (e !== BreakException) throw e;
               }
@@ -323,7 +315,6 @@ export default class Reserve extends React.Component {
                     currentIndex: -1,
                     currentID: 0,
                 });
-                console.log(this.state)
               } catch (e) {
                 if (e !== BreakException) throw e;
               }
@@ -343,7 +334,6 @@ export default class Reserve extends React.Component {
         const time = this.state.currentTime;
         const date = this.state.currentDate;
         const startTime = `${date}${time}`
-        console.log(this.state)
         createOrder(this.props.userId, this.state.currentId, startTime).then((data) => {
             this.back(false);
         });

@@ -43,6 +43,7 @@ type User struct {
 	Number       string `json:"number,omitempty"`
 	IsAdmin      bool   `json:"isAdmin,omitempty"`
 	IsRestaurant bool   `json:"isRestaurant,omitempty"`
+	Restaurant   uint64 `json:"restaurant,omitempty"`
 }
 
 //easyjson:json
@@ -77,6 +78,7 @@ type Order struct {
 	Id                uint64    `json:"id,omitempty"`
 	UserId            uint64    `json:"userId,omitempty"`
 	PlaceId           uint64    `json:"placeId,omitempty"`
+	RestaurantId      uint64    `json:"restaurantId,omitempty"`
 	RestaurantTitle   string    `json:"restaurantTitle,omitempty"`
 	RestaurantAddress string    `json:"restaurantAddress,omitempty"`
 	RestaurantMetro   string    `json:"restaurantMetro,omitempty"`
@@ -141,4 +143,9 @@ type Restaurant struct {
 	CloseTime   time.Time `json:"closeTime,omitempty"`
 	Kitchen     string    `json:"kitchen,omitempty"`
 	Img         string    `json:"img,omitempty"`
+}
+
+//easyjson:json
+type Search struct {
+	SearchPattern string `json:"searchPattern,omitempty"`
 }

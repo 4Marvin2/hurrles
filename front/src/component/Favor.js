@@ -24,6 +24,7 @@ export default class Favor extends React.Component {
         this.likeClick = this.likeClick.bind(this);
         this.restorClick = this.restorClick.bind(this);
         this.reserveClick = this.reserveClick.bind(this);
+        this.searchCallback = this.searchCallback.bind(this);
 
         getFavoriteRestors().then((data) => {
             if (!data) {
@@ -136,11 +137,38 @@ export default class Favor extends React.Component {
         this.setState({reserve: payload});
     }
 
+    searchCallback(payload) {
+        this.setState({
+            currentIndex: 0,
+            restors: payload.restors,
+        })
+        getFavoriteRestors().then((data) => {
+            if (!data) {
+                return
+            }
+            try {
+                if (this.state.restors.length === 0) {
+                    throw BreakException;
+                }
+                const id = this.state.restors[0].id
+                data.forEach(e => {
+                    if (e.id === id) {
+                        this.setState({isFavorite: true});
+                        throw BreakException;
+                    };
+                });
+                this.setState({isFavorite: false});
+            } catch (e) {
+                if (e !== BreakException) throw e;
+            }
+        });
+    }
+
     render(){
         return (
             <div className='favor'>
                 <div className='favor__left'>
-                    <SearchBar />
+                    <SearchBar searchCallback={this.searchCallback}/>
                     <Restors restors={this.state.restors} restorClick={this.restorClick} />
                 </div>
                 <div className='favor__right'>

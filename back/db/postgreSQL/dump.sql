@@ -8,7 +8,8 @@ create table if not exists users
     full_name     varchar(128) default '',
     number        varchar(16) default '',
     is_admin      boolean default false,
-    is_restaurant boolean default false
+    is_restaurant boolean default false,
+    restaurant    int
 );
 
 create table if not exists restaurants

@@ -19,6 +19,12 @@
   font-weight: 600;
   color: #000000;
 }
+.cart-restor__topbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 .cart-restor__title {
   font-size: 36px;
   line-height: 36px;

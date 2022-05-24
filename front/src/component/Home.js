@@ -6,6 +6,7 @@ import Reserve from './Reserve/Reserve'
 import '../css/Home.css'
 
 import { getRestors, getRestorMenu, getFavoriteRestors, addFavorite, deleteFavorite } from '../requests/restors';
+import { dateToTimeString } from '../utils/date'
 
 var BreakException = {};
 
@@ -23,6 +24,7 @@ export default class Home extends React.Component {
         this.likeClick = this.likeClick.bind(this);
         this.restorClick = this.restorClick.bind(this);
         this.reserveClick = this.reserveClick.bind(this);
+        this.searchCallback = this.searchCallback.bind(this);
 
         getFavoriteRestors().then((data) => {
             if (!data) {
@@ -65,6 +67,9 @@ export default class Home extends React.Component {
                         });
                     }
 
+                    const startWorkTimeStr = dateToTimeString(e.openTime)
+                    const finishWorkTimeStr = dateToTimeString(e.closeTime)
+                    const fullWorkTimeStr = `${startWorkTimeStr} - ${finishWorkTimeStr}`
                     const restorElement = {
                         id: e.id, 
                         srcImg: e.img ? e.img : '', 
@@ -72,9 +77,10 @@ export default class Home extends React.Component {
                         rating: '4.1', 
                         metro: e.metro,
                         restorInfo: {
+                            title: e.title,
                             number: e.number,
                             address: e.address,
-                            workTime: `Понедельник-суббота ${e.openTime} - ${e.closeTime}`,
+                            workTime: `Понедельник-суббота ${fullWorkTimeStr}`,
                             desc: e.description,
                             tag1: e.kitchen
                         },
@@ -132,11 +138,46 @@ export default class Home extends React.Component {
         this.setState({reserve: payload});
     }
 
+    shouldComponentUpdate(newProps, newStat) {
+        if (this.state !== newStat) {
+            this.state.searchUpdate = false
+            return true
+        }
+        return false
+    }
+
+    searchCallback(payload) {
+        this.setState({
+            currentIndex: 0,
+            restors: payload.restors,
+        })
+        getFavoriteRestors().then((data) => {
+            if (!data) {
+                return
+            }
+            try {
+                if (this.state.restors.length === 0) {
+                    throw BreakException;
+                }
+                const id = this.state.restors[0].id
+                data.forEach(e => {
+                    if (e.id === id) {
+                        this.setState({isFavorite: true});
+                        throw BreakException;
+                    };
+                });
+                this.setState({isFavorite: false});
+            } catch (e) {
+                if (e !== BreakException) throw e;
+            }
+        });
+    }
+
     render(){
         return (
             <div className='home'>
                 <div className='home__left'>
-                    <SearchBar />
+                    <SearchBar searchCallback={this.searchCallback}/>
                     <Restors restors={this.state.restors} restorClick={this.restorClick} />
                 </div>
                 <div className='home__right'>

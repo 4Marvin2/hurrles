@@ -13,9 +13,9 @@ export default class CartRestors extends React.Component {
         let orders
         if (this.props.orders !== undefined) {
             orders = this.props.orders.map((order) => {
-                order.startTime = dateToDateString(order.startTime)
+                order['startTimeString'] = dateToDateString(order.startTime)
                 return (
-                    <CartRestor key={order.id} data={order} updateCallback={this.props.updateCallback}/>
+                    <CartRestor isRestor={this.props.isRestor} key={order.id} data={order} updateCallback={this.props.updateCallback} menuOpenClick={this.props.menuOpenClick}/>
                 );
             });
         }

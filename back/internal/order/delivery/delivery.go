@@ -5,6 +5,7 @@ import (
 	"hurrles/internal/order/usecase"
 	"hurrles/internal/pkg/ioutils"
 	p "hurrles/internal/pkg/permissions"
+	"hurrles/internal/pkg/restaurant_admin"
 	userUsecase "hurrles/internal/user/usecase"
 	"net/http"
 	"strconv"
@@ -29,6 +30,7 @@ func SetOrderRouting(router *mux.Router, os usecase.IOrderUsecase, us userUsecas
 
 	router.HandleFunc("/api/v1/orders", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(orderHandler.OrdersPost)))).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/v1/order", p.SetCSRF(perm.CheckAuth(perm.GetCurrentUser(orderHandler.OrderUserIdGet)))).Methods("GET", "OPTIONS")
+	router.HandleFunc("/api/v1/order/restaurant", p.SetCSRF(perm.CheckAuth(perm.GetCurrentUser(restaurant_admin.CheckRestaurantAdmin(orderHandler.OrderRestaurantIdGet))))).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/v1/order/{id:[0-9]+}", p.SetCSRF(perm.CheckAuth(perm.GetCurrentUser(orderHandler.OrderUserIdDelete)))).Methods("DELETE", "OPTIONS")
 
 	router.HandleFunc("/api/v1/order/{order_id:[0-9]+}/dish/{dish_id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(orderHandler.DishIdPost))).Methods("POST", "OPTIONS")
@@ -141,4 +143,17 @@ func (oh *OrderHandler) DishIdDelete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ioutils.Send(w, status, dishesNumber)
+}
+
+func (oh *OrderHandler) OrderRestaurantIdGet(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	orders, status, err := oh.OrderUseCase.OrderRestaurantIdGet(r.Context())
+	if err != nil || status != http.StatusOK {
+		log.Errorf("OrderDelivery.OrderRestaurantIdGet: failed get restaurants orders [error: %w] [status: %d]", err, status)
+		ioutils.SendError(w, status, "")
+		return
+	}
+
+	ioutils.Send(w, status, orders)
 }
