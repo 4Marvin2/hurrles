@@ -7,7 +7,7 @@ import AuthForm from "./AuthForm/AuthForm";
 import Profile from "./Profile";
 import '../css/App.css'
 
-import { getUserRequest } from '../requests/user';
+import { getUserRequest , logoutRequest} from '../requests/user';
 
 import { Bars } from  'react-loader-spinner'
 import Admin from "./Admin";
@@ -39,6 +39,7 @@ export default class App extends React.Component {
 
         this.tapBarClick = this.tapBarClick.bind(this);
         this.logInHandler = this.logInHandler.bind(this);
+        this.logoutClick = this.logoutClick.bind(this);
     }
 
     tapBarClick(payload) {
@@ -46,7 +47,18 @@ export default class App extends React.Component {
     }
 
     logInHandler(payload) {
-        this.setState({loggedIn: payload.loggedIn, mainPage: 'home', user: payload.user})
+        console.log(payload.user)
+        this.setState({loggedIn: payload.loggedIn, mainPage: 'home', user: payload.user, user: payload.user})
+    }
+
+    logoutClick() {
+        logoutRequest()
+        .then(() => {
+            this.setState({loggedIn: false})
+        })
+        .catch(() => {
+            // this.setState({loggedIn: false})
+        })
     }
 
     render() {
@@ -63,7 +75,7 @@ export default class App extends React.Component {
                 { !this.state.promiseInProgress && this.state.loggedIn && !this.state.user.isAdmin && !this.state.user.isRestaurant &&
                     <div className="app">
                         <div className="app__tapbar">
-                            <TapBar reserveFlag={true} mainPage={this.state.mainPage} tapBarClick={this.tapBarClick} />
+                            <TapBar reserveFlag={true} mainPage={this.state.mainPage} tapBarClick={this.tapBarClick} logoutClick={this.logoutClick}/>
                         </div>
                         <div className="app__body">
                             {this.state.mainPage === 'home' &&
@@ -78,7 +90,7 @@ export default class App extends React.Component {
                     </div>
                 }
                 { !this.state.promiseInProgress && this.state.loggedIn && this.state.user.isAdmin &&
-                    <Admin />
+                    <Admin logoutClick={this.logoutClick}/>
                 }
                 { !this.state.promiseInProgress && this.state.loggedIn && this.state.user.isRestaurant &&
                     <RestorAdmin />

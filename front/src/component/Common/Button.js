@@ -18,6 +18,9 @@ export default class Button extends React.Component {
             } else if (props.theme === 'dark') {
                 this.state['buttonClassName'] = 'button button_dark'
                 this.state['buttonTextClassName'] = 'button__text button__text_dark'
+            } else if (props.theme === 'cancel') {
+                this.state['buttonClassName'] = 'button button_cancel'
+                this.state['buttonTextClassName'] = 'button__text button__text_cancel'
             } else {
                 this.state['buttonClassName'] = 'button'
                 this.state['buttonTextClassName'] = 'button__text'

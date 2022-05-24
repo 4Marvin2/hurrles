@@ -94,7 +94,8 @@ func (or *orderRepository) GetOrders(ctx context.Context, uid uint64) (models.Or
 			r.metro,
 			p.number,
 			p.capacity,
-			ARRAY_REMOVE(ARRAY_AGG(d.title), NULL) AS dishes,
+			ARRAY_REMOVE(ARRAY_AGG(d.id), NULL) AS dish_ids,
+			ARRAY_REMOVE(ARRAY_AGG(d.title), NULL) AS dish_titles,
 			ARRAY_REMOVE(ARRAY_AGG(d.price), NULL) AS dish_prices,
 			ARRAY_REMOVE(ARRAY_AGG(dso.number), NULL) AS dish_numbers
 		FROM orders AS o
@@ -141,7 +142,8 @@ func (or *orderRepository) GetOrders(ctx context.Context, uid uint64) (models.Or
 			&curOrder.RestaurantMetro,
 			&curOrder.PlaceNumber,
 			&curOrder.PlaceCapacity,
-			pq.Array(&curOrder.Dishes),
+			pq.Array(&curOrder.DishesIds),
+			pq.Array(&curOrder.DishesTitles),
 			pq.Array(&curOrder.DishesPrices),
 			pq.Array(&curOrder.DishesCounts),
 		)

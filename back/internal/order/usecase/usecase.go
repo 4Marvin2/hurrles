@@ -54,7 +54,7 @@ func (ou *orderUsecase) OrderUserIdGet(ctx context.Context) (models.OrderList, i
 		return models.OrderList{}, http.StatusInternalServerError, err
 	}
 	for i := range orders {
-		for j := range orders[i].Dishes {
+		for j := range orders[i].DishesIds {
 			orders[i].Cost += orders[i].DishesCounts[j] * orders[i].DishesPrices[j]
 		}
 	}

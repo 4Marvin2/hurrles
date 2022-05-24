@@ -17,12 +17,14 @@
 }
 .admin__right {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 15px;
   flex: 8;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 .admin__right_hidden {
-  visibility: collapse;
+  justify-content: flex-end;
 }
 .admin__form {
   box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
