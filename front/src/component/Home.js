@@ -151,32 +151,26 @@ export default class Home extends React.Component {
             currentIndex: 0,
             restors: payload.restors,
         })
-        setTimeout(() => {
-            console.log(this.state.restors.length)
-        }, 100);
-        // getFavoriteRestors().then((data) => {
-        //     if (!data) {
-        //         return
-        //     }
-        //     try {
-        //         if (this.state.restors.length === 0) {
-        //             throw BreakException;
-        //         }
-        //         const id = this.state.restors[0].id
-        //         data.forEach(e => {
-        //             if (e.id === id) {
-        //                 this.setState({isFavorite: true});
-        //                 throw BreakException;
-        //             };
-        //         });
-        //         this.setState({isFavorite: false});
-        //     } catch (e) {
-        //         if (e !== BreakException) throw e;
-        //     }
-        // });
-        setTimeout(() => {
-            console.log(this.state.restors)
-        }, 100);
+        getFavoriteRestors().then((data) => {
+            if (!data) {
+                return
+            }
+            try {
+                if (this.state.restors.length === 0) {
+                    throw BreakException;
+                }
+                const id = this.state.restors[0].id
+                data.forEach(e => {
+                    if (e.id === id) {
+                        this.setState({isFavorite: true});
+                        throw BreakException;
+                    };
+                });
+                this.setState({isFavorite: false});
+            } catch (e) {
+                if (e !== BreakException) throw e;
+            }
+        });
     }
 
     render(){
