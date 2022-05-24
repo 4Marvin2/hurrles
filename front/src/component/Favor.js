@@ -59,6 +59,7 @@ export default class Favor extends React.Component {
                             tag1: e.kitchen
                         },
                         dishes: dishes,
+                        floors: e.floors,
                     };
                     restors.push(restorElement);
                     this.setState({

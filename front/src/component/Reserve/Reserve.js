@@ -17,13 +17,19 @@ export default class Reserve extends React.Component {
         const day = today.getDate();
         const date = today.getFullYear()+'-'+(this.formate(month))+'-'+this.formate(day);
 
+        const nextDay = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+        const month2 = nextDay.getMonth()+1;
+        const day2 = nextDay.getDate();
+        const nextDate = nextDay.getFullYear()+'-'+(this.formate(month2))+'-'+this.formate(day2);
+
+        var isTodayBool = true;
         const hours = new Date().getHours();
         var start =  10;
-        if (hours > 10) {
-        start = hours;
-        }
-        if (start % 2 != 0) {
-            start = start + 1;
+        if (hours > 10 && hours < 22) {
+            isTodayBool = true;
+            start = hours;
+        } else {
+            isTodayBool = false;
         }
         const startTime = `T${start}:00:00.00Z`
 
@@ -32,6 +38,7 @@ export default class Reserve extends React.Component {
             currentFloor: 1,
             currentTime: startTime,
             currentDate: date,
+            isToday: isTodayBool ? date : nextDate,
             isMouseDown: false,
             currentIndex: -1,
             currentId: 0,
@@ -56,14 +63,25 @@ export default class Reserve extends React.Component {
         const day = today.getDate();
         const date = today.getFullYear()+'-'+(this.formate(month))+'-'+this.formate(day);
 
+        const nextDay = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+        const month2 = nextDay.getMonth()+1;
+        const day2 = nextDay.getDate();
+        const nextDate = nextDay.getFullYear()+'-'+(this.formate(month2))+'-'+this.formate(day2);
+        
+        var isTodayBool = true;
+
         const hours = new Date().getHours();
         var start =  10;
-        if (hours > 10) {
-        start = hours;
+        if (hours > 10 && hours < 22) {
+            isTodayBool = true;
+            start = hours;
+        } else {
+            isTodayBool = false;
         }
         if (start % 2 != 0) {
             start = start + 1;
         }
+
         const startTime = `T${start}:00:00.00Z`
 
         const dateTime = `${date}${startTime}`
@@ -97,6 +115,7 @@ export default class Reserve extends React.Component {
                     currentIndex: -1,
                     currentTime: startTime,
                     currentDate: date,
+                    isToday: isTodayBool ? date : nextDate,
                 });
               } catch (e) {
                 if (e !== BreakException) throw e;
@@ -228,6 +247,14 @@ export default class Reserve extends React.Component {
         const dateTime = `${date}${time}`
         getPlaces(this.props.id, dateTime, floor).then((data) => {
             if (!data) {
+                this.setState({
+                    places: [],
+                    currentFloor: payload,
+                    isMouseDown: false,
+                    currentIndex: -1,
+                    currentID: 0,
+                });
+
                 return
             }
             try {
@@ -255,7 +282,6 @@ export default class Reserve extends React.Component {
                     currentIndex: -1,
                     currentID: 0,
                 });
-                console.log(this.state)
               } catch (e) {
                 if (e !== BreakException) throw e;
               }
@@ -269,6 +295,15 @@ export default class Reserve extends React.Component {
         const dateTime = `${date}${payload}`
         getPlaces(this.props.id, dateTime, floor).then((data) => {
             if (!data) {
+                this.setState({
+                    places: [],
+                    currentTime: payload,
+                    currentDate: date,
+                    isMouseDown: false,
+                    currentIndex: -1,
+                    currentID: 0,
+                });
+
                 return
             }
             try {
@@ -310,6 +345,15 @@ export default class Reserve extends React.Component {
         const dateTime = `${payload}${time}`
         getPlaces(this.props.id, dateTime, floor).then((data) => {
             if (!data) {
+                this.setState({
+                    places: [],
+                    currentTime: time,
+                    currentDate: payload,
+                    isMouseDown: false,
+                    currentIndex: -1,
+                    currentID: 0,
+                });
+
                 return
             }
             try {
@@ -338,10 +382,10 @@ export default class Reserve extends React.Component {
                     currentIndex: -1,
                     currentID: 0,
                 });
-              } catch (e) {
+            } catch (e) {
                 if (e !== BreakException) throw e;
-              }
-              this.updateCanvas();
+            }
+            this.updateCanvas();
         });
     }
 
@@ -357,7 +401,6 @@ export default class Reserve extends React.Component {
         const time = this.state.currentTime;
         const date = this.state.currentDate;
         const startTime = `${date}${time}`
-        console.log(this.state)
         createOrder(this.props.userId, this.state.currentId, startTime).then((data) => {
             this.back(false);
         });
@@ -376,15 +419,16 @@ export default class Reserve extends React.Component {
 
         const hours = new Date().getHours();
         var start =  10;
-        if (hours > 10) {
-        start = hours;
+        if (hours > 10 && hours < 22) {
+            start = hours;
         }
 
-        const times = [];
         if (start % 2 != 0) {
             start = start + 1;
         }
-        while (start <= 22) {
+
+        const times = [];
+        while (start < 22) {
             const value = `T${start}:00:00.00Z`
             const el = `${start}:00`
             times.push({
@@ -398,16 +442,25 @@ export default class Reserve extends React.Component {
             <option key={index+1} value={time.value}>{time.el}</option>
         );
 
+        const floorsArray = Array.from({length: this.props.floors}, (_, i) => i + 1)
+        const floorsList = floorsArray.map((floor, index) =>
+            <option key={index+1} value={floor}>{floor}</option>
+        );
+
         return (
             <div className='reserve'>
                 <ReserveTitleBar reserveClick={this.props.reserveClick} />
                 <div className='reserve__floor-time'>
                     <select onChange={(e) => this.floorChange(e.target.value)} value={this.state.currentFloor}>
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
+                        {floorsList}
                     </select>
-                    <select onChange={(e) => this.dateChange(e.target.value)}>
-                        <option value={date}>Сегодня</option>
+                    <select onChange={(e) => this.dateChange(e.target.value)} value={this.state.currentDate}>
+                        {this.state.isToday &&
+                            <option value={date}>Сегодня</option>
+                        }
+                        {!this.state.isToday &&
+                            <option value={date} disabled>Сегодня</option>
+                        }
                         <option value={nextDate}>Завтра</option>
                     </select>
                     <select onChange={(e) => this.timeChange(e.target.value)}>

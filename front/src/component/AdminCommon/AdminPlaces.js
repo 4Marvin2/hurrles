@@ -430,6 +430,9 @@ export default class AdminPlaces extends React.Component {
                     </div>
                     <Button text='Добавить' theme='dark' width={100} height={30} onClick={() => this.addPlace()}/>
                 </div>
+                <div className='reserve__order-button'>
+                    Удаление - двойной щелчок по столу
+                </div>
                 <div className='reserve__canvas'>
                     <canvas ref="canvas" width={300} height={300}/>
                 </div>

@@ -80,6 +80,7 @@ export default class Home extends React.Component {
                         },
                         dishes: dishes,
                         isFavorite: false,
+                        floors: e.floors,
                     };
                     restors.push(restorElement);
                     this.setState({
@@ -152,7 +153,11 @@ export default class Home extends React.Component {
                     }
                     {this.state.reserve &&
                         <div className='home__reserve'>
-                            <Reserve reserveClick={this.reserveClick} id={this.state.restors[this.state.currentIndex].id} userId={this.props.userId} />
+                            <Reserve 
+                                reserveClick={this.reserveClick}
+                                id={this.state.restors[this.state.currentIndex].id}
+                                userId={this.props.userId}
+                                floors={this.state.restors[this.state.currentIndex].floors} />
                         </div>
                     }
                 </div>
