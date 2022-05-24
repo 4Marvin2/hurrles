@@ -44,15 +44,14 @@ export default class Dish extends React.Component {
           </div>
         );
       }
-      if (this.props.isAdmin) {
+    }
+    if (this.props.isAdmin) {
         buttonTmpl = (
           <div>
             <Button text='Изменить' theme='dark' width={82} height={24} onClick={() => { this.props.updateButtonClick(this.props.dish) }}/>
           </div>
         )
       }
-    }
-
 
     return (
       <div className="menu__dish dish">

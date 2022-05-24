@@ -9,6 +9,7 @@ import moment from 'moment'
 
 import { addressErrorMsg, addRestorFormErrorMsg, closeTimeErrorMsg, descErrorMsg, kitchenErrorMsg, metroErrorMsg, openTimeErrorMsg, phoneNumberErrorMsg, titleErrorMsg } from '../../constants/errorMsg';
 import { addRestorRequest, updateRestorRequest } from '../../requests/admin';
+import { metroMap } from '../../utils/metroMap';
 
 export default class AddRestorForm extends React.Component {
     constructor(props) {
@@ -92,8 +93,8 @@ export default class AddRestorForm extends React.Component {
     }
 
     metroOnInput = (payload) => {
-        this.setState({metro: payload.target.value});
-        if (payload.target.value.length !== 0) {
+        this.setState({metro: payload.target.value.toLowerCase()});
+        if (payload.target.value.length !== 0 && metroMap[payload.target.value.toLowerCase()]) {
             this.setState({metroIsValid: true});
         } else {
             this.setState({metroIsValid: false});

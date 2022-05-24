@@ -180,7 +180,7 @@ export default class AddDishForm extends React.Component {
                 </div>
                 <div className='add-restor-form__button'>
                     <span className={ this.state.formErrorIsActive ? 'add-restor-form__form-error add-restor-form__form-error_active' : 'add-restor-form__form-error' }>{addRestorFormErrorMsg}</span>
-                    <Button text='Добавить' theme='dark' width={300} height={72} onClick={this.formButtonClick}/>
+                    <Button text={this.props.buttonText} theme='dark' width={300} height={72} onClick={this.formButtonClick}/>
                 </div>
             </div>
         );

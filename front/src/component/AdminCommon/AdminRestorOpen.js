@@ -78,9 +78,9 @@ export default class AdminRestorOpen extends React.Component {
         if (!this.state.addFormActive && !this.state.updateFormActive) {
             tmpl = (
                 <div className="admin-restor-open">
-                    <TitleBar isFavorite={this.props.isFavorite} likeClick={this.props.likeClick} />
+                    <TitleBar isFavorite={this.props.isFavorite} likeClick={this.props.likeClick} title={this.props.restorInfo.title} withoutLike={true} />
                     <div className="admin-restor-open__main">
-                        <Info restorInfo={this.props.restorInfo}/>
+                        <Info restorInfo={this.props.restorInfo} />
                         <Menu dishes={this.props.dishes} isAdmin={true} restorId={this.state.openRestorId} addButtonClick={this.addButtonClick} updateButtonClick={this.updateButtonClick}/>
                     </div>
                     <div className="admin-restor-open__reverse-button">
@@ -105,6 +105,7 @@ export default class AdminRestorOpen extends React.Component {
                             }
                             isUpdate={true}
                             closeAllForms={this.props.closeAllForms}
+                            buttonText='Изменить'
                         />
                     }
                     { this.state.addFormActive && !this.state.updateFormActive &&
@@ -112,6 +113,7 @@ export default class AdminRestorOpen extends React.Component {
                             restorId={this.state.openRestorId}
                             addDishCallback={this.addDishCallback}
                             closeAllForms={this.props.closeAllForms}
+                            buttonText='Добавить'
                         />
                     }
                 </div>

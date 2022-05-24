@@ -56,7 +56,7 @@
     }
     &__desc {
         display: flex;
-        height: 30px;
+        min-height: 30px;
         width: 90%;
 
         font-family: 'SF Pro Rounded';

@@ -11,6 +11,7 @@
 .search__input {
   position: absolute;
   margin: 8px;
+  width: 10%;
 }
 .search input {
   background-color: transparent;

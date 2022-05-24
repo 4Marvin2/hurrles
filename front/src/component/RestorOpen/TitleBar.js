@@ -11,18 +11,22 @@ export default class TitleBar extends React.Component {
   render() {
     return (
         <nav className="restor-open__restor-titlebar restor-titlebar">
-          <div className="restor-titlebar__back">
+          {/* <div className="restor-titlebar__back">
           </div>
-          <div className="restor-titlebar__back"></div>
-          <div className="restor-titlebar__img">
+          <div className="restor-titlebar__back"></div> */}
+          {/* <div className="restor-titlebar__img">
             <img src={require("../../imgs/restors/nagoya.webp")} alt="restor" />
-          </div>
+          </div> */}
+          <div className="restor-titlebar__title">{this.props.title}</div>
           <div className="restor-titlebar__like"></div>
-          <div className="restor-titlebar__like">
-            <button onClick={() => this.likeClick(!this.props.isFavorite)}>
-                <img src={this.props.isFavorite ? LikeEnable : LikeDisable} alt="like" />
-            </button>
-          </div>
+          <div className="restor-titlebar__like"></div>
+          { !this.props.withoutLike &&
+            <div className="restor-titlebar__like">
+              <button onClick={() => this.likeClick(!this.props.isFavorite)}>
+                  <img src={this.props.isFavorite ? LikeEnable : LikeDisable} alt="like" />
+              </button>
+            </div>
+          }
         </nav>
     );
   }

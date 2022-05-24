@@ -8,6 +8,8 @@ import '../css/Admin.css'
 import { getRestors, getRestorMenu } from '../requests/restors';
 import Button from './Common/Button'
 
+import { dateToTimeString } from '../utils/date'
+
 import Exit from '../imgs/tapbar/exit.svg';
 
 var BreakException = {};
@@ -48,6 +50,9 @@ export default class Home extends React.Component {
                         });
                     }
 
+                    const startWorkTimeStr = dateToTimeString(e.openTime)
+                    const finishWorkTimeStr = dateToTimeString(e.closeTime)
+                    const fullWorkTimeStr = `${startWorkTimeStr} - ${finishWorkTimeStr}`
                     const restorElement = {
                         id: e.id, 
                         srcImg: e.img ? e.img : '', 
@@ -55,9 +60,10 @@ export default class Home extends React.Component {
                         rating: '4.1', 
                         metro: e.metro,
                         restorInfo: {
+                            title: e.title,
                             number: e.number,
                             address: e.address,
-                            workTime: `Понедельник-суббота ${e.openTime} - ${e.closeTime}`,
+                            workTime: `Понедельник-суббота ${fullWorkTimeStr}`,
                             desc: e.description,
                             tag1: e.kitchen
                         },
@@ -99,6 +105,9 @@ export default class Home extends React.Component {
                         });
                     }
 
+                    const startWorkTimeStr = dateToTimeString(e.openTime)
+                    const finishWorkTimeStr = dateToTimeString(e.closeTime)
+                    const fullWorkTimeStr = `${startWorkTimeStr} - ${finishWorkTimeStr}`
                     const restorElement = {
                         id: e.id, 
                         srcImg: e.img ? e.img : '', 
@@ -106,9 +115,10 @@ export default class Home extends React.Component {
                         rating: '4.1', 
                         metro: e.metro,
                         restorInfo: {
+                            title: e.title,
                             number: e.number,
                             address: e.address,
-                            workTime: `Понедельник-суббота ${e.openTime} - ${e.closeTime}`,
+                            workTime: `Понедельник-суббота ${fullWorkTimeStr}`,
                             desc: e.description,
                             tag1: e.kitchen,
                             openTime: e.openTime,

@@ -12,7 +12,7 @@ export default class RestorOpen extends React.Component {
     render(){
         return (
             <div className="restor-open">
-                <TitleBar isFavorite={this.props.isFavorite} likeClick={this.props.likeClick} />
+                <TitleBar isFavorite={this.props.isFavorite} likeClick={this.props.likeClick} title={this.props.restorInfo.title} />
                 <div className="restor-open__main">
                     <Info  restorInfo={this.props.restorInfo}/>
                     <Menu dishes={this.props.dishes} />
