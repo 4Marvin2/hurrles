@@ -1,6 +1,6 @@
 .reserve {
     width: 652px;
-    height: 760px;
+    height: 840px;
 
     background: #FFFFFF;
     box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
@@ -35,5 +35,11 @@
         height: 30px;
         width: 100px;
         text-align: center;
+    }
+    &__order-button {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: center;
     }
 }

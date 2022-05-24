@@ -79,9 +79,9 @@ export default class App extends React.Component {
                         </div>
                         <div className="app__body">
                             {this.state.mainPage === 'home' &&
-                            <Home />}
+                            <Home userId={this.state.user.id} />}
                             {this.state.mainPage === 'restorOpen' &&
-                            <Favor />}
+                            <Favor userId={this.state.user.id} />}
                             {this.state.mainPage === 'cart' &&
                             <Cart />}
                             {this.state.mainPage === 'profile' &&

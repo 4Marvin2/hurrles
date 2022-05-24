@@ -6,4 +6,5 @@ export const userURL = `${apiPrefix}/user`;
 export const restaurantsURL = `${apiPrefix}/restaurants`
 export const restaurantURL = `${apiPrefix}/restaurant`
 export const adminURL = `${apiPrefix}/admin`
-export const ordersURL = `${apiPrefix}/order`
+export const orderURL = `${apiPrefix}/order`
+export const ordersURL = `${apiPrefix}/orders`

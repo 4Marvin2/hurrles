@@ -71,4 +71,25 @@ const deleteFavorite = (id) => {
         })
 };
 
-export { getRestors, getRestorMenu, getFavoriteRestors, addFavorite, deleteFavorite };
+const getPlaces = (id, time, floor) => {
+    console.log(id, time, floor)
+    const body = JSON.stringify({
+        restaurantId: id,
+        time: time,
+        floor: floor,
+    });
+
+    return http
+        .post(`${restaurantURL}/${id}/places`, body)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
+            }
+            return result.data
+        })
+        .catch((error) => {
+            throw error
+        })
+};
+
+export { getRestors, getRestorMenu, getFavoriteRestors, addFavorite, deleteFavorite, getPlaces };

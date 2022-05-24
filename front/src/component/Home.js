@@ -152,7 +152,7 @@ export default class Home extends React.Component {
                     }
                     {this.state.reserve &&
                         <div className='home__reserve'>
-                            <Reserve reserveClick={this.reserveClick} />
+                            <Reserve reserveClick={this.reserveClick} id={this.state.restors[this.state.currentIndex].id} userId={this.props.userId} />
                         </div>
                     }
                 </div>
