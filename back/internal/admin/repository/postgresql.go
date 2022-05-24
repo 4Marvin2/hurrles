@@ -22,9 +22,10 @@ type IAdminRepository interface {
 	UpdateDish(context.Context, models.Dish) (models.Dish, error)
 
 	GetPlaceById(context.Context, uint64) (models.Place, error)
-	GetPlaceByNumberAndRestaurantIdAndCoordinate(context.Context, int, uint64, int, int) (models.Place, error)
+	GetPlaceByNumberAndRestaurantIdAndCoordinate(context.Context, int, uint64, int, int, int) (models.Place, error)
 	CreatePlace(context.Context, models.Place) (models.Place, error)
 	UpdatePlace(context.Context, models.Place) (models.Place, error)
+	DeletePlace(context.Context, uint64) (models.Place, error)
 }
 
 type adminRepository struct {
@@ -64,7 +65,7 @@ func NewPostgresAdminRepository(config config.PostgresConfig) (IAdminRepository,
 func (ar *adminRepository) GetRestaurantById(ctx context.Context, id uint64) (models.Restaurant, error) {
 	var restaurant models.Restaurant
 	err := ar.Conn.QueryRow(
-		`SELECT id, title, description, address, number, open_time, close_time, kitchen, img
+		`SELECT id, title, description, address, number, open_time, close_time, kitchen, img, floors
 		FROM restaurants
 		WHERE id = $1;`,
 		id,
@@ -78,6 +79,7 @@ func (ar *adminRepository) GetRestaurantById(ctx context.Context, id uint64) (mo
 		&restaurant.CloseTime,
 		&restaurant.Kitchen,
 		&restaurant.Img,
+		&restaurant.Floors,
 	)
 	if err != nil {
 		return models.Restaurant{}, err
@@ -88,7 +90,7 @@ func (ar *adminRepository) GetRestaurantById(ctx context.Context, id uint64) (mo
 func (ar *adminRepository) GetRestaurantByTitleAndAddress(ctx context.Context, title string, address string) (models.Restaurant, error) {
 	var restaurant models.Restaurant
 	err := ar.Conn.QueryRow(
-		`SELECT id, title, description, address, number, open_time, close_time, kitchen, img
+		`SELECT id, title, description, address, number, open_time, close_time, kitchen, img, floors
 		FROM restaurants
 		WHERE title = $1 AND address = $2;`,
 		title,
@@ -103,6 +105,7 @@ func (ar *adminRepository) GetRestaurantByTitleAndAddress(ctx context.Context, t
 		&restaurant.CloseTime,
 		&restaurant.Kitchen,
 		&restaurant.Img,
+		&restaurant.Floors,
 	)
 	if err != nil {
 		return models.Restaurant{}, err
@@ -116,9 +119,9 @@ func (ar *adminRepository) CreateRestaurant(ctx context.Context, restaurant mode
 	// formattedCloseTime := restaurant.CloseTime.Format("15:04")
 	// var openTime, closeTime interface{}
 	err := ar.Conn.QueryRow(
-		`INSERT INTO restaurants (title, description, address, metro, number, open_time, close_time, kitchen, img)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-		RETURNING id, title, description, address, metro, number, open_time, close_time, kitchen, img;`,
+		`INSERT INTO restaurants (title, description, address, metro, number, open_time, close_time, kitchen, img, floors)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+		RETURNING id, title, description, address, metro, number, open_time, close_time, kitchen, img, floors;`,
 		restaurant.Title,
 		restaurant.Description,
 		restaurant.Address,
@@ -128,6 +131,7 @@ func (ar *adminRepository) CreateRestaurant(ctx context.Context, restaurant mode
 		restaurant.CloseTime,
 		restaurant.Kitchen,
 		restaurant.Img,
+		restaurant.Floors,
 	).Scan(
 		&createdRestaurant.Id,
 		&createdRestaurant.Title,
@@ -139,6 +143,7 @@ func (ar *adminRepository) CreateRestaurant(ctx context.Context, restaurant mode
 		&createdRestaurant.CloseTime,
 		&createdRestaurant.Kitchen,
 		&createdRestaurant.Img,
+		&createdRestaurant.Floors,
 	)
 
 	if err != nil {
@@ -151,9 +156,9 @@ func (ar *adminRepository) UpdateRestaurant(ctx context.Context, restaurant mode
 	var updatedRestaurant models.Restaurant
 	err := ar.Conn.QueryRow(
 		`UPDATE restaurants
-		SET (title, description, address, metro, number, open_time, close_time, kitchen, img) = ($2, $3, $4, $5, $6, $7, $8, $9, $10)
+		SET (title, description, address, metro, number, open_time, close_time, kitchen, img, floors) = ($2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
 		WHERE id = $1
-		RETURNING id, title, description, address, metro, number, open_time, close_time, kitchen, img;`,
+		RETURNING id, title, description, address, metro, number, open_time, close_time, kitchen, img, floors;`,
 		restaurant.Id,
 		restaurant.Title,
 		restaurant.Description,
@@ -164,6 +169,7 @@ func (ar *adminRepository) UpdateRestaurant(ctx context.Context, restaurant mode
 		restaurant.CloseTime,
 		restaurant.Kitchen,
 		restaurant.Img,
+		restaurant.Floors,
 	).Scan(
 		&updatedRestaurant.Id,
 		&updatedRestaurant.Title,
@@ -175,6 +181,7 @@ func (ar *adminRepository) UpdateRestaurant(ctx context.Context, restaurant mode
 		&updatedRestaurant.CloseTime,
 		&updatedRestaurant.Kitchen,
 		&updatedRestaurant.Img,
+		&updatedRestaurant.Floors,
 	)
 
 	if err != nil {
@@ -311,16 +318,18 @@ func (ar *adminRepository) GetPlaceByNumberAndRestaurantIdAndCoordinate(
 	number int,
 	restaurantId uint64,
 	leftTop int,
-	rightBottom int) (models.Place, error) {
+	rightBottom int,
+	floor int) (models.Place, error) {
 	var place models.Place
 	err := ar.Conn.QueryRow(
 		`SELECT id, restaurant_id, capacity, number, left_top, right_bottom, width, height, floor
 		FROM places
-		WHERE (number = $1 OR (left_top = $3 AND right_bottom = $4)) AND restaurant_id = $2;`,
+		WHERE (number = $1 AND restaurant_id = $2) OR (left_top = $3 AND right_bottom = $4 AND restaurant_id = $2 AND floor=$5);`,
 		number,
 		restaurantId,
 		leftTop,
 		rightBottom,
+		floor,
 	).Scan(
 		&place.Id,
 		&place.RestaurantId,
@@ -374,18 +383,40 @@ func (ar *adminRepository) UpdatePlace(ctx context.Context, place models.Place) 
 	var updatedPlace models.Place
 	err := ar.Conn.QueryRow(
 		`UPDATE places
-		SET (restaurant_id, capacity, number, left_top, right_bottom, width, height, floor) = ($2, $3, $4, $5, $6, $7, $8, $9)
+		SET (capacity, number, left_top, right_bottom, width, height) = ($2, $3, $4, $5, $6, $7)
 		WHERE id = $1
 		RETURNING id, restaurant_id, capacity, number, left_top, right_bottom, width, height, floor;`,
 		place.Id,
-		place.RestaurantId,
 		place.Capacity,
 		place.Number,
 		place.LeftTop,
 		place.RightBottom,
 		place.Width,
 		place.Height,
-		place.Floor,
+	).Scan(
+		&updatedPlace.Id,
+		&updatedPlace.RestaurantId,
+		&updatedPlace.Capacity,
+		&updatedPlace.Number,
+		&updatedPlace.LeftTop,
+		&updatedPlace.RightBottom,
+		&updatedPlace.Width,
+		&updatedPlace.Height,
+		&updatedPlace.Floor,
+	)
+
+	if err != nil {
+		return models.Place{}, err
+	}
+	return updatedPlace, nil
+}
+
+func (ar *adminRepository) DeletePlace(ctx context.Context, placeId uint64) (models.Place, error) {
+	var updatedPlace models.Place
+	err := ar.Conn.QueryRow(
+		`DELETE FROM places WHERE id = $1
+		RETURNING id, restaurant_id, capacity, number, left_top, right_bottom, width, height, floor;`,
+		placeId,
 	).Scan(
 		&updatedPlace.Id,
 		&updatedPlace.RestaurantId,

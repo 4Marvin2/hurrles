@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"errors"
 	"hurrles/internal/admin/repository"
 	"hurrles/internal/models"
 	"net/http"
@@ -19,12 +20,18 @@ type IAdminUsecase interface {
 
 	PlaceCreatePost(context.Context, models.Place) (models.Place, int, error)
 	PlaceUpdatePut(context.Context, models.Place) (models.Place, int, error)
+	AllPlacesUpdatePut(ctx context.Context, places []models.Place) (models.PlaceList, int, error)
+	PlaceDropDelete(context.Context, uint64) (models.Place, int, error)
 }
 
 type adminUsecase struct {
 	AdminPostgresRepository repository.IAdminRepository
 	Timeout                 time.Duration
 }
+
+var (
+	ErrPlaceAlreadyExists = errors.New("place already exists")
+)
 
 func NewAdminUsecase(ar repository.IAdminRepository, timeout time.Duration) IAdminUsecase {
 	return &adminUsecase{
@@ -108,9 +115,10 @@ func (au *adminUsecase) PlaceCreatePost(ctx context.Context, place models.Place)
 		place.RestaurantId,
 		place.LeftTop,
 		place.RightBottom,
+		place.Floor,
 	)
 	if err == nil {
-		return models.Place{}, http.StatusConflict, err
+		return models.Place{}, http.StatusConflict, ErrPlaceAlreadyExists
 	} else if err != nil && err != pgx.ErrNoRows {
 		return models.Place{}, http.StatusInternalServerError, err
 	}
@@ -129,6 +137,33 @@ func (au *adminUsecase) PlaceUpdatePut(ctx context.Context, place models.Place) 
 	}
 
 	updatedPlace, err := au.AdminPostgresRepository.UpdatePlace(ctx, place)
+	if err != nil {
+		return models.Place{}, http.StatusInternalServerError, err
+	}
+	return updatedPlace, http.StatusOK, nil
+}
+
+func (au *adminUsecase) AllPlacesUpdatePut(ctx context.Context, places []models.Place) (models.PlaceList, int, error) {
+	updatedPlaces := make([]models.Place, len(places))
+	for idx, val := range places {
+		_, err := au.AdminPostgresRepository.GetPlaceById(ctx, val.Id)
+		if err != nil {
+			return nil, http.StatusNotFound, err
+		}
+
+		updatedPlace, err := au.AdminPostgresRepository.UpdatePlace(ctx, val)
+		if err != nil {
+			return nil, http.StatusInternalServerError, err
+		}
+
+		updatedPlaces[idx] = updatedPlace
+	}
+
+	return updatedPlaces, http.StatusOK, nil
+}
+
+func (au *adminUsecase) PlaceDropDelete(ctx context.Context, placeId uint64) (models.Place, int, error) {
+	updatedPlace, err := au.AdminPostgresRepository.DeletePlace(ctx, placeId)
 	if err != nil {
 		return models.Place{}, http.StatusInternalServerError, err
 	}

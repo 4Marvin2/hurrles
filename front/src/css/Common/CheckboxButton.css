@@ -1,12 +1,21 @@
 .checkbox {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   width: 80%;
   margin-top: 16px;
 }
 .checkbox__input {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 .checkbox__text {
   margin-left: 6px;
@@ -14,5 +23,3 @@
   font-size: 14px;
   color: #6247AA;
 }
-
-/*# sourceMappingURL=CheckboxButton.css.map */

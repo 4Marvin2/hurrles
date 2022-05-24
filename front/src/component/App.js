@@ -90,7 +90,7 @@ export default class App extends React.Component {
                     </div>
                 }
                 { !this.state.promiseInProgress && this.state.loggedIn && this.state.user.isAdmin &&
-                    <Admin logoutClick={this.logoutClick}/>
+                    <Admin logoutClick={this.logoutClick} userId={this.state.user.id}/>
                 }
                 { !this.state.promiseInProgress && this.state.loggedIn && this.state.user.isRestaurant &&
                     <RestorAdmin />

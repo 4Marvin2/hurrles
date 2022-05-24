@@ -72,7 +72,6 @@ const deleteFavorite = (id) => {
 };
 
 const getPlaces = (id, time, floor) => {
-    console.log(id, time, floor)
     const body = JSON.stringify({
         restaurantId: id,
         time: time,
@@ -92,4 +91,18 @@ const getPlaces = (id, time, floor) => {
         })
 };
 
-export { getRestors, getRestorMenu, getFavoriteRestors, addFavorite, deleteFavorite, getPlaces };
+const getAllPlaces = (id) => {
+    return http
+        .get(`${restaurantURL}/${id}/places`, null)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
+            }
+            return result.data
+        })
+        .catch((error) => {
+            throw error
+        })
+};
+
+export { getRestors, getRestorMenu, getFavoriteRestors, addFavorite, deleteFavorite, getPlaces, getAllPlaces };

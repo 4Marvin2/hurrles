@@ -3,6 +3,7 @@ import Restors from './Restors'
 import SearchBar from  './SearchBar'
 import AddRestorForm from './AdminCommon/AddRestorForm'
 import AdminRestorOpen from './AdminCommon/AdminRestorOpen'
+import AdminPlaces from './AdminCommon/AdminPlaces' 
 import '../css/Admin.css'
 
 import { getRestors, getRestorMenu } from '../requests/restors';
@@ -24,6 +25,7 @@ export default class Home extends React.Component {
             currentIndex: 0,
             isFavorite: false,
             restors:[],
+            map: false,
         }
 
         this.restorClick = this.restorClick.bind(this);
@@ -63,6 +65,7 @@ export default class Home extends React.Component {
                         },
                         dishes: dishes,
                         isFavorite: false,
+                        floors: e.floors,
                     };
                     restors.push(restorElement);
                     this.setState({
@@ -76,6 +79,7 @@ export default class Home extends React.Component {
         this.updateRestors = this.updateRestors.bind(this);
         this.openUpdateRestorClick = this.openUpdateRestorClick.bind(this);
         this.closeAllForms = this.closeAllForms.bind(this);
+        this.mapClick = this.mapClick.bind(this);
     }
 
     updateRestors(payload) {
@@ -116,6 +120,7 @@ export default class Home extends React.Component {
                         },
                         dishes: dishes,
                         isFavorite: false,
+                        floors: e.floors,
                     };
                     restors.push(restorElement);
                     this.setState({
@@ -162,6 +167,10 @@ export default class Home extends React.Component {
 
     logoutClick() {
         this.props.logoutClick()
+    }
+
+    mapClick(payload) {
+        this.setState({map: payload});
     }
 
     render(){
@@ -213,12 +222,22 @@ export default class Home extends React.Component {
                                 updateRestorsCallback={this.updateRestors}
                                 openUpdateRestorClick={this.openUpdateRestorClick}
                                 closeAllForms={this.closeAllForms}
+                                mapClick={this.mapClick}
                             />
                         </div>
                     }
                     <button className="admin__exit-button">
                         <img src={Exit} alt="Exit" onClick={() => {this.logoutClick()}} />
-                    </button> 
+                    </button>
+                    {this.state.map &&
+                        <div className='admin__map'>
+                            <AdminPlaces 
+                                mapClick={this.mapClick}
+                                id={this.state.restors[this.state.currentIndex].id}
+                                userId={this.props.userId}
+                                floors={this.state.restors[this.state.currentIndex].floors} />
+                        </div>
+                    } 
                 </div>
             </div>
         );

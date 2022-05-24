@@ -36,6 +36,8 @@ func SetAdminRouting(router *mux.Router, as usecase.IAdminUsecase, us userUsecas
 
 	router.HandleFunc("/api/v1/admin/place", p.CheckCSRF((perm.CheckAuth(perm.GetCurrentUser(admin.CheckAdmin(adminHandler.PlaceCreatePost)))))).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/v1/admin/place/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(admin.CheckAdmin(adminHandler.PlaceUpdatePut))))).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/api/v1/admin/places", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(admin.CheckAdmin(adminHandler.AllPlacesUpdatePut))))).Methods("PUT", "OPTIONS")
+	router.HandleFunc("/api/v1/admin/place/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(admin.CheckAdmin(adminHandler.PlaceDropDelete))))).Methods("DELETE", "OPTIONS")
 }
 
 //
@@ -191,6 +193,47 @@ func (rh *AdminHandler) PlaceUpdatePut(w http.ResponseWriter, r *http.Request) {
 	place.Id = uint64(placeId)
 
 	updatedDish, status, err := rh.AdminUseCase.PlaceUpdatePut(r.Context(), place)
+	if err != nil || status != http.StatusOK {
+		log.Errorf("AdminDelivery.PlaceUpdatePut: failed update place [error: %w] [status: %d]", err, status)
+		ioutils.SendError(w, status, "")
+		return
+	}
+
+	ioutils.Send(w, status, updatedDish)
+}
+
+func (rh *AdminHandler) AllPlacesUpdatePut(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	var places models.PlaceList
+	err := ioutils.ReadJSON(r, &places)
+	if err != nil {
+		log.Errorf("AdminDelivery.PlaceUpdatePut: failed read json with error: %w", err)
+		ioutils.SendError(w, http.StatusBadRequest, "")
+		return
+	}
+
+	updatedPlaces, status, err := rh.AdminUseCase.AllPlacesUpdatePut(r.Context(), places)
+	if err != nil || status != http.StatusOK {
+		log.Errorf("AdminDelivery.PlaceUpdatePut: failed update place [error: %w] [status: %d]", err, status)
+		ioutils.SendError(w, status, "")
+		return
+	}
+
+	ioutils.Send(w, status, updatedPlaces)
+}
+
+func (rh *AdminHandler) PlaceDropDelete(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	placeId, err := strconv.Atoi(mux.Vars(r)["id"])
+	if err != nil {
+		log.Errorf("AdminDelivery.PlaceUpdatePut: failed get place id from url [error: %w]", err)
+		ioutils.SendError(w, http.StatusInternalServerError, "")
+		return
+	}
+
+	updatedDish, status, err := rh.AdminUseCase.PlaceDropDelete(r.Context(), uint64(placeId))
 	if err != nil || status != http.StatusOK {
 		log.Errorf("AdminDelivery.PlaceUpdatePut: failed update place [error: %w] [status: %d]", err, status)
 		ioutils.SendError(w, status, "")

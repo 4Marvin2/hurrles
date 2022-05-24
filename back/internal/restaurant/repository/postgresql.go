@@ -13,6 +13,7 @@ import (
 type IRestaurantRepository interface {
 	GetRestaurants(context.Context) (models.RestaurantList, error)
 	GetRestaurantPlacesByFloor(context.Context, models.PlaceParameters) (models.PlaceList, error)
+	GetRestaurantAllPlaces(context.Context, uint64) (models.PlaceList, error)
 	GetRestaurantBookedPlaces(context.Context, models.PlaceParameters) (models.PlaceList, error)
 	GetRestaurantMenuById(context.Context, uint64) (models.DishList, error)
 	CreateFavoriteRestaurant(context.Context, uint64, uint64) error
@@ -52,7 +53,7 @@ func NewPostgresRestaurantRepository(config config.PostgresConfig) (IRestaurantR
 
 func (rr *restaurantRepository) GetRestaurants(ctx context.Context) (models.RestaurantList, error) {
 	rows, err := rr.Conn.Query(
-		"SELECT id, title, description, address, metro, number, open_time, close_time, kitchen, img FROM restaurants;",
+		"SELECT id, title, description, address, metro, number, open_time, close_time, kitchen, img, floors FROM restaurants;",
 	)
 	if err != nil {
 		return models.RestaurantList{}, err
@@ -73,6 +74,7 @@ func (rr *restaurantRepository) GetRestaurants(ctx context.Context) (models.Rest
 			&curRestaurant.CloseTime,
 			&curRestaurant.Kitchen,
 			&curRestaurant.Img,
+			&curRestaurant.Floors,
 		)
 		if err != nil {
 			return models.RestaurantList{}, err
@@ -122,13 +124,49 @@ func (rr *restaurantRepository) GetRestaurantPlacesByFloor(ctx context.Context, 
 	return places, nil
 }
 
+func (rr *restaurantRepository) GetRestaurantAllPlaces(ctx context.Context, restaurantId uint64) (models.PlaceList, error) {
+	rows, err := rr.Conn.Query(
+		`SELECT id, capacity, number, left_top, right_bottom, width, height, floor
+		FROM places
+		WHERE restaurant_id = $1;`,
+		restaurantId,
+	)
+	if err != nil {
+		return models.PlaceList{}, err
+	}
+	defer rows.Close()
+
+	var places models.PlaceList
+	var curPlace models.Place
+	for rows.Next() {
+		err := rows.Scan(
+			&curPlace.Id,
+			&curPlace.Capacity,
+			&curPlace.Number,
+			&curPlace.LeftTop,
+			&curPlace.RightBottom,
+			&curPlace.Width,
+			&curPlace.Height,
+			&curPlace.Floor,
+		)
+		if err != nil {
+			return models.PlaceList{}, err
+		}
+		places = append(places, curPlace)
+	}
+	if err := rows.Err(); err != nil {
+		return models.PlaceList{}, err
+	}
+	return places, nil
+}
+
 func (rr *restaurantRepository) GetRestaurantBookedPlaces(ctx context.Context, placeParams models.PlaceParameters) (models.PlaceList, error) {
 	rows, err := rr.Conn.Query(
 		`SELECT p.id, p.capacity, p.number, p.left_top, p.right_bottom, p.width, p.height, p.floor
 		FROM places as p
 		LEFT JOIN orders as o
 		ON o.place_id = p.id
-		WHERE o.start_time <= $1 AND o.end_time >= $1
+		WHERE o.start_time <= $1 AND o.end_time > $1
 		AND p.restaurant_id = $2;`,
 		placeParams.Time,
 		placeParams.RestaurantId,
@@ -211,7 +249,7 @@ func (rr *restaurantRepository) CreateFavoriteRestaurant(ctx context.Context, ui
 
 func (rr *restaurantRepository) GetRestaurantFavorite(ctx context.Context, uid uint64) (models.RestaurantList, error) {
 	rows, err := rr.Conn.Query(
-		`SELECT r.id, r.title, r.description, r.address, r.metro, r.number, r.open_time, r.close_time, r.kitchen, r.img
+		`SELECT r.id, r.title, r.description, r.address, r.metro, r.number, r.open_time, r.close_time, r.kitchen, r.img, r.floors
 		FROM restaurants_users AS ru
 		JOIN restaurants AS r ON (r.id = ru.restaurant_id)
 		WHERE ru.user_id = $1;`,
@@ -236,6 +274,7 @@ func (rr *restaurantRepository) GetRestaurantFavorite(ctx context.Context, uid u
 			&curRestaurant.CloseTime,
 			&curRestaurant.Kitchen,
 			&curRestaurant.Img,
+			&curRestaurant.Floors,
 		)
 		if err != nil {
 			return models.RestaurantList{}, err

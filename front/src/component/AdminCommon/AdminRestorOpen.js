@@ -73,6 +73,10 @@ export default class AdminRestorOpen extends React.Component {
         this.props.openUpdateRestorClick();
     }
 
+    mapClick() {
+        this.props.mapClick(true);
+    }
+
     render() {
         let tmpl
         if (!this.state.addFormActive && !this.state.updateFormActive) {
@@ -81,6 +85,9 @@ export default class AdminRestorOpen extends React.Component {
                     <TitleBar isFavorite={this.props.isFavorite} likeClick={this.props.likeClick} />
                     <div className="admin-restor-open__main">
                         <Info restorInfo={this.props.restorInfo}/>
+                        <div className="admin-restor-open__reverse-button">
+                            <Button text='Обновить карту столов' theme='dark' width={200} height={30} onClick={() => this.mapClick()}/>
+                        </div>
                         <Menu dishes={this.props.dishes} isAdmin={true} restorId={this.state.openRestorId} addButtonClick={this.addButtonClick} updateButtonClick={this.updateButtonClick}/>
                     </div>
                     <div className="admin-restor-open__reverse-button">
