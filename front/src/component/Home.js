@@ -26,26 +26,26 @@ export default class Home extends React.Component {
         this.reserveClick = this.reserveClick.bind(this);
         this.searchCallback = this.searchCallback.bind(this);
 
-        // getFavoriteRestors().then((data) => {
-        //     if (!data) {
-        //         return
-        //     }
-        //     try {
-        //         if (this.state.restors.length === 0) {
-        //             throw BreakException;
-        //         }
-        //         const id = this.state.restors[0].id
-        //         data.forEach(e => {
-        //             if (e.id === id) {
-        //                 this.setState({isFavorite: true});
-        //                 throw BreakException;
-        //             };
-        //         });
-        //         this.setState({isFavorite: false});
-        //       } catch (e) {
-        //         if (e !== BreakException) throw e;
-        //       }
-        // });
+        getFavoriteRestors().then((data) => {
+            if (!data) {
+                return
+            }
+            try {
+                if (this.state.restors.length === 0) {
+                    throw BreakException;
+                }
+                const id = this.state.restors[0].id
+                data.forEach(e => {
+                    if (e.id === id) {
+                        this.setState({isFavorite: true});
+                        throw BreakException;
+                    };
+                });
+                this.setState({isFavorite: false});
+              } catch (e) {
+                if (e !== BreakException) throw e;
+              }
+        });
         
         getRestors().then((data) => {
             if (!data) {
