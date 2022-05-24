@@ -8,6 +8,8 @@ import '../css/Admin.css'
 import { getRestors, getRestorMenu } from '../requests/restors';
 import Button from './Common/Button'
 
+import Exit from '../imgs/tapbar/exit.svg';
+
 var BreakException = {};
 
 export default class Home extends React.Component {
@@ -158,6 +160,10 @@ export default class Home extends React.Component {
         })
     }
 
+    logoutClick() {
+        this.props.logoutClick()
+    }
+
     render(){
         return (
             <div className='admin'>
@@ -168,7 +174,7 @@ export default class Home extends React.Component {
                     </div>
                     <Restors restors={this.state.restors} restorClick={this.restorClick} />
                 </div>
-                <div className='admin__right'>
+                <div className={ (!this.state.addFormActive && !this.state.restorFormActive && !this.state.updateRestorFormActive) ? 'admin__right admin__right_hidden' : 'admin__right' }>
                     { this.state.addFormActive && !this.state.restorFormActive && !this.state.updateRestorFormActive &&
                         <AddRestorForm
                             updateRestorsCallback={this.updateRestors}
@@ -210,6 +216,9 @@ export default class Home extends React.Component {
                             />
                         </div>
                     }
+                    <button className="admin__exit-button">
+                        <img src={Exit} alt="Exit" onClick={() => {this.logoutClick()}} />
+                    </button> 
                 </div>
             </div>
         );

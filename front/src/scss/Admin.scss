@@ -19,13 +19,19 @@
 
     &__right {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         margin: 15px;
         flex: 8;
+        align-items: flex-start;
+        justify-content: space-between;
 
         &_hidden {
-            visibility: collapse;
+            justify-content: flex-end;
         }
+    }
+
+    &__exit-button {
+
     }
 
     &__form {

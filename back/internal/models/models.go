@@ -82,12 +82,13 @@ type Order struct {
 	RestaurantMetro   string    `json:"restaurantMetro,omitempty"`
 	PlaceNumber       int32     `json:"placeNumber,omitempty"`
 	PlaceCapacity     int32     `json:"placeCapacity,omitempty"`
-	Dishes            []string  `json:"dishes,omitempty"`
+	DishesIds         []int32   `json:"dishesIds,omitempty"` // why pgx can't pars []uint64 ???
+	DishesTitles      []string  `json:"dishesTitles,omitempty"`
 	DishesPrices      []int32   `json:"dishesPrices,omitempty"`
 	DishesCounts      []int32   `json:"dishesCounts,omitempty"`
 	StartTime         time.Time `json:"startTime,omitempty"`
 	EndTime           time.Time `json:"endTime,omitempty"`
-	Cost              int32     `json:"cost,omitempty"`
+	Cost              int32     `json:"cost"`
 	CreatedTime       time.Time `json:"createdTime,omitempty"`
 	Status            string    `json:"status,omitempty"`
 }

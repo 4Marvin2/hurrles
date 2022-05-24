@@ -801,7 +801,7 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels7(out *jwriter.Writer, in Place)
 		}
 		out.Int(int(in.Number))
 	}
-	if in.LeftTop != 0 {
+	{
 		const prefix string = ",\"leftTop\":"
 		if first {
 			first = false
@@ -811,54 +811,29 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels7(out *jwriter.Writer, in Place)
 		}
 		out.Int(int(in.LeftTop))
 	}
-	if in.RightBottom != 0 {
+	{
 		const prefix string = ",\"rightBottom\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Int(int(in.RightBottom))
 	}
 	if in.Floor != 0 {
 		const prefix string = ",\"floor\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Int(int(in.Floor))
 	}
 	if in.Width != 0 {
 		const prefix string = ",\"width\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Int(int(in.Width))
 	}
 	if in.Height != 0 {
 		const prefix string = ",\"height\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Int(int(in.Height))
 	}
 	{
 		const prefix string = ",\"isBooked\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Bool(bool(in.IsBooked))
 	}
 	out.RawByte('}')
@@ -1103,25 +1078,48 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels10(in *jlexer.Lexer, out *Order)
 			out.PlaceNumber = int32(in.Int32())
 		case "placeCapacity":
 			out.PlaceCapacity = int32(in.Int32())
-		case "dishes":
+		case "dishesIds":
 			if in.IsNull() {
 				in.Skip()
-				out.Dishes = nil
+				out.DishesIds = nil
 			} else {
 				in.Delim('[')
-				if out.Dishes == nil {
+				if out.DishesIds == nil {
 					if !in.IsDelim(']') {
-						out.Dishes = make([]string, 0, 4)
+						out.DishesIds = make([]int32, 0, 16)
 					} else {
-						out.Dishes = []string{}
+						out.DishesIds = []int32{}
 					}
 				} else {
-					out.Dishes = (out.Dishes)[:0]
+					out.DishesIds = (out.DishesIds)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v10 string
-					v10 = string(in.String())
-					out.Dishes = append(out.Dishes, v10)
+					var v10 int32
+					v10 = int32(in.Int32())
+					out.DishesIds = append(out.DishesIds, v10)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		case "dishesTitles":
+			if in.IsNull() {
+				in.Skip()
+				out.DishesTitles = nil
+			} else {
+				in.Delim('[')
+				if out.DishesTitles == nil {
+					if !in.IsDelim(']') {
+						out.DishesTitles = make([]string, 0, 4)
+					} else {
+						out.DishesTitles = []string{}
+					}
+				} else {
+					out.DishesTitles = (out.DishesTitles)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v11 string
+					v11 = string(in.String())
+					out.DishesTitles = append(out.DishesTitles, v11)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1142,9 +1140,9 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels10(in *jlexer.Lexer, out *Order)
 					out.DishesPrices = (out.DishesPrices)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v11 int32
-					v11 = int32(in.Int32())
-					out.DishesPrices = append(out.DishesPrices, v11)
+					var v12 int32
+					v12 = int32(in.Int32())
+					out.DishesPrices = append(out.DishesPrices, v12)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1165,9 +1163,9 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels10(in *jlexer.Lexer, out *Order)
 					out.DishesCounts = (out.DishesCounts)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v12 int32
-					v12 = int32(in.Int32())
-					out.DishesCounts = append(out.DishesCounts, v12)
+					var v13 int32
+					v13 = int32(in.Int32())
+					out.DishesCounts = append(out.DishesCounts, v13)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1278,8 +1276,8 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels10(out *jwriter.Writer, in Order
 		}
 		out.Int32(int32(in.PlaceCapacity))
 	}
-	if len(in.Dishes) != 0 {
-		const prefix string = ",\"dishes\":"
+	if len(in.DishesIds) != 0 {
+		const prefix string = ",\"dishesIds\":"
 		if first {
 			first = false
 			out.RawString(prefix[1:])
@@ -1288,11 +1286,30 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels10(out *jwriter.Writer, in Order
 		}
 		{
 			out.RawByte('[')
-			for v13, v14 := range in.Dishes {
-				if v13 > 0 {
+			for v14, v15 := range in.DishesIds {
+				if v14 > 0 {
 					out.RawByte(',')
 				}
-				out.String(string(v14))
+				out.Int32(int32(v15))
+			}
+			out.RawByte(']')
+		}
+	}
+	if len(in.DishesTitles) != 0 {
+		const prefix string = ",\"dishesTitles\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		{
+			out.RawByte('[')
+			for v16, v17 := range in.DishesTitles {
+				if v16 > 0 {
+					out.RawByte(',')
+				}
+				out.String(string(v17))
 			}
 			out.RawByte(']')
 		}
@@ -1307,11 +1324,11 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels10(out *jwriter.Writer, in Order
 		}
 		{
 			out.RawByte('[')
-			for v15, v16 := range in.DishesPrices {
-				if v15 > 0 {
+			for v18, v19 := range in.DishesPrices {
+				if v18 > 0 {
 					out.RawByte(',')
 				}
-				out.Int32(int32(v16))
+				out.Int32(int32(v19))
 			}
 			out.RawByte(']')
 		}
@@ -1326,11 +1343,11 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels10(out *jwriter.Writer, in Order
 		}
 		{
 			out.RawByte('[')
-			for v17, v18 := range in.DishesCounts {
-				if v17 > 0 {
+			for v20, v21 := range in.DishesCounts {
+				if v20 > 0 {
 					out.RawByte(',')
 				}
-				out.Int32(int32(v18))
+				out.Int32(int32(v21))
 			}
 			out.RawByte(']')
 		}
@@ -1355,7 +1372,7 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels10(out *jwriter.Writer, in Order
 		}
 		out.Raw((in.EndTime).MarshalJSON())
 	}
-	if in.Cost != 0 {
+	{
 		const prefix string = ",\"cost\":"
 		if first {
 			first = false
@@ -1367,22 +1384,12 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels10(out *jwriter.Writer, in Order
 	}
 	if true {
 		const prefix string = ",\"createdTime\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.Raw((in.CreatedTime).MarshalJSON())
 	}
 	if in.Status != "" {
 		const prefix string = ",\"status\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
+		out.RawString(prefix)
 		out.String(string(in.Status))
 	}
 	out.RawByte('}')
@@ -1507,9 +1514,9 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels12(in *jlexer.Lexer, out *DishLi
 			*out = (*out)[:0]
 		}
 		for !in.IsDelim(']') {
-			var v19 Dish
-			(v19).UnmarshalEasyJSON(in)
-			*out = append(*out, v19)
+			var v22 Dish
+			(v22).UnmarshalEasyJSON(in)
+			*out = append(*out, v22)
 			in.WantComma()
 		}
 		in.Delim(']')
@@ -1523,11 +1530,11 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels12(out *jwriter.Writer, in DishL
 		out.RawString("null")
 	} else {
 		out.RawByte('[')
-		for v20, v21 := range in {
-			if v20 > 0 {
+		for v23, v24 := range in {
+			if v23 > 0 {
 				out.RawByte(',')
 			}
-			(v21).MarshalEasyJSON(out)
+			(v24).MarshalEasyJSON(out)
 		}
 		out.RawByte(']')
 	}

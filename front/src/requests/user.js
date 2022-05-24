@@ -55,7 +55,7 @@ const getUserRequest = () => {
 
 const logoutRequest = () => {
     return http
-        .delete(userURL+'/logout')
+        .get(userURL+'/logout')
         .then((result) => {
             if (result.status !== 200) {
                 throw 'Non 200 response';

@@ -15,6 +15,10 @@ export default class TapBar extends React.Component {
         this.props.tapBarClick(payload);
     }
 
+    logoutClick() {
+        this.props.logoutClick()
+    }
+
     render() {
         return (
             <nav className="tapbar">
@@ -51,7 +55,7 @@ export default class TapBar extends React.Component {
                     }
                 </button>
                 <button className="tapbar__exit-icon">
-                    <img src={Exit} alt="Exit" />
+                    <img src={Exit} alt="Exit" onClick={() => {this.logoutClick()}} />
                 </button>
             </nav>            
         )

@@ -2,18 +2,31 @@ import React from 'react'
 import CartRestor from './CartRestor';
 
 import '../../css/Cart/Cart.css'
+import { dateToDateString } from '../../utils/date';
 
 export default class CartRestors extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render(){
-        const cartRestors = this.props.cartRestors.map((cartRestor) =>
-            <CartRestor key={cartRestor.id} />
-        );
+        let orders
+        if (this.props.orders !== undefined) {
+            orders = this.props.orders.map((order) => {
+                order.startTime = dateToDateString(order.startTime)
+                return (
+                    <CartRestor key={order.id} data={order} updateCallback={this.props.updateCallback}/>
+                );
+            });
+        }
 
         return (
             <div className="cart__cart-restors">
-                <div className='cart__cart-restors_scroll'>
-                    {cartRestors}
-                </div>
+                { this.props.orders !== undefined &&
+                    <div className='cart__cart-restors_scroll'>
+                        {orders}
+                    </div>
+                }
             </div>
         );
     }
