@@ -23,6 +23,18 @@
 
         color: #000000;
     }
+
+    &__topbar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__title-metro {
+
+    }
+
     &__title {
         font-size: 36px;
         line-height: 36px;

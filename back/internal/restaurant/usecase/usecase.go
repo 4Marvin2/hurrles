@@ -16,6 +16,7 @@ type IRestaurantUsecase interface {
 	RestaurantFavoritePost(context.Context, uint64) (int, error)
 	RestaurantFavoriteGet(context.Context) (models.RestaurantList, int, error)
 	RestaurantFavoriteDelete(context.Context, uint64) (int, error)
+	RestaurantSearchPost(context.Context, string) (models.RestaurantList, int, error)
 }
 
 type restaurantUsecase struct {
@@ -102,4 +103,12 @@ func (ru *restaurantUsecase) RestaurantFavoriteDelete(ctx context.Context, resta
 		return http.StatusInternalServerError, err
 	}
 	return http.StatusOK, nil
+}
+
+func (ru *restaurantUsecase) RestaurantSearchPost(ctx context.Context, searchPattern string) (models.RestaurantList, int, error) {
+	restaurant, err := ru.RestaurantPostgresRepository.SearchRestaurant(ctx, searchPattern)
+	if err != nil {
+		return models.RestaurantList{}, http.StatusInternalServerError, err
+	}
+	return restaurant, http.StatusOK, nil
 }

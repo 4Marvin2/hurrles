@@ -18,6 +18,7 @@ type IRestaurantRepository interface {
 	CreateFavoriteRestaurant(context.Context, uint64, uint64) error
 	GetRestaurantFavorite(context.Context, uint64) (models.RestaurantList, error)
 	DeleteFavoriteRestaurant(context.Context, uint64, uint64) error
+	SearchRestaurant(context.Context, string) (models.RestaurantList, error)
 }
 
 type restaurantRepository struct {
@@ -262,4 +263,42 @@ func (rr *restaurantRepository) DeleteFavoriteRestaurant(ctx context.Context, ui
 		return err
 	}
 	return nil
+}
+
+func (rr *restaurantRepository) SearchRestaurant(ctx context.Context, searchPattern string) (models.RestaurantList, error) {
+	rows, err := rr.Conn.Query(
+		`SELECT id, title, description, address, metro, number, open_time, close_time, kitchen, img
+		FROM restaurants
+		WHERE LOWER(title) LIKE '%' || $1 || '%';`,
+		searchPattern,
+	)
+	if err != nil {
+		return models.RestaurantList{}, err
+	}
+	defer rows.Close()
+
+	var restaurants models.RestaurantList
+	var curRestaurant models.Restaurant
+	for rows.Next() {
+		err := rows.Scan(
+			&curRestaurant.Id,
+			&curRestaurant.Title,
+			&curRestaurant.Description,
+			&curRestaurant.Address,
+			&curRestaurant.Metro,
+			&curRestaurant.Number,
+			&curRestaurant.OpenTime,
+			&curRestaurant.CloseTime,
+			&curRestaurant.Kitchen,
+			&curRestaurant.Img,
+		)
+		if err != nil {
+			return models.RestaurantList{}, err
+		}
+		restaurants = append(restaurants, curRestaurant)
+	}
+	if err := rows.Err(); err != nil {
+		return models.RestaurantList{}, err
+	}
+	return restaurants, nil
 }

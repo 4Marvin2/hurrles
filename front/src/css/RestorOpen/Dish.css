@@ -74,5 +74,9 @@
   right: 15px;
   bottom: 20px;
 }
+.dish__add-delete-buttons {
+  display: flex;
+  align-items: center;
+}
 
 /*# sourceMappingURL=Dish.css.map */

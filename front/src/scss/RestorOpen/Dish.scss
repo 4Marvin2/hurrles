@@ -93,4 +93,9 @@
         right: 15px;
         bottom: 20px;
     }
+
+    &__add-delete-buttons {
+        display: flex;
+        align-items: center;
+    }
 }
