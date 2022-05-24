@@ -2,6 +2,8 @@ import React from 'react'
 import Restors from './Restors'
 import SearchBar from  './SearchBar'
 import RestorOpen from './RestorOpen/RestorOpen'
+import Reserve from './Reserve/Reserve'
+
 import '../css/Favor.css'
 
 import { getFavoriteRestors, getRestorMenu, addFavorite, deleteFavorite } from '../requests/restors';
@@ -13,6 +15,7 @@ export default class Favor extends React.Component {
         super(props);
 
         this.state = {
+            reserve: false,
             currentIndex: 0,
             isFavorite: false,
             restors:[],
@@ -20,6 +23,7 @@ export default class Favor extends React.Component {
 
         this.likeClick = this.likeClick.bind(this);
         this.restorClick = this.restorClick.bind(this);
+        this.reserveClick = this.reserveClick.bind(this);
 
         getFavoriteRestors().then((data) => {
             if (!data) {
@@ -128,6 +132,10 @@ export default class Favor extends React.Component {
         }
     }
 
+    reserveClick(payload) {
+        this.setState({reserve: payload});
+    }
+
     render(){
         return (
             <div className='favor'>
@@ -139,10 +147,16 @@ export default class Favor extends React.Component {
                     {this.state.restors.length !== 0 && 
                         <div className='favor__restorOpen_in'>
                             <RestorOpen
+                            reserveClick={this.reserveClick}
                             likeClick={this.likeClick}
                             isFavorite={this.state.isFavorite}
                             dishes={this.state.restors[this.state.currentIndex].dishes}
                             restorInfo={this.state.restors[this.state.currentIndex].restorInfo} />
+                        </div>
+                    }
+                    {this.state.reserve &&
+                        <div className='home__reserve'>
+                            <Reserve reserveClick={this.reserveClick} id={this.state.restors[this.state.currentIndex].id} userId={this.props.userId} />
                         </div>
                     }
                 </div>

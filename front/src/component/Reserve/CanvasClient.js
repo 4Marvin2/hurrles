@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Canvas extends React.Component {
+export default class CanvasClient extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,6 +13,8 @@ export default class Canvas extends React.Component {
         }
     }
     componentDidUpdate(){
+        const comp = JSON.stringify(this.props.places) === JSON.stringify(this.state.places);
+        console.log(!comp)
         if (this.props.currentFloor !== this.state.currentFloor) {
             this.setState({currentFloor: this.props.currentFloor});
             setTimeout(() => {
@@ -117,84 +119,9 @@ export default class Canvas extends React.Component {
             this.setState({
                 isMouseDown: false,
             });
-            savePlaces(e);
             clear(ctx);
             paintRects();
         })
-
-        canv.addEventListener('mousemove', (e) => {
-            if (this.state.isMouseDown) {
-                clear(ctx);
-                changeRect(e);
-            }
-        })
-
-
-        const savePlaces = (event) => {
-            const rect = canv.getBoundingClientRect();
-            const x = Math.floor((event.clientX - rect.left)/2);
-            const y = Math.floor((event.clientY - rect.top)/2);
-            const idx = this.state.currentIndex;
-            if (idx === -1) return;
-            const places = this.state.places;
-            const newPlaces = [];
-            places.forEach((e, index) => {
-                if (index === idx) {
-                    const newPlace = {
-                        id: e.id,
-                        left: x - this.state.offsetX,
-                        top: y - this.state.offsetY,
-                        width: e.width,
-                        height:e.height,
-                        nubmer: e.nubmer,
-                        capacity: e.capacity,
-                        floor: e.floor,
-                    }
-                    newPlaces.push(newPlace)
-                } else {
-                    newPlaces.push(e)
-                }
-            });
-            this.setState({places: newPlaces})
-        };
-
-        const changeRect = (event) => {
-            const idx = this.state.currentIndex;
-            if (idx === -1) return;
-            const places = this.state.places;
-            const rect = canv.getBoundingClientRect();
-            const x = Math.floor((event.clientX - rect.left)/2);
-            const y = Math.floor((event.clientY - rect.top)/2);
-            places.forEach((e, index) => {
-                if (e.floor == this.state.currentFloor) {
-                    if (index === idx) {
-                        roundRect(
-                            ctx,
-                            x - this.state.offsetX,
-                            y - this.state.offsetY,  
-                            e.width, 
-                            e.height,
-                            10
-                        )
-                        ctx.fillText(
-                            e.capacity, 
-                            x - this.state.offsetX + Math.floor(e.width/2), 
-                            y - this.state.offsetY + Math.floor(e.height/2)
-                        );
-                    } else {
-                        roundRect(
-                            ctx,
-                            e.left,
-                            e.top, 
-                            e.width, 
-                            e.height,
-                            10
-                        )
-                        ctx.fillText(e.capacity, e.left + Math.floor(e.width/2), e.top + Math.floor(e.height/2))
-                    }
-                }
-            });
-        };
 
         const paintRects = () => {
             clear(ctx);

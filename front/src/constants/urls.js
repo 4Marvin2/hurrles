@@ -7,3 +7,4 @@ export const restaurantsURL = `${apiPrefix}/restaurants`
 export const restaurantURL = `${apiPrefix}/restaurant`
 export const adminURL = `${apiPrefix}/admin`
 export const ordersURL = `${apiPrefix}/order`
+export const orders = `${apiPrefix}/orders`
