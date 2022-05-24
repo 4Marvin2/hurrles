@@ -14,17 +14,14 @@ export default class CanvasClient extends React.Component {
     }
     componentDidUpdate(){
         const comp = JSON.stringify(this.props.places) === JSON.stringify(this.state.places);
-        console.log(!comp)
         if (this.props.currentFloor !== this.state.currentFloor) {
             this.setState({currentFloor: this.props.currentFloor});
             setTimeout(() => {
-                console.log(this.state.currentFloor)
                 this.updateCanvas();
             }, 100);
         }
     }
     componentDidMount() {
-        console.log(this.state)
         this.updateCanvas();
     }
     updateCanvas() {
@@ -33,8 +30,6 @@ export default class CanvasClient extends React.Component {
         canv.style.width  = '600px';
         canv.style.height = '600px';
         
-        console.log(this.state)
-
         const  roundRect = (ctx, x, y, width, height, radius, fill, stroke) => {
             if (typeof stroke === 'undefined') {
               stroke = true;

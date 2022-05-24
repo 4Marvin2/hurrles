@@ -139,7 +139,6 @@ export default class Home extends React.Component {
     }
 
     shouldComponentUpdate(newProps, newStat) {
-        console.log(this.props, newProps, this.state, newStat)
         if (this.state !== newStat) {
             this.state.searchUpdate = false
             return true

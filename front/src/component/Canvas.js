@@ -16,13 +16,11 @@ export default class Canvas extends React.Component {
         if (this.props.currentFloor !== this.state.currentFloor) {
             this.setState({currentFloor: this.props.currentFloor});
             setTimeout(() => {
-                console.log(this.state.currentFloor)
                 this.updateCanvas();
             }, 100);
         }
     }
     componentDidMount() {
-        console.log(this.state)
         this.updateCanvas();
     }
     updateCanvas() {
@@ -31,8 +29,6 @@ export default class Canvas extends React.Component {
         canv.style.width  = '600px';
         canv.style.height = '600px';
         
-        console.log(this.state)
-
         const  roundRect = (ctx, x, y, width, height, radius, fill, stroke) => {
             if (typeof stroke === 'undefined') {
               stroke = true;

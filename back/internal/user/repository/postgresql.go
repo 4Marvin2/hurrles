@@ -50,7 +50,7 @@ func NewPostgresUserRepository(config config.PostgresConfig) (IUserRepository, e
 func (ur *userRepository) GetUserById(ctx context.Context, uid uint64) (models.User, error) {
 	var user models.User
 	err := ur.Conn.QueryRow(
-		"SELECT id, email, password, full_name, number, is_admin, is_restaurant FROM users WHERE id = $1;",
+		"SELECT id, email, password, full_name, number, is_admin, is_restaurant, restaurant FROM users WHERE id = $1;",
 		uid,
 	).Scan(
 		&user.Id,
@@ -60,6 +60,7 @@ func (ur *userRepository) GetUserById(ctx context.Context, uid uint64) (models.U
 		&user.Number,
 		&user.IsAdmin,
 		&user.IsRestaurant,
+		&user.Restaurant,
 	)
 	if err != nil {
 		return models.User{}, err
@@ -70,7 +71,7 @@ func (ur *userRepository) GetUserById(ctx context.Context, uid uint64) (models.U
 func (ur *userRepository) GetUserByEmail(ctx context.Context, email string) (models.User, error) {
 	var user models.User
 	err := ur.Conn.QueryRow(
-		"SELECT id, email, password, full_name, number, is_admin, is_restaurant FROM users WHERE email = $1;",
+		"SELECT id, email, password, full_name, number, is_admin, is_restaurant, restaurant FROM users WHERE email = $1;",
 		email,
 	).Scan(
 		&user.Id,
@@ -80,6 +81,7 @@ func (ur *userRepository) GetUserByEmail(ctx context.Context, email string) (mod
 		&user.Number,
 		&user.IsAdmin,
 		&user.IsRestaurant,
+		&user.Restaurant,
 	)
 	if err != nil {
 		return models.User{}, err
@@ -91,7 +93,7 @@ func (ur *userRepository) CreateUser(ctx context.Context, user models.User) (mod
 	var createdUser models.User
 	err := ur.Conn.QueryRow(
 		`INSERT INTO users (email, password)
-		VALUES ($1, $2) RETURNING id, email, password, full_name, number, is_admin, is_restaurant;`,
+		VALUES ($1, $2) RETURNING id, email, password, full_name, number, is_admin, is_restaurant, restaurant;`,
 		user.Email,
 		user.Password,
 	).Scan(
@@ -102,6 +104,7 @@ func (ur *userRepository) CreateUser(ctx context.Context, user models.User) (mod
 		&createdUser.Number,
 		&user.IsAdmin,
 		&user.IsRestaurant,
+		&user.Restaurant,
 	)
 
 	if err != nil {
@@ -116,7 +119,7 @@ func (ur *userRepository) UpdateUser(ctx context.Context, user models.User) (mod
 		`UPDATE users
 		SET (full_name, email, number) = ($2, $3, $4)
 		WHERE id = $1
-		RETURNING id, email, password, full_name, number, is_admin, is_restaurant;`,
+		RETURNING id, email, password, full_name, number, is_admin, is_restaurant, restaurant;`,
 		user.Id,
 		user.FullName,
 		user.Email,
@@ -129,6 +132,7 @@ func (ur *userRepository) UpdateUser(ctx context.Context, user models.User) (mod
 		&updatedUser.Number,
 		&user.IsAdmin,
 		&user.IsRestaurant,
+		&user.Restaurant,
 	)
 
 	if err != nil {

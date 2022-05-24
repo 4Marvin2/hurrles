@@ -98,7 +98,9 @@ export default class CartRestor extends React.Component {
                     }
                     <div className='cart-restor__cancel-button'>
                         {/* <span className={ this.state.formErrorIsActive ? 'auth-form__form-error auth-form__form-error_active' : 'auth-form__form-error' }>{this.state.formError}</span> */}
-                        <Button text='Отменить заказ' theme='cancel' width={150} height={30} onClick={() => {this.closeOrderButtonClick({orderId: this.props.data.id})}}/>
+                        { !this.props.isRestor &&
+                            <Button text='Отменить заказ' theme='cancel' width={150} height={30} onClick={() => {this.closeOrderButtonClick({orderId: this.props.data.id})}}/>
+                        }
                     </div>
                 </div>
             </div>

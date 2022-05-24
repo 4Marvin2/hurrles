@@ -1,10 +1,10 @@
 import React from 'react'
-import { nameErorrMsg, emailErrorMsg, phoneNumberErrorMsg, profileFormErrorMsg } from '../constants/errorMsg';
-import InputField from './Common/InputField';
-import Button from './Common/Button';
-import validator from 'validator'
+import { profileFormErrorMsg } from '../constants/errorMsg';
 import { editRequest } from '../requests/user';
 import '../css/Profile.css'
+import '../css/RestorAdmin.css'
+import RestorAdminCart from './RestorAdminCart';
+import Exit from '../imgs/tapbar/exit.svg';
 
 export default class RestorAdmin extends React.Component {
     constructor(props) {
@@ -18,33 +18,6 @@ export default class RestorAdmin extends React.Component {
             phoneNumberIsValid: true,
             formError: profileFormErrorMsg,
             formErrorIsActive: false,
-        }
-    }
-
-    nameOnInput = (payload) => {
-        this.setState({name: payload.target.value})
-        if (payload.target.value.length === 0) {
-            this.setState({nameIsValid: false})
-        } else {
-            this.setState({nameIsValid: true})
-        }
-    }
-
-    emailOnInput = (payload) => {
-        this.setState({email: payload.target.value})
-        if (validator.isEmail(payload.target.value)) {
-            this.setState({emailIsValid: true})
-        } else {
-            this.setState({emailIsValid: false})
-        }
-    }
-
-    phoneNumberOnInput = (payload) => {
-        this.setState({phoneNumber: payload.target.value})
-        if (validator.isMobilePhone(payload.target.value, 'ru-RU') || payload.target.value.length === 0) {
-            this.setState({phoneNumberIsValid: true})
-        } else {
-            this.setState({phoneNumberIsValid: false})
         }
     }
 
@@ -66,10 +39,17 @@ export default class RestorAdmin extends React.Component {
         }
     }
 
+    logoutClick() {
+        this.props.logoutClick()
+    }
+
     render(){
         return (
             <div className='restor-admin'>
-                RESTOR ADMIN
+                <RestorAdminCart />
+                <button className="restor-admin__exit-button">
+                    <img src={Exit} alt="Exit" onClick={() => {this.logoutClick()}} />
+                </button> 
             </div>
         );
     }

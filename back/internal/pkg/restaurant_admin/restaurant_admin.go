@@ -18,7 +18,7 @@ func CheckRestaurantAdmin(next http.HandlerFunc) http.HandlerFunc {
 			return
 		}
 
-		if curUser.IsAdmin {
+		if curUser.IsRestaurant && curUser.Restaurant != 0 {
 			next.ServeHTTP(w, r)
 			return
 		}

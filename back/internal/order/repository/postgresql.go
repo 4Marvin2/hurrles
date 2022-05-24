@@ -336,7 +336,7 @@ func (or *orderRepository) GetRestaurantOrders(ctx context.Context, rid uint64) 
 		JOIN restaurants AS r ON (r.id = p.restaurant_id)
 		LEFT JOIN dishes_orders AS dso ON (dso.order_id = o.id)
 		LEFT JOIN dishes AS d ON (d.id = dso.dish_id)
-		WHERE r.d = $1 AND o.end_time >= now()
+		WHERE r.id = $1 AND o.end_time >= now()
 		GROUP BY
 			o.id,
 			o.user_id,

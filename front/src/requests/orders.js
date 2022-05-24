@@ -15,6 +15,20 @@ const getOrders = () => {
         })
 };
 
+const getRestaurantOrders = () => {
+    return http
+        .get(`${orderURL}/restaurant`)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
+            }
+            return result.data
+        })
+        .catch((error) => {
+            throw error
+        })
+};
+
 const createOrder = (userId, placeId, startTime) => {
     const str = startTime;
     const str1 = str.substring(0, 11);
@@ -85,4 +99,4 @@ const deleteOrder = (orderId) => {
         })
 };
 
-export { getOrders, addDish, deleteDish, deleteOrder, createOrder }
+export { getOrders, addDish, deleteDish, deleteOrder, createOrder, getRestaurantOrders }

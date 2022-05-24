@@ -47,7 +47,6 @@ export default class App extends React.Component {
     }
 
     logInHandler(payload) {
-        console.log(payload.user)
         this.setState({loggedIn: payload.loggedIn, mainPage: 'home', user: payload.user, user: payload.user})
     }
 
@@ -93,7 +92,7 @@ export default class App extends React.Component {
                     <Admin logoutClick={this.logoutClick}/>
                 }
                 { !this.state.promiseInProgress && this.state.loggedIn && this.state.user.isRestaurant &&
-                    <RestorAdmin />
+                    <RestorAdmin logoutClick={this.logoutClick}/>
                 }
             </div>
         )
