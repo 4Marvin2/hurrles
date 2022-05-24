@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"hurrles/config"
 	"hurrles/internal/models"
@@ -430,7 +431,11 @@ func (ar *adminRepository) DeletePlace(ctx context.Context, placeId uint64) (mod
 	)
 
 	if err != nil {
-		return models.Place{}, err
+		if err == sql.ErrNoRows {
+			return models.Place{}, nil
+		} else {
+			return models.Place{}, err
+		}
 	}
 	return updatedPlace, nil
 }
