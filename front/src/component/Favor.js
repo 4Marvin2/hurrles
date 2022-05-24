@@ -53,6 +53,7 @@ export default class Favor extends React.Component {
                         rating: '4.1', 
                         metro: e.metro,
                         restorInfo: {
+                            title: e.title,
                             rating: '4.8',
                             address: e.address,
                             workTime: `Понедельник-суббота ${e.openTime} - ${e.closeTime}`,
@@ -60,6 +61,7 @@ export default class Favor extends React.Component {
                             tag1: e.kitchen
                         },
                         dishes: dishes,
+                        floors: e.floors,
                     };
                     restors.push(restorElement);
                     this.setState({

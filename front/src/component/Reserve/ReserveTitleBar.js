@@ -5,15 +5,15 @@ import Back from '../../imgs/titlebar/back.svg'
 import "../../css/RestorOpen/TitleBar.css"
 
 export default class ReserveTitleBar extends React.Component {
-  reserveClick(payload) {
-    this.props.reserveClick(payload);
+  reserveClick() {
+    this.props.reserveClick(false);
   }
 
   render() {
     return (
         <nav className="restor-open__restor-titlebar restor-titlebar">
           <div className="restor-titlebar__back">
-            <button onClick={() => this.reserveClick(false)}>
+            <button onClick={() => this.reserveClick()}>
                 <img src={Back} alt="like" />
             </button>
           </div>

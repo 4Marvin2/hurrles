@@ -84,12 +84,12 @@ export default class App extends React.Component {
                             {this.state.mainPage === 'cart' &&
                             <Cart />}
                             {this.state.mainPage === 'profile' &&
-                            <Profile name={this.state.user.fullName} email={this.state.user.email} phoneNumber={this.state.number}/>}
+                            <Profile name={this.state.user.fullName} email={this.state.user.email} phoneNumber={this.state.user.number}/>}
                         </div>
                     </div>
                 }
                 { !this.state.promiseInProgress && this.state.loggedIn && this.state.user.isAdmin &&
-                    <Admin logoutClick={this.logoutClick}/>
+                    <Admin logoutClick={this.logoutClick} userId={this.state.user.id}/>
                 }
                 { !this.state.promiseInProgress && this.state.loggedIn && this.state.user.isRestaurant &&
                     <RestorAdmin logoutClick={this.logoutClick}/>

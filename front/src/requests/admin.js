@@ -26,7 +26,7 @@ const addRestorRequest = (title, desc, kitchen, address, metro, phoneNumber, ope
         })
 };
 
-const updateRestorRequest = (id, title, desc, kitchen, address, metro, phoneNumber, openTime, closeTime) => {
+const updateRestorRequest = (id, title, desc, kitchen, address, metro, phoneNumber, floors, openTime, closeTime) => {
     const body = JSON.stringify({
         title: title,
         description: desc,
@@ -34,6 +34,7 @@ const updateRestorRequest = (id, title, desc, kitchen, address, metro, phoneNumb
         address: address,
         metro: metro,
         number: phoneNumber,
+        floors: floors,
         openTime: openTime,
         closeTime: closeTime,
     });

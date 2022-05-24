@@ -30,6 +30,7 @@ func SetRestaurantRouting(router *mux.Router, rs usecase.IRestaurantUsecase, us 
 	router.HandleFunc("/api/v1/restaurants", p.SetCSRF(perm.CheckAuth(restaurantHandler.RestaurantsGet))).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/v1/restaurant/{id:[0-9]+}/menu", p.SetCSRF(perm.CheckAuth(restaurantHandler.RestaurantIdMenuGet))).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/v1/restaurant/{id:[0-9]+}/places", p.CheckCSRF(perm.CheckAuth(restaurantHandler.RestaurantIdPlacesGet))).Methods("POST", "OPTIONS")
+	router.HandleFunc("/api/v1/restaurant/{id:[0-9]+}/places", p.CheckCSRF(perm.CheckAuth(restaurantHandler.RestaurantIdAllPlacesGet))).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/v1/restaurant/favorite/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(restaurantHandler.RestaurantFavoritePost)))).Methods("POST", "OPTIONS")
 	router.HandleFunc("/api/v1/restaurant/favorite", p.SetCSRF(perm.CheckAuth(perm.GetCurrentUser(restaurantHandler.RestaurantFavoriteGet)))).Methods("GET", "OPTIONS")
 	router.HandleFunc("/api/v1/restaurant/favorite/{id:[0-9]+}", p.CheckCSRF(perm.CheckAuth(perm.GetCurrentUser(restaurantHandler.RestaurantFavoriteDelete)))).Methods("DELETE", "OPTIONS")
@@ -76,6 +77,26 @@ func (rh *RestaurantHandler) RestaurantIdPlacesGet(w http.ResponseWriter, r *htt
 	placeParameters.RestaurantId = uint64(restaurantId)
 
 	places, status, err := rh.RestaurantUseCase.RestaurantIdPlacesGet(r.Context(), placeParameters)
+	if err != nil || status != http.StatusOK {
+		log.Errorf("RestaurantDelivery.RestaurantIdPlacesGet: failed get places [error: %w] [status: %d]", err, status)
+		ioutils.SendError(w, status, "")
+		return
+	}
+
+	ioutils.Send(w, status, places)
+}
+
+func (rh *RestaurantHandler) RestaurantIdAllPlacesGet(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+
+	restaurantId, err := strconv.Atoi(mux.Vars(r)["id"])
+	if err != nil {
+		log.Errorf("RestaurantDelivery.RestaurantIdPlacesGet: failed get restaurant id from url [error: %w]", err)
+		ioutils.SendError(w, http.StatusInternalServerError, "")
+		return
+	}
+
+	places, status, err := rh.RestaurantUseCase.RestaurantIdAllPlacesGet(r.Context(), uint64(restaurantId))
 	if err != nil || status != http.StatusOK {
 		log.Errorf("RestaurantDelivery.RestaurantIdPlacesGet: failed get places [error: %w] [status: %d]", err, status)
 		ioutils.SendError(w, status, "")

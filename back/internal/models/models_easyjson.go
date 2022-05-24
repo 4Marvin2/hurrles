@@ -496,6 +496,8 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels5(in *jlexer.Lexer, out *Restaur
 			out.Kitchen = string(in.String())
 		case "img":
 			out.Img = string(in.String())
+		case "floors":
+			out.Floors = int(in.Int())
 		default:
 			in.SkipRecursive()
 		}
@@ -605,6 +607,16 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels5(out *jwriter.Writer, in Restau
 			out.RawString(prefix)
 		}
 		out.String(string(in.Img))
+	}
+	if in.Floors != 0 {
+		const prefix string = ",\"floors\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Int(int(in.Floors))
 	}
 	out.RawByte('}')
 }

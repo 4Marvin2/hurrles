@@ -25,27 +25,6 @@ export default class Home extends React.Component {
         this.restorClick = this.restorClick.bind(this);
         this.reserveClick = this.reserveClick.bind(this);
         this.searchCallback = this.searchCallback.bind(this);
-
-        getFavoriteRestors().then((data) => {
-            if (!data) {
-                return
-            }
-            try {
-                if (this.state.restors.length === 0) {
-                    throw BreakException;
-                }
-                const id = this.state.restors[0].id
-                data.forEach(e => {
-                    if (e.id === id) {
-                        this.setState({isFavorite: true});
-                        throw BreakException;
-                    };
-                });
-                this.setState({isFavorite: false});
-              } catch (e) {
-                if (e !== BreakException) throw e;
-              }
-        });
         
         getRestors().then((data) => {
             if (!data) {
@@ -86,6 +65,7 @@ export default class Home extends React.Component {
                         },
                         dishes: dishes,
                         isFavorite: false,
+                        floors: e.floors,
                     };
                     restors.push(restorElement);
                     this.setState({
@@ -93,6 +73,26 @@ export default class Home extends React.Component {
                         restors: restors,
                     });
                 });
+            });
+            getFavoriteRestors().then((data) => {
+                if (!data) {
+                    return
+                }
+                try {
+                    if (this.state.restors.length === 0) {
+                        throw BreakException;
+                    }
+                    const id = this.state.restors[0].id
+                    data.forEach(e => {
+                        if (e.id === id) {
+                            this.setState({isFavorite: true});
+                            throw BreakException;
+                        };
+                    });
+                    this.setState({isFavorite: false});
+                  } catch (e) {
+                    if (e !== BreakException) throw e;
+                  }
             });
         });
     }
@@ -193,7 +193,11 @@ export default class Home extends React.Component {
                     }
                     {this.state.reserve &&
                         <div className='home__reserve'>
-                            <Reserve reserveClick={this.reserveClick} id={this.state.restors[this.state.currentIndex].id} userId={this.props.userId} />
+                            <Reserve 
+                                reserveClick={this.reserveClick}
+                                id={this.state.restors[this.state.currentIndex].id}
+                                userId={this.props.userId}
+                                floors={this.state.restors[this.state.currentIndex].floors} />
                         </div>
                     }
                 </div>

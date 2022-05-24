@@ -109,4 +109,18 @@ const searchRestorsRequest = (titlePattern) => {
         })
 };
 
-export { getRestors, getRestorMenu, getFavoriteRestors, addFavorite, deleteFavorite, getPlaces, searchRestorsRequest };
+const getAllPlaces = (id) => {
+    return http
+        .get(`${restaurantURL}/${id}/places`, null)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw 'Non 200 response';
+            }
+            return result.data
+        })
+        .catch((error) => {
+            throw error
+        })
+};
+
+export { getRestors, getRestorMenu, getFavoriteRestors, addFavorite, deleteFavorite, getPlaces, getAllPlaces, searchRestorsRequest };

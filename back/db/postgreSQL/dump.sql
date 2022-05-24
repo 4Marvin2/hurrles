@@ -9,7 +9,7 @@ create table if not exists users
     number        varchar(16) default '',
     is_admin      boolean default false,
     is_restaurant boolean default false,
-    restaurant    int
+    restaurant    int default 0
 );
 
 create table if not exists restaurants
@@ -18,12 +18,13 @@ create table if not exists restaurants
     title       varchar(255) not null,
     description varchar(1000) not null,
     address     varchar(255) not null,
-    metro       varchar(50) not null,
+    metro       varchar(50)  not null,
     number      varchar(16)  not null,
     open_time   timestamptz  not null,
     close_time  timestamptz  not null,
     kitchen     varchar(255) not null,
-    img         varchar(255) not null
+    img         varchar(255) not null,
+    floors      int          not null
 );
 
 create table if not exists restaurants_users
@@ -47,7 +48,8 @@ create table if not exists places
     right_bottom  int not null,
     width         int not null,
     height        int not null,
-    floor         int not null
+    floor         int not null,
+    unique(number, restaurant_id)
 );
 
 create table if not exists orders

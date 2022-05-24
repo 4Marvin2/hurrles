@@ -7,7 +7,7 @@ import '../../css/AdminCommon/AddRestorForm.css'
 import validator from 'validator'
 import moment from 'moment'
 
-import { addressErrorMsg, addRestorFormErrorMsg, closeTimeErrorMsg, descErrorMsg, kitchenErrorMsg, metroErrorMsg, openTimeErrorMsg, phoneNumberErrorMsg, titleErrorMsg } from '../../constants/errorMsg';
+import { addressErrorMsg, addRestorFormErrorMsg, closeTimeErrorMsg, descErrorMsg, floorsErrorMsg, kitchenErrorMsg, metroErrorMsg, openTimeErrorMsg, phoneNumberErrorMsg, titleErrorMsg } from '../../constants/errorMsg';
 import { addRestorRequest, updateRestorRequest } from '../../requests/admin';
 import { metroMap } from '../../utils/metroMap';
 
@@ -21,6 +21,7 @@ export default class AddRestorForm extends React.Component {
             addressIsValid: true,
             metroIsValid: true,
             phoneNumberIsValid: true,
+            floorsIsValid: true,
             openTimeIsValid: true,
             closeTimeIsValid: true,
             formErrorIsActive: false,
@@ -110,6 +111,15 @@ export default class AddRestorForm extends React.Component {
         }
     }
 
+    floorsOnInput = (payload) => {
+        this.setState({floors: Number(payload.target.value)})
+        if (typeof(payload.target.value) !== Number && Number(payload.target.value) > 0) {
+            this.setState({floorsIsValid: true})
+        } else {
+            this.setState({floorsIsValid: false})
+        }
+    }
+
     openTimeOnInput = (payload) => {
         const fullDate = new Date();
         const d = moment(fullDate).format('L'); // d = "12/12/2017"
@@ -169,8 +179,14 @@ export default class AddRestorForm extends React.Component {
         }
         if (!this.state.phoneNumber && this.state.restor.phoneNumber !== '' && this.state.restor.phoneNumber !== undefined) {
             this.state.phoneNumber = this.state.restor.phoneNumber
-        } else if (!this.state.desc && (this.state.restor.phoneNumber === '' || this.state.restor.phoneNumber === undefined)) {
+        } else if (!this.state.phoneNumber && (this.state.restor.phoneNumber === '' || this.state.restor.phoneNumber === undefined)) {
             this.setState({phoneNumberIsValid: false})
+            state = false
+        }
+        if (!this.state.floors && this.state.restor.floors !== 0 && this.state.restor.floors !== undefined) {
+            this.state.floors = this.state.restor.floors
+        } else if (!this.state.floors && (this.state.restor.floors === '' || this.state.restor.floors === undefined)) {
+            this.setState({floorsIsValid: false})
             state = false
         }
         if (!this.state.openTime && this.state.restor.openTime !== '' && this.state.restor.openTime !== undefined) {
@@ -196,6 +212,7 @@ export default class AddRestorForm extends React.Component {
             this.state.addressIsValid &&
             this.state.metroIsValid &&
             this.state.phoneNumberIsValid &&
+            this.state.floorsIsValid &&
             this.state.openTimeIsValid &&
             this.state.closeTimeIsValid) {
                 if (this.state.isUpdate) {
@@ -211,6 +228,7 @@ export default class AddRestorForm extends React.Component {
                         this.state.address,
                         this.state.metro,
                         this.state.phoneNumber,
+                        this.state.floors,
                         this.state.openTime,
                         this.state.closeTime
                     )
@@ -231,6 +249,7 @@ export default class AddRestorForm extends React.Component {
                         this.state.address,
                         this.state.metro,
                         this.state.phoneNumber,
+                        this.state.floors,
                         this.state.openTime,
                         this.state.closeTime
                     )
@@ -319,6 +338,16 @@ export default class AddRestorForm extends React.Component {
                             prompt={phoneNumberErrorMsg}
                             promptIsActive={!this.state.phoneNumberIsValid}
                             onInput={(e) => {this.phoneNumberOnInput(e)}}
+                            theme='dark'
+                        />
+                        <InputField
+                            type='number'
+                            name='floors'
+                            label='Количество этажей'
+                            value={this.state.restor.floors}
+                            prompt={floorsErrorMsg}
+                            promptIsActive={!this.state.floorsIsValid}
+                            onInput={(e) => {this.floorsOnInput(e)}}
                             theme='dark'
                         />
                         <InputField

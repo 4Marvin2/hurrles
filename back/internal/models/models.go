@@ -143,6 +143,7 @@ type Restaurant struct {
 	CloseTime   time.Time `json:"closeTime,omitempty"`
 	Kitchen     string    `json:"kitchen,omitempty"`
 	Img         string    `json:"img,omitempty"`
+	Floors      int       `json:"floors,omitempty"`
 }
 
 //easyjson:json

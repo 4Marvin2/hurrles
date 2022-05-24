@@ -38,14 +38,12 @@ export default class RestorAdminCart extends React.Component {
     updateCallback() {
         getRestaurantOrders()
         .then((data) => {
-            console.log(data)
             const orders = []
             let curOrder
             if (data) {
                 data.map((order) => {
                     orders.push(order)
                     if (this.state.curOrder && order.id === this.state.curOrder.id) {
-                        console.log(100)
                         curOrder = order
                     }
                 })

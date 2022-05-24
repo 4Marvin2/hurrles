@@ -3,7 +3,7 @@ import { nameErorrMsg, emailErrorMsg, phoneNumberErrorMsg, profileFormErrorMsg }
 import InputField from './Common/InputField';
 import Button from './Common/Button';
 import validator from 'validator'
-import { editRequest } from '../requests/user';
+import { editRequest, getUserRequest } from '../requests/user';
 import '../css/Profile.css'
 
 export default class Profile extends React.Component {

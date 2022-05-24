@@ -12,6 +12,7 @@ import (
 type IRestaurantUsecase interface {
 	RestaurantsGet(context.Context) (models.RestaurantList, int, error)
 	RestaurantIdPlacesGet(context.Context, models.PlaceParameters) (models.PlaceList, int, error)
+	RestaurantIdAllPlacesGet(context.Context, uint64) (models.PlaceList, int, error)
 	RestaurantIdMenuGet(context.Context, uint64) (models.DishList, int, error)
 	RestaurantFavoritePost(context.Context, uint64) (int, error)
 	RestaurantFavoriteGet(context.Context) (models.RestaurantList, int, error)
@@ -55,6 +56,15 @@ func (ru *restaurantUsecase) RestaurantIdPlacesGet(ctx context.Context, placePar
 			}
 		}
 	}
+	return places, http.StatusOK, nil
+}
+
+func (ru *restaurantUsecase) RestaurantIdAllPlacesGet(ctx context.Context, restaurantId uint64) (models.PlaceList, int, error) {
+	places, err := ru.RestaurantPostgresRepository.GetRestaurantAllPlaces(ctx, restaurantId)
+	if err != nil {
+		return models.PlaceList{}, http.StatusInternalServerError, err
+	}
+
 	return places, http.StatusOK, nil
 }
 
