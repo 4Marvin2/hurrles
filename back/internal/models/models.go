@@ -43,6 +43,7 @@ type User struct {
 	Number       string `json:"number,omitempty"`
 	IsAdmin      bool   `json:"isAdmin,omitempty"`
 	IsRestaurant bool   `json:"isRestaurant,omitempty"`
+	Restaurant   uint64 `json:"restaurant,omitempty"`
 }
 
 //easyjson:json

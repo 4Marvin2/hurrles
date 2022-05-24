@@ -18,6 +18,7 @@ type IOrderRepository interface {
 	GetOrderById(context.Context, uint64) (models.Order, error)
 	AddDishToOrder(context.Context, uint64, uint64) (int32, error)
 	DeleteDishFromOrder(context.Context, uint64, uint64) (int32, error)
+	GetRestaurantOrders(context.Context, uint64) (models.OrderList, error)
 }
 
 type orderRepository struct {
@@ -307,4 +308,87 @@ func (or *orderRepository) DeleteDishFromOrder(ctx context.Context, orderId uint
 	}
 	return number, nil
 
+}
+
+func (or *orderRepository) GetRestaurantOrders(ctx context.Context, rid uint64) (models.OrderList, error) {
+	rows, err := or.Conn.Query(
+		`SELECT
+			o.id,
+			o.user_id,
+			o.place_id,
+			o.start_time,
+			o.end_time,
+			o.cost,
+			o.created_time,
+			o.status,
+			r.id,
+			r.title,
+			r.address,
+			r.metro,
+			p.number,
+			p.capacity,
+			ARRAY_REMOVE(ARRAY_AGG(d.id), NULL) AS dish_ids,
+			ARRAY_REMOVE(ARRAY_AGG(d.title), NULL) AS dish_titles,
+			ARRAY_REMOVE(ARRAY_AGG(d.price), NULL) AS dish_prices,
+			ARRAY_REMOVE(ARRAY_AGG(dso.number), NULL) AS dish_numbers
+		FROM orders AS o
+		JOIN places AS p ON (p.id = o.place_id)
+		JOIN restaurants AS r ON (r.id = p.restaurant_id)
+		LEFT JOIN dishes_orders AS dso ON (dso.order_id = o.id)
+		LEFT JOIN dishes AS d ON (d.id = dso.dish_id)
+		WHERE r.d = $1 AND o.end_time >= now()
+		GROUP BY
+			o.id,
+			o.user_id,
+			o.place_id,
+			o.start_time,
+			o.end_time,
+			o.cost,
+			o.created_time,
+			r.id,
+			r.title,
+			r.address,
+			r.metro,
+			p.number,
+			p.capacity
+		ORDER BY o.start_time;`,
+		rid,
+	)
+	if err != nil {
+		return models.OrderList{}, err
+	}
+	defer rows.Close()
+
+	var orders models.OrderList
+	var curOrder models.Order
+	for rows.Next() {
+		err := rows.Scan(
+			&curOrder.Id,
+			&curOrder.UserId,
+			&curOrder.PlaceId,
+			&curOrder.StartTime,
+			&curOrder.EndTime,
+			&curOrder.Cost,
+			&curOrder.CreatedTime,
+			&curOrder.Status,
+			&curOrder.RestaurantId,
+			&curOrder.RestaurantTitle,
+			&curOrder.RestaurantAddress,
+			&curOrder.RestaurantMetro,
+			&curOrder.PlaceNumber,
+			&curOrder.PlaceCapacity,
+			pq.Array(&curOrder.DishesIds),
+			pq.Array(&curOrder.DishesTitles),
+			pq.Array(&curOrder.DishesPrices),
+			pq.Array(&curOrder.DishesCounts),
+		)
+		if err != nil {
+			return models.OrderList{}, err
+		}
+		orders = append(orders, curOrder)
+	}
+	if err := rows.Err(); err != nil {
+		return models.OrderList{}, err
+	}
+	return orders, nil
 }

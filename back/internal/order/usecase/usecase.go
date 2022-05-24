@@ -15,6 +15,7 @@ type IOrderUsecase interface {
 	OrderUserIdDelete(context.Context, uint64) (models.Order, int, error)
 	DishIdPost(context.Context, uint64, uint64) (models.DishOrder, int, error)
 	DishIdDelete(context.Context, uint64, uint64) (models.DishOrder, int, error)
+	OrderRestaurantIdGet(context.Context) (models.OrderList, int, error)
 }
 
 type orderUsecase struct {
@@ -111,4 +112,23 @@ func (ou *orderUsecase) DishIdDelete(ctx context.Context, dishId uint64, orderId
 	}
 
 	return dishes, http.StatusOK, nil
+}
+
+func (ou *orderUsecase) OrderRestaurantIdGet(ctx context.Context) (models.OrderList, int, error) {
+	curUser, ok := ctx.Value(config.ContextUser).(models.User)
+	if !ok {
+		return models.OrderList{}, http.StatusNotFound, nil
+	}
+
+	orders, err := ou.OrderPostgresRepository.GetRestaurantOrders(ctx, curUser.Restaurant)
+	if err != nil {
+		return models.OrderList{}, http.StatusInternalServerError, err
+	}
+	for i := range orders {
+		for j := range orders[i].DishesIds {
+			orders[i].Cost += orders[i].DishesCounts[j] * orders[i].DishesPrices[j]
+		}
+	}
+
+	return orders, http.StatusOK, nil
 }

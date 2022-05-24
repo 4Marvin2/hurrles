@@ -129,6 +129,8 @@ func easyjsonD2b7633eDecodeHurrlesInternalModels1(in *jlexer.Lexer, out *User) {
 			out.IsAdmin = bool(in.Bool())
 		case "isRestaurant":
 			out.IsRestaurant = bool(in.Bool())
+		case "restaurant":
+			out.Restaurant = uint64(in.Uint64())
 		default:
 			in.SkipRecursive()
 		}
@@ -208,6 +210,16 @@ func easyjsonD2b7633eEncodeHurrlesInternalModels1(out *jwriter.Writer, in User) 
 			out.RawString(prefix)
 		}
 		out.Bool(bool(in.IsRestaurant))
+	}
+	if in.Restaurant != 0 {
+		const prefix string = ",\"restaurant\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		out.Uint64(uint64(in.Restaurant))
 	}
 	out.RawByte('}')
 }
