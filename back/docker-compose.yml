@@ -27,7 +27,7 @@ services:
     image: postgres:latest
     volumes:
       - postgis-data:/var/lib/postgresql
-      - $PWD/db/postgreSQL/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+      - ./db/postgreSQL/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     environment:
         POSTGRES_DB: "hurrles"
         POSTGRES_USER: "admin"

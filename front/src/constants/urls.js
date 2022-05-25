@@ -1,4 +1,4 @@
-const domain = '127.0.0.1';
+const domain = '146.185.209.6';
 export const serverAddress = `http://${domain}`;
 
 const apiPrefix = '/api/v1'

@@ -86,6 +86,7 @@ export default class Home extends React.Component {
         this.openUpdateRestorClick = this.openUpdateRestorClick.bind(this);
         this.closeAllForms = this.closeAllForms.bind(this);
         this.mapClick = this.mapClick.bind(this);
+        this.searchCallback = this.searchCallback.bind(this);
     }
 
     updateRestors(payload) {
@@ -183,11 +184,18 @@ export default class Home extends React.Component {
         this.setState({map: payload});
     }
 
+    searchCallback(payload) {
+        this.setState({
+            currentIndex: 0,
+            restors: payload.restors,
+        })
+    }
+
     render(){
         return (
             <div className='admin'>
                 <div className='admin__left'>
-                    <SearchBar />
+                    <SearchBar searchCallback={this.searchCallback}/>
                     <div className='admin__add-button'>
                         <Button text='Добавить новый ресторан' theme='light' width={250} height={32} onClick={this.addRestorButtonClick}/>
                     </div>

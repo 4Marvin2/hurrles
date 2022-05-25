@@ -15,10 +15,16 @@ export default class Cart extends React.Component {
         getOrders()
         .then((data) => {
             console.log(data)
+            const orders = []
+            if (data) {
+                data.forEach(element => {
+                    orders.push(element)
+                });
+            }
             this.setState(
                 {
                     promiseInProgress: false,
-                    orders: data,
+                    orders: orders,
                 }
             )
         })

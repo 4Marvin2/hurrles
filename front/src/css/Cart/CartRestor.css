@@ -6,62 +6,49 @@
   justify-content: center;
   background: #FFFFFF;
   box-shadow: 5px 5px 20px 5px rgba(57, 57, 57, 0.15);
-  border-radius: 12px;
-}
-.cart-restor__content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  margin: 20px;
-  font-family: "SF Pro Rounded";
-  font-style: normal;
-  font-weight: 600;
-  color: #000000;
-}
-.cart-restor__topbar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-.cart-restor__title {
-  font-size: 36px;
-  line-height: 36px;
-  margin-bottom: 10px;
-}
-.cart-restor__column-comp {
-  margin: 10px 0;
-}
-.cart-restor__row-comp {
-  margin-right: 10px;
-}
-.cart-restor__menu {
-  margin: 0 0 0 20px;
-}
-.cart-restor__dish {
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-}
-.cart-restor__total {
-  list-style-type: none;
-}
-.cart-restor__dish-title {
-  width: 200px;
-}
-.cart-restor__total-title {
-  width: 310px;
-}
-.cart-restor__metro {
-  display: flex;
-  flex-direction: row;
-  margin: 5px 0;
-}
-.cart-restor__cancel-button {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-}
+  border-radius: 12px; }
+  .cart-restor__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 20px;
+    font-family: 'SF Pro Rounded';
+    font-style: normal;
+    font-weight: 600;
+    color: #000000; }
+  .cart-restor__topbar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; }
+  .cart-restor__title {
+    font-size: 36px;
+    line-height: 36px;
+    margin-bottom: 10px; }
+  .cart-restor__column-comp {
+    margin: 10px 0; }
+  .cart-restor__row-comp {
+    margin-right: 10px; }
+  .cart-restor__menu {
+    margin: 0 0 0 20px; }
+  .cart-restor__dish {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center; }
+  .cart-restor__total {
+    list-style-type: none; }
+  .cart-restor__dish-title {
+    width: 200px; }
+  .cart-restor__total-title {
+    width: 310px; }
+  .cart-restor__metro {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0; }
+  .cart-restor__cancel-button {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%; }
 
 /*# sourceMappingURL=CartRestor.css.map */

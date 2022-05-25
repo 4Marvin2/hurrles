@@ -16,7 +16,7 @@ local-build:
 
 .PHONY: local-run
 local-run:
-	docker-compose -f docker-compose.yml up --build --no-deps
+	docker compose -f docker-compose.yml up --build --no-deps -d
 
 .PHONY: local
 local: local-build local-run

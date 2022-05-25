@@ -1,7 +1,7 @@
 import { adminURL } from '../constants/urls.js';
 import http from '../utils/http.js';
 
-const addRestorRequest = (title, desc, kitchen, address, metro, phoneNumber, openTime, closeTime) => {
+const addRestorRequest = (title, desc, kitchen, address, metro, phoneNumber, floors, openTime, closeTime) => {
     const body = JSON.stringify({
         title: title,
         description: desc,
@@ -9,6 +9,7 @@ const addRestorRequest = (title, desc, kitchen, address, metro, phoneNumber, ope
         address: address,
         metro: metro,
         number: phoneNumber,
+        floors: floors,
         openTime: openTime,
         closeTime: closeTime,
     });

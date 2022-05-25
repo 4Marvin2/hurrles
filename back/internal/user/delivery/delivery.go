@@ -290,9 +290,9 @@ func (uh *UserHandler) createSessionCookie(email string) (http.Cookie, error) {
 		Name:     "sessionId",
 		Value:    md5CookieValue,
 		Expires:  expiration,
-		Secure:   true,
+		Secure:   false,
 		HttpOnly: true,
-		SameSite: http.SameSiteNoneMode,
+		// SameSite: http.SameSiteNoneMode,
 		Path:     "/api/v1",
 	}
 

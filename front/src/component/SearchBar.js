@@ -36,6 +36,7 @@ export default class NavBar extends React.Component {
                         rating: '4.1', 
                         metro: e.metro,
                         restorInfo: {
+                            title: e.title,
                             number: e.number,
                             address: e.address,
                             workTime: `Понедельник-суббота ${e.openTime} - ${e.closeTime}`,
