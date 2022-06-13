@@ -1,0 +1,81 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2638
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 # Modify this code to update the DB schema diagram.\
+# To reset the sample schema, replace everything with\
+# two dots ('..' - without quotes).\
+\
+users\
+-\
+    id            PK serial\
+    email         citext UNIQUE\
+    password      varchar(64)\
+    full_name     varchar(128) default=''\
+    number        varchar(16) default=''\
+    is_admin      boolean default=false\
+    is_restaurant boolean default=false\
+    restaurant    int default=0\
+\
+restaurants\
+-\
+    id          PK serial\
+    title       varchar(255)\
+    description varchar(1000)\
+    address     varchar(255)\
+    metro       varchar(50)\
+    number      varchar(16)\
+    open_time   timestamptz\
+    close_time  timestamptz\
+    kitchen     varchar(255)\
+    img         varchar(255)\
+    floors      int\
+\
+restaurants_users\
+-\
+    id              PK serial\
+    user_id         int FK >- users.id\
+    restaurant_id   int FK >- restaurants.id\
+    unique(user_id, restaurant_id)\
+\
+places\
+-\
+    id            PK serial\
+    restaurant_id int FK >- restaurants.id\
+    capacity      int\
+    number        int\
+    left_top      int\
+    right_bottom  int\
+    width         int\
+    height        int\
+    floor         int\
+    unique(number, restaurant_id)\
+\
+orders\
+-\
+    id           PK serial\
+    user_id      int FK >- users.id\
+    place_id     int FK >- places.id\
+    start_time   timestamptz\
+    end_time     timestamptz\
+    cost         int\
+    created_time timestamptz default=now()\
+\
+dishes\
+-\
+    id            PK serial\
+    restaurant_id int FK >- restaurants.id\
+    title         varchar(255)\
+    description   varchar(255)\
+    price         int\
+\
+dishes_orders\
+-\
+    id       PK serial\
+    order_id int FK >- orders.id\
+    dish_id  int FK >- dishes.id\
+    number   int default=1\
+}
