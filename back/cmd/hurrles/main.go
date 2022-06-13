@@ -5,6 +5,7 @@ import (
 	admin_delivery "hurrles/internal/admin/delivery"
 	admin_repository "hurrles/internal/admin/repository"
 	admin_usecase "hurrles/internal/admin/usecase"
+	"os"
 
 	restaurant_delivery "hurrles/internal/restaurant/delivery"
 	restaurant_repository "hurrles/internal/restaurant/repository"
@@ -18,6 +19,8 @@ import (
 	order_repository "hurrles/internal/order/repository"
 	order_usecase "hurrles/internal/order/usecase"
 	"net/http"
+
+	"hurrles/internal/pkg/monitoring"
 
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
@@ -65,6 +68,10 @@ func main() {
 	admin_delivery.SetAdminRouting(router, adminUseCase, userUseCase, sessionUseCase)
 	restaurant_delivery.SetRestaurantRouting(router, restaurantUseCase, userUseCase, sessionUseCase)
 	order_delivery.SetOrderRouting(router, orderUseCase, userUseCase, sessionUseCase)
+
+	// metrics
+	prometheusMetrics := monitoring.RegisterMetrics(router, os.Args[1])
+	router.Use(monitoring.Metrics(prometheusMetrics))
 
 	srv := &http.Server{
 		Handler:      router,

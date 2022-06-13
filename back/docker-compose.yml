@@ -14,6 +14,8 @@ services:
     depends_on:
       - tarantool
       - postgres
+    environment:
+      INSTANSE_NAME: hurrles_1
   hurrles_2:
     image: hurrles
     ports:
@@ -22,6 +24,8 @@ services:
     depends_on:
       - tarantool
       - postgres
+    environment:
+      INSTANSE_NAME: hurrles_2
 
   tarantool:
     image: "hurrles_tarantool"

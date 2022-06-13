@@ -2,4 +2,4 @@ FROM hurrles_go_base AS builder
 
 WORKDIR /app
 
-CMD /app/hurrles
+CMD /app/hurrles ${INSTANSE_NAME}
