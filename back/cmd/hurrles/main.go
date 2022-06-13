@@ -73,9 +73,16 @@ func main() {
 	prometheusMetrics := monitoring.RegisterMetrics(router, os.Args[1])
 	router.Use(monitoring.Metrics(prometheusMetrics))
 
+	var addr string
+	if os.Args[1] == "hurrles_1" {
+		addr = config.Hurrles1.HttpPort
+	} else {
+		addr = config.Hurrles2.HttpPort
+	}
+
 	srv := &http.Server{
 		Handler:      router,
-		Addr:         config.Server.HttpPort,
+		Addr:         addr,
 		WriteTimeout: http.DefaultClient.Timeout,
 		ReadTimeout:  http.DefaultClient.Timeout,
 	}

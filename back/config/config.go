@@ -42,7 +42,8 @@ type contextUserID string
 type contextUser string
 
 var (
-	Server        ServerConfig
+	Hurrles1      ServerConfig
+	Hurrles2      ServerConfig
 	Tarantool     TarantoolConfig
 	Postgres      PostgresConfig
 	Timeouts      TimeoutsConfig
@@ -57,11 +58,18 @@ func SetConfig() {
 		log.Fatal(err)
 	}
 
-	Server = ServerConfig{
-		HttpPort: viper.GetString(`server.httpPort`),
-		Host:     viper.GetString(`server.host`),
-		CertFile: viper.GetString(`server.certFile`),
-		KeyFile:  viper.GetString(`server.keyFile`),
+	Hurrles1 = ServerConfig{
+		HttpPort: viper.GetString(`hurrles_1.httpPort`),
+		Host:     viper.GetString(`hurrles_1.host`),
+		CertFile: viper.GetString(`hurrles_1.certFile`),
+		KeyFile:  viper.GetString(`hurrles_1.keyFile`),
+	}
+
+	Hurrles2 = ServerConfig{
+		HttpPort: viper.GetString(`hurrles_2.httpPort`),
+		Host:     viper.GetString(`hurrles_2.host`),
+		CertFile: viper.GetString(`hurrles_2.certFile`),
+		KeyFile:  viper.GetString(`hurrles_2.keyFile`),
 	}
 
 	Tarantool = TarantoolConfig{

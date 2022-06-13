@@ -1,7 +1,13 @@
 {
-  "server": {
+  "hurrles_1": {
     "host": "127.0.0.1",
     "httpPort": ":8000",
+    "certFile": "api.ijia.me.crt",
+    "keyFile": "api.ijia.me.key"
+  },
+  "hurrles_2": {
+    "host": "127.0.0.1",
+    "httpPort": ":8001",
     "certFile": "api.ijia.me.crt",
     "keyFile": "api.ijia.me.key"
   },
