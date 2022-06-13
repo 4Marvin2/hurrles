@@ -6,10 +6,18 @@ volumes:
   tarantool:
 
 services:
-  hurrles:
+  hurrles_1:
     image: hurrles
     ports:
       - "8000:8000"
+    restart: on-failure
+    depends_on:
+      - tarantool
+      - postgres
+  hurrles_2:
+    image: hurrles
+    ports:
+      - "8001:8001"
     restart: on-failure
     depends_on:
       - tarantool
