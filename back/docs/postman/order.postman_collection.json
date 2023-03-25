@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "1e684fc4-05ff-4697-8a38-1fb044630ecb",
+		"name": "order",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19073079"
+	},
+	"item": [
+		{
+			"name": "create order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-csrf-token",
+						"value": "ee0afeab-b09a-4195-4fb7-84f0d6068227",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "sessionId=d6cf7725ad412d8cf3668b86b0d383e6",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 2,\n    \"placeId\": 3,\n    \"startTime\": \"2022-05-25T12:00:00.00Z\",\n    \"endTime\": \"2022-05-25T14:00:00.00Z\",\n    \"cost\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "orders",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "sessionId=ca29c530e0955fe63778d2ce9eaf2cb7",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/order",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "orders",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "sessionId=53045f57371c26db7e3035310f0453a9",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/order/5",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add dish to order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-csrf-token",
+						"value": "eb61002e-5dec-4bae-5c61-1c3469cc41d9",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "sessionId=b68fb9273e1c2504dc9c95729b20d98c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/order/1/dish/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"1",
+						"dish",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete dish from order",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-csrf-token",
+						"value": "d8e19786-2740-46e5-7b00-748552e166b1",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "sessionId=c4cde9f0f048e8bb3922afd715775c2a",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/order/1/dish/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"1",
+						"dish",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "restaurant orders",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "sessionId=5aa87d4f140d5973cf3ac93ddd933a25",
+						"type": "text"
+					},
+					{
+						"key": "x-csrf-token",
+						"value": "87aaab51-0252-4062-4881-0d22e21316ac",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/order/restaurant",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"order",
+						"restaurant"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

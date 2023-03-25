@@ -1,0 +1,374 @@
+{
+	"info": {
+		"_postman_id": "4dc47ce4-b24d-4538-9434-3c297cd8a024",
+		"name": "admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19073079"
+	},
+	"item": [
+		{
+			"name": "create restaurant",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-csrf-token",
+						"value": "c43ffbe6-85be-4150-5689-d22f2928e510",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "sessionId=5b78c723877dc910597db8d0d3f2236b",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Nagoya\",\n    \"description\": \"Философия заведения основана на воссоздании атмосферы японского кафе в каждой детали. Заказы совершаются через специальный билетный терминал самообслуживания, используемый в большинстве заведений Японии. К каждому обеду подается бесплатный чай. Наши порции – щедрые, а цены – демократичные. Все блюда, которые мы подаем, вы без труда найдете в Японии.\",\n    \"address\": \"м.Буманская, Старокирочный переулок 16/2 стр.1\",\n    \"metro\": \"Бауманская\",\n    \"number\": \"89374857384\",\n    \"openTime\": \"10:00\",\n    \"closeTime\": \"22:00\",\n    \"kitchen\": \"japan\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/admin/restaurant",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"restaurant"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update restaurant",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-csrf-token",
+						"value": "f893f2fc-f6b3-4499-6b80-f68d6eee068c",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "sessionId=5a29d8a5624bb69a336c5241fbbb9239",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"nagoy\",\n    \"description\": \"Душа моя озарена.\",\n    \"address\": \"м Бауманская\",\n    \"number\": \"89374857555\",\n    \"openTime\": \"2021-05-04T10:00:00.001Z\",\n    \"closeTime\": \"2021-05-04T23:00:00.001Z\",\n    \"kitchen\": \"japann\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/admin/restaurant/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"restaurant",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create dish",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-csrf-token",
+						"value": "3ba5e761-b3c7-4bd2-59a4-c915b1cd6837",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "sessionId=5a29d8a5624bb69a336c5241fbbb9239",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurantId\": 1,\n    \"title\": \"Карааге Карри Райсу\",\n    \"description\": \"Карааге, рис и соус карри\",\n    \"price\": 250\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/admin/dish",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"dish"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update dish",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-csrf-token",
+						"value": "a2d27dd7-008b-487e-4cef-169b459727a9",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "sessionId=5a29d8a5624bb69a336c5241fbbb9239",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurantId\": 1,\n    \"title\": \"Биф а-ля Руса\",\n    \"description\": \"Душа моя озарена неземной радостью, как эти чудесные.\",\n    \"price\": 350\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/admin/dish/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"dish",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create place",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-csrf-token",
+						"value": "ba325d93-d0be-4886-5a02-d0a2e3c1b136",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "sessionId=4679775b19c7176f15dfb94c9e858f80",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurantId\": 1,\n    \"capacity\": 10,\n    \"number\": 2,\n    \"leftTop\": 45,\n    \"rightBottom\": 245,\n    \"width\": 500,\n    \"height\": 500,\n    \"floor\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/admin/place",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"place"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update place",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-csrf-token",
+						"value": "8db94a4b-01ad-4a15-6d4d-53bf04124854",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "sessionId=5a29d8a5624bb69a336c5241fbbb9239",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurantId\": 1,\n    \"capacity\": 6,\n    \"number\": 5,\n    \"leftTop\": 200,\n    \"rightBottom\": 200,\n    \"width\": 25,\n    \"height\": 25\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/admin/place/4",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"place",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update all places",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-csrf-token",
+						"value": "4a10db82-7f10-4281-6483-682e5d2caab6",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "sessionId=5a29d8a5624bb69a336c5241fbbb9239",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"places\": [\n    {\n        \"id\": 15,\n        \"restaurantId\": 1,\n        \"capacity\": 6,\n        \"number\": 5,\n        \"leftTop\": 25,\n        \"rightBottom\": 50,\n        \"width\": 25,\n        \"height\": 25\n    },\n    {\n        \"id\": 16,\n        \"restaurantId\": 1,\n        \"capacity\": 6,\n        \"number\": 3,\n        \"leftTop\": 100,\n        \"rightBottom\": 100,\n        \"width\": 25,\n        \"height\": 25\n    }\n]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/admin/places",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"places"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete place",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-csrf-token",
+						"value": "258daa49-e54b-4320-4366-0095739c3b4e",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "sessionId=5a29d8a5624bb69a336c5241fbbb9239",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/admin/place/5",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"admin",
+						"place",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

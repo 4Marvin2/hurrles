@@ -1,0 +1,331 @@
+{
+	"info": {
+		"_postman_id": "30768882-bace-4de4-8e4a-cb31628d7831",
+		"name": "restaurant",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19073079"
+	},
+	"item": [
+		{
+			"name": "restaurants",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "sessionId=27525f7a5c0ecd83b08c7b410a91f646",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://146.185.209.6:8000/api/v1/restaurants",
+					"protocol": "http",
+					"host": [
+						"146",
+						"185",
+						"209",
+						"6"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"restaurants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "restaurant menu",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "sessionId=7492a9cb386d1e0a77a7f4177c57b5cf",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/restaurant/2/menu",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"restaurant",
+						"2",
+						"menu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "restaurant places",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "sessionId=9450a3cf07f1414754a69a21aec65403",
+						"type": "text"
+					},
+					{
+						"key": "x-csrf-token",
+						"value": "81afbf97-ce49-431f-640a-8e840689610b",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurantId\": 1,\n    \"time\": \"2022-05-04T17:00:00.00Z\",\n    \"floor\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/restaurant/1/places",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"restaurant",
+						"1",
+						"places"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "restaurant all places",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "sessionId=5a29d8a5624bb69a336c5241fbbb9239",
+						"type": "text"
+					},
+					{
+						"key": "x-csrf-token",
+						"value": "9267ef59-d753-43db-49f1-eb6ce10e845f",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/restaurant/1/places",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"restaurant",
+						"1",
+						"places"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "restaurant add favorite",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "sessionId=d34ce1a7b86f6bf7b43aaae9e2d893b2",
+						"type": "text"
+					},
+					{
+						"key": "x-csrf-token",
+						"value": "e39f846d-8037-4736-4afc-33e6b5e27e43",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/restaurant/favorite/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"restaurant",
+						"favorite",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "restaurant favorite",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "sessionId=7492a9cb386d1e0a77a7f4177c57b5cf",
+						"type": "text"
+					},
+					{
+						"key": "x-csrf-token",
+						"value": "6a997c30-9cdd-4abe-7041-a93e791acfcc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/restaurant/favorite",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"restaurant",
+						"favorite"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "restaurant delete favorite",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "sessionId=ca5f90b62358dc3c0c4c814f994de720",
+						"type": "text"
+					},
+					{
+						"key": "x-csrf-token",
+						"value": "9ca8045b-35eb-4f24-6b04-19753373a579",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/restaurant/favorite/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"restaurant",
+						"favorite",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search restaurants",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "sessionId=9784dd44e4a47eb15b4ee6838c7f5f83",
+						"type": "text"
+					},
+					{
+						"key": "x-csrf-token",
+						"value": "01ecd2e7-e2e3-4c31-4b7c-d57eb6f9dc07",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"searchPattern\": \"n\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/restaurant/search",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"restaurant",
+						"search"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
